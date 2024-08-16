@@ -5,13 +5,8 @@ type Node<T> = {
 
 export default class LinkedList<T> {
   private size = 0;
-  private head: Node<T> | null;
-  private tail: Node<T> | null;
-
-  constructor() {
-    this.head = null;
-    this.tail = null;
-  }
+  private head: Node<T> | null = null;
+  private tail: Node<T> | null = null;
 
   public isEmpty(): boolean {
     return this.size === 0;
@@ -34,47 +29,39 @@ export default class LinkedList<T> {
   }
 
   public addFirst(element: T) {
-    if (!this.head) this.add(element);
     const newNode = this.makeNode(element, this.head);
 
     this.head = newNode;
+    if (this.size === 0) this.tail = newNode;
     this.size++;
 
     return element;
   }
 
   public insert(index: number, element: T): T {
-    if (index > this.size) throw new Error('Index out of bounds');
-    if (index === this.size || !this.head) return this.add(element);
+    if (index < 0 || index > this.size) throw new Error('Index out of bounds');
+    if (index === this.size) return this.add(element);
+    if (index === 0) return this.addFirst(element);
 
-    let nextNode = this.head;
-
-    let i = 0;
-    while (nextNode && i < index) {
-      nextNode = nextNode.next as Node<T>;
-      i++;
-    }
-    const prevNode = this.findNodeBefore(nextNode);
+    const prevNode = this.findNodeBefore(index);
     if (prevNode) {
-      const newNode = this.makeNode(element, nextNode);
+      const newNode = this.makeNode(element, prevNode.next);
       prevNode.next = newNode;
+      this.size++;
     }
-
-    this.size++;
 
     return element;
   }
 
   public get(index: number): T | null {
-    if (this.size === 0 || !this.head || !this.tail) return null;
+    if (index < 0 || index >= this.size) return null;
 
     let node: Node<T> | null = this.head;
     for (let i = 0; i < index; i++) {
-      if (node) node = node.next;
+      node = node?.next || null;
     }
 
-    if (node) return node.data;
-    return null;
+    return node ? node.data : null;
   }
 
   public getFirst(): T | null {
@@ -101,14 +88,12 @@ export default class LinkedList<T> {
 
   public toString(): string {
     let result = '';
-
     let node = this.head;
-    while (node && node.next) {
-      result += node.data + ' -> ';
+
+    while (node) {
+      result += node.data + (node.next ? ' -> ' : '');
       node = node.next;
     }
-
-    if (this.tail) result += this.tail?.data;
 
     return result;
   }
@@ -120,14 +105,12 @@ export default class LinkedList<T> {
     };
   }
 
-  private findNodeBefore(node: Node<T> | null) {
-    if (!node) return null;
-    if (node === this.head) return null;
+  private findNodeBefore(index: number): Node<T> | null {
+    if (index < 1 || index >= this.size) return null;
 
     let current = this.head;
-    while (current) {
-      if (current.next === node) break;
-      current = current.next;
+    for (let i = 0; i < index - 1; i++) {
+      if (current) current = current.next;
     }
 
     return current;
