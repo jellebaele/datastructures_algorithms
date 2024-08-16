@@ -1,4 +1,4 @@
-import IndexOutOfBoundsError from '../shared/IndexOutOfBoundsError';
+import IndexOutOfBoundsError from '../shared/errors/IndexOutOfBoundsError';
 
 export default class MyArray<T> {
   private data: { [index: number]: T } = {};
