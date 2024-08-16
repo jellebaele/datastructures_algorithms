@@ -1,3 +1,5 @@
+// O(n^2)
+
 export default class SelectionSort<T> {
   public sort(arr: Array<T>) {
     const arrayToSort = [...arr];
