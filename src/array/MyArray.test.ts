@@ -4,7 +4,7 @@ describe('MyArray', () => {
   let arr: MyArray<number>;
 
   beforeEach(() => {
-    arr = new MyArray<number>(3);
+    arr = new MyArray<number>(4);
   });
 
   test('should add elements to the end using push', () => {
@@ -33,8 +33,9 @@ describe('MyArray', () => {
     arr.push(10);
     arr.push(20);
     arr.push(30);
+    arr.push(40);
 
-    expect(() => arr.push(40)).toThrow('Array is full');
+    expect(() => arr.push(50)).toThrow('Array is full');
   });
 
   test('should return undefined when popping from an empty array', () => {
@@ -109,5 +110,39 @@ describe('MyArray', () => {
 
   test('should return an empty array representation when the array is empty', () => {
     expect(arr.toString()).toBe('[ ]');
+  });
+
+  test('should insert an element in the middle of the array', () => {
+    arr.push(10);
+    arr.push(20);
+    arr.push(40);
+
+    arr.insert(2, 30);
+
+    expect(arr.getLength()).toBe(4);
+    expect(arr.get(0)).toBe(10);
+    expect(arr.get(1)).toBe(20);
+    expect(arr.get(2)).toBe(30);
+    expect(arr.get(3)).toBe(40);
+  });
+
+  test('should throw an error when inserting beyond the fixed length', () => {
+    arr.push(10);
+    arr.push(20);
+    arr.push(30);
+    arr.push(50);
+
+    expect(() => arr.insert(3, 40)).toThrow('Index out of bounds or array is full');
+  });
+
+  test('should throw an error when inserting at a negative index', () => {
+    expect(() => arr.insert(-1, 10)).toThrow('Index out of bounds or array is full');
+  });
+
+  test('should throw an error when inserting at an index greater than the current length', () => {
+    arr.push(10);
+    arr.push(20);
+
+    expect(() => arr.insert(3, 30)).toThrow('Index out of bounds or array is full');
   });
 });

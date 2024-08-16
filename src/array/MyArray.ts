@@ -45,6 +45,15 @@ export default class MyArray<T> {
     this.currentLength--;
   }
 
+  public insert(index: number, element: T) {
+    if (this.currentLength >= this.maxLength || index < 0 || index > this.currentLength)
+      throw new Error('Index out of bounds or array is full');
+
+    this.shiftItemsRight(index);
+    this.data[index] = element;
+    this.currentLength++;
+  }
+
   public toString(): string {
     let result = '[ ';
     for (let i = 0; i < this.currentLength; i++) {
@@ -53,5 +62,12 @@ export default class MyArray<T> {
       result += ' ';
     }
     return result + ']';
+  }
+
+  private shiftItemsRight(startIndex: number) {
+    for (let i = startIndex; i < this.currentLength; i++) {
+      const originalData = this.data[i];
+      this.data[i + 1] = originalData;
+    }
   }
 }
