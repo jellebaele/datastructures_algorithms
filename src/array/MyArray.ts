@@ -1,3 +1,5 @@
+import IndexOutOfBoundsError from '../shared/IndexOutOfBoundsError';
+
 export default class MyArray<T> {
   private data: { [index: number]: T } = {};
   private maxLength: number;
@@ -12,7 +14,7 @@ export default class MyArray<T> {
   }
 
   public push(element: T): void {
-    if (this.currentLength === this.maxLength) throw new Error('Array is full');
+    if (this.currentLength === this.maxLength) throw new IndexOutOfBoundsError();
 
     this.data[this.currentLength] = element;
     this.currentLength++;
@@ -47,7 +49,7 @@ export default class MyArray<T> {
 
   public insert(index: number, element: T) {
     if (this.currentLength >= this.maxLength || index < 0 || index > this.currentLength)
-      throw new Error('Index out of bounds or array is full');
+      throw new IndexOutOfBoundsError();
 
     this.shiftItemsRight(index);
     this.data[index] = element;

@@ -35,7 +35,7 @@ describe('MyArray', () => {
     arr.push(30);
     arr.push(40);
 
-    expect(() => arr.push(50)).toThrow('Array is full');
+    expect(() => arr.push(50)).toThrow('Index out of bounds');
   });
 
   test('should return undefined when popping from an empty array', () => {
@@ -132,17 +132,17 @@ describe('MyArray', () => {
     arr.push(30);
     arr.push(50);
 
-    expect(() => arr.insert(3, 40)).toThrow('Index out of bounds or array is full');
+    expect(() => arr.insert(3, 40)).toThrow('Index out of bounds');
   });
 
   test('should throw an error when inserting at a negative index', () => {
-    expect(() => arr.insert(-1, 10)).toThrow('Index out of bounds or array is full');
+    expect(() => arr.insert(-1, 10)).toThrow('Index out of bounds');
   });
 
   test('should throw an error when inserting at an index greater than the current length', () => {
     arr.push(10);
     arr.push(20);
 
-    expect(() => arr.insert(3, 30)).toThrow('Index out of bounds or array is full');
+    expect(() => arr.insert(3, 30)).toThrow('Index out of bounds');
   });
 });
