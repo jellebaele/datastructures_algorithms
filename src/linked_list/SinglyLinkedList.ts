@@ -16,6 +16,8 @@ export default class SinglyLinkedList<T> implements ILinkedList<T> {
     return this.size === 0;
   }
 
+  // O(1)
+  // Without keeping track of 'size' property: O(N) as you need to traverse the entire list
   public getSize(): number {
     return this.size;
   }

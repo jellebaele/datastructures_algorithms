@@ -1,4 +1,6 @@
 import IndexOutOfBoundsError from '../shared/errors/IndexOutOfBoundsError';
+import NotFoundError from '../shared/errors/NotFoundError';
+import ILinkedList from './ILinkedList';
 
 type Node<T> = {
   data: T;
@@ -6,7 +8,7 @@ type Node<T> = {
   next: Node<T> | null;
 };
 
-export default class DoublyLinkedList<T> {
+export default class DoublyLinkedList<T> implements ILinkedList<T> {
   private head: Node<T> | null = null;
   private tail: Node<T> | null = null;
   private size = 0;
@@ -25,10 +27,9 @@ export default class DoublyLinkedList<T> {
     if (!this.head) {
       this.head = this.tail = newNode;
     } else {
+      newNode.next = this.head;
       this.head.prev = newNode;
-      const originalHead = this.head;
       this.head = newNode;
-      this.head.next = originalHead;
     }
 
     this.size++;
@@ -52,14 +53,35 @@ export default class DoublyLinkedList<T> {
     return element;
   }
 
+  insert(index: number, element: T): T {
+    if (index === 0) return this.addFirst(element);
+    if (index < 0 || index > this.size) throw new IndexOutOfBoundsError();
+    if (index === this.size) return this.add(element);
+
+    const prevNode = this.getNode(index - 1);
+    const nextNode = prevNode?.next;
+    const newNode = this.makeNode(element, prevNode, nextNode);
+
+    if (prevNode) {
+      prevNode.next = newNode;
+      // newNode.prev = prevNode;
+    }
+    if (nextNode) {
+      nextNode.prev = newNode;
+      // newNode.next = nextNode;
+    }
+
+    this.size++;
+
+    return element;
+  }
+
   // O(N)
+  // Optimialisition: as you can go backwards, you can check if the index is above or below the middle of the list to go
+  // up or down
   public get(index: number): T | null {
     if (index < 0 || index >= this.size) throw new IndexOutOfBoundsError();
-
-    let node: Node<T> | null = this.head;
-    for (let i = 0; i < index; i++) {
-      node = node ? node.next : null;
-    }
+    const node = this.getNode(index);
 
     return node ? node.data : null;
   }
@@ -100,11 +122,125 @@ export default class DoublyLinkedList<T> {
     return result;
   }
 
+  // O(N)
+  remove(index: number): T | null {
+    if (index < 0 || index > this.size - 1) throw new IndexOutOfBoundsError();
+    if (index === 0) return this.removeFirst();
+    if (index === this.size - 1) return this.removeLast();
+
+    const nodeToRemove = this.getNode(index);
+    if (!nodeToRemove) throw new NotFoundError();
+
+    const prevNode = nodeToRemove?.prev;
+    if (prevNode) {
+      prevNode.next = nodeToRemove.next;
+    }
+
+    const nextNode = nodeToRemove?.next;
+    if (nextNode) {
+      nextNode.prev = nodeToRemove.prev;
+    }
+
+    nodeToRemove.next = null;
+    nodeToRemove.prev = null;
+    this.size--;
+
+    return nodeToRemove.data;
+  }
+
+  // O(1)
+  removeFirst(): T | null {
+    if (!this.head) return null;
+
+    const newHead = this.head.next;
+    const oldHeadData = this.head.data;
+
+    if (newHead) newHead.prev = null;
+    this.head.next = null;
+    this.head = newHead;
+    this.size--;
+
+    return oldHeadData ? oldHeadData : null;
+  }
+
+  // 0(1)
+  removeLast(): T | null {
+    if (!this.tail) return null;
+
+    const newTail = this.tail.prev;
+    const oldTailData = this.tail.data;
+
+    if (newTail) newTail.next = null;
+    this.tail.prev = null;
+    this.tail = newTail;
+    this.size--;
+
+    return oldTailData ? oldTailData : null;
+  }
+
+  // O(N)
+  clear(): void {
+    let current = this.head;
+    this.head = null;
+    this.tail = null;
+
+    while (current) {
+      const nextNode = current.next;
+      current = null;
+      current = nextNode;
+      this.size--;
+    }
+  }
+
+  // O(N)
+  contains(element: T): boolean {
+    let current = this.head;
+
+    while (current) {
+      if (current.data === element) return true;
+      current = current.next;
+    }
+
+    return false;
+  }
+
+  // O(N)
+  indexOf(element: T): number {
+    let current = this.head;
+    let index = 0;
+
+    while (current) {
+      if (current.data === element) return index;
+      index++;
+      current = current.next;
+    }
+
+    return -1;
+  }
+
   private makeNode(element: T, prev: Node<T> | null = null, next: Node<T> | null = null): Node<T> {
     return {
       data: element,
       prev: prev,
       next: next,
     };
+  }
+
+  private getNode(index: number): Node<T> | null {
+    let node: Node<T> | null;
+
+    if (index + 1 > this.size / 2) {
+      node = this.tail;
+      for (let i = this.size - 1; i > index; i--) {
+        node = node ? node.prev : null;
+      }
+    } else {
+      node = this.head;
+      for (let i = 0; i < index; i++) {
+        node = node ? node.next : null;
+      }
+    }
+
+    return node;
   }
 }
