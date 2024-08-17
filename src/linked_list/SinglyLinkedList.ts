@@ -6,7 +6,7 @@ type Node<T> = {
   next: Node<T> | null;
 };
 
-export default class LinkedList<T> {
+export default class SinglyLinkedList<T> {
   private size = 0;
   private head: Node<T> | null = null;
   private tail: Node<T> | null = null;

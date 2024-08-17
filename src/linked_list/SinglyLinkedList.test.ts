@@ -1,10 +1,10 @@
-import LinkedList from './LinkedList';
+import SinglyLinkedList from './SinglyLinkedList';
 
 describe('LinkedList', () => {
-  let list: LinkedList<number>;
+  let list: SinglyLinkedList<number>;
 
   beforeEach(() => {
-    list = new LinkedList<number>();
+    list = new SinglyLinkedList<number>();
   });
 
   test('should initialize an empty list', () => {
