@@ -123,12 +123,14 @@ export default class DoublyLinkedList<T> implements ILinkedList<T> {
   }
 
   // O(N)
+  // If input parameter is a node -> O(1) as you don't need to traverse the list to get both
+  // the next and previous node
   remove(index: number): T | null {
     if (index < 0 || index > this.size - 1) throw new IndexOutOfBoundsError();
     if (index === 0) return this.removeFirst();
     if (index === this.size - 1) return this.removeLast();
 
-    const nodeToRemove = this.getNode(index);
+    let nodeToRemove = this.getNode(index);
     if (!nodeToRemove) throw new NotFoundError();
 
     const prevNode = nodeToRemove?.prev;
@@ -141,11 +143,12 @@ export default class DoublyLinkedList<T> implements ILinkedList<T> {
       nextNode.prev = nodeToRemove.prev;
     }
 
-    nodeToRemove.next = null;
-    nodeToRemove.prev = null;
+    const data = nodeToRemove.data;
+    nodeToRemove = null;
+
     this.size--;
 
-    return nodeToRemove.data;
+    return data;
   }
 
   // O(1)

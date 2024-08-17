@@ -81,6 +81,8 @@ export default class SinglyLinkedList<T> implements ILinkedList<T> {
   }
 
   // O(N)
+  // If input parameter is a node -> O(N) as you node to traverse
+  // to the node before to be deleted
   public remove(index: number): T | null {
     if (index < 0 || index + 1 > this.size) throw new IndexOutOfBoundsError();
     if (index === 0) return this.removeFirst();
