@@ -1,11 +1,11 @@
 export const sumArray = (arr: Array<number>): number => {
   if (arr.length === 0) return 0;
-  else return arr[0] + sumArray(arr.splice(1));
+  else return arr[0] + sumArray(arr.slice(1));
 };
 
 export const countLengthArray = (arr: Array<number>): number => {
   if (arr === undefined || arr.length === 0) return 0;
-  else return 1 + countLengthArray(arr.splice(1));
+  else return 1 + countLengthArray(arr.slice(1));
 };
 
 export const getHighest = (arr: Array<number>): number => {
@@ -14,7 +14,7 @@ export const getHighest = (arr: Array<number>): number => {
     return arr[0] > arr[1] ? arr[0] : arr[1];
   }
 
-  const subHighest = getHighest(arr.splice(1));
+  const subHighest = getHighest(arr.slice(1));
   return arr[0] > subHighest ? arr[0] : subHighest;
 };
 
