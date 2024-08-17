@@ -1,12 +1,13 @@
 import IndexOutOfBoundsError from '../shared/errors/IndexOutOfBoundsError';
 import NotFoundError from '../shared/errors/NotFoundError';
+import ILinkedList from './ILinkedList';
 
 type Node<T> = {
   data: T;
   next: Node<T> | null;
 };
 
-export default class SinglyLinkedList<T> {
+export default class SinglyLinkedList<T> implements ILinkedList<T> {
   private size = 0;
   private head: Node<T> | null = null;
   private tail: Node<T> | null = null;
@@ -15,11 +16,13 @@ export default class SinglyLinkedList<T> {
     return this.size === 0;
   }
 
-  public getSize() {
+  public getSize(): number {
     return this.size;
   }
 
-  public add(element: T) {
+  // With tail: O(1)
+  // Without tail: traverse to end and add: O(N)
+  public add(element: T): T {
     const newNode = this.makeNode(element);
 
     if (this.size === 0) this.head = newNode;
@@ -31,7 +34,8 @@ export default class SinglyLinkedList<T> {
     return element;
   }
 
-  public addFirst(element: T) {
+  // O(1)
+  public addFirst(element: T): T {
     const newNode = this.makeNode(element, this.head);
 
     this.head = newNode;
@@ -41,6 +45,7 @@ export default class SinglyLinkedList<T> {
     return element;
   }
 
+  // O(N)
   public insert(index: number, element: T): T {
     if (index < 0 || index > this.size) throw new IndexOutOfBoundsError();
     if (index === this.size) return this.add(element);
@@ -56,21 +61,25 @@ export default class SinglyLinkedList<T> {
     return element;
   }
 
+  // O(N)
   public get(index: number): T | null {
     const node = this.getNode(index);
 
     return node ? node.data : null;
   }
 
+  // O(1)
   public getFirst(): T | null {
     return this.head ? this.head.data : null;
   }
 
+  // O(1) with tail, otherwise O(N) as you need to traverse the list
   public getLast(): T | null {
     return this.tail ? this.tail.data : null;
   }
 
-  public remove(index: number) {
+  // O(N)
+  public remove(index: number): T | null {
     if (index < 0 || index + 1 > this.size) throw new IndexOutOfBoundsError();
     if (index === 0) return this.removeFirst();
     if (index === this.size) return this.removeLast();
@@ -85,8 +94,10 @@ export default class SinglyLinkedList<T> {
     nodeToRemove.next = null;
 
     this.size--;
+    return nodeToRemove ? nodeToRemove.data : null;
   }
 
+  // O(1)
   public removeFirst(): T | null {
     if (!this.head) return null;
 
@@ -98,6 +109,7 @@ export default class SinglyLinkedList<T> {
     return nodeToRemove.data;
   }
 
+  // O(N)
   public removeLast(): T | null {
     if (!this.tail) return null;
 
@@ -115,6 +127,7 @@ export default class SinglyLinkedList<T> {
     return nodeToRemove.data;
   }
 
+  // O(N)
   public clear(): void {
     let currentNode = this.head;
 
@@ -129,6 +142,7 @@ export default class SinglyLinkedList<T> {
     this.size = 0;
   }
 
+  // O(N)
   public contains(element: T): boolean {
     let currentNode = this.head;
 
@@ -140,6 +154,7 @@ export default class SinglyLinkedList<T> {
     return false;
   }
 
+  // O(N)
   public indexOf(element: T): number {
     let currentNode = this.head;
     let index = 0;
@@ -153,6 +168,7 @@ export default class SinglyLinkedList<T> {
     return -1;
   }
 
+  // O(N)
   public toString(): string {
     let result = '';
     let node = this.head;
