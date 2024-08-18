@@ -12,20 +12,20 @@ export default class MergeSort<T> implements ISort<T> {
   }
 
   private merge(left: T[], right: T[]): T[] {
-    const resultArray: T[] = [];
-    let leftIndex = 0,
-      rightIndex = 0;
+    const resultArr: T[] = [];
+    let leftIndex = 0;
+    let rightIndex = 0;
 
     while (leftIndex < left.length && rightIndex < right.length) {
       if (left[leftIndex] < right[rightIndex]) {
-        resultArray.push(left[leftIndex]);
+        resultArr.push(left[leftIndex]);
         leftIndex++;
       } else {
-        resultArray.push(right[rightIndex]);
+        resultArr.push(right[rightIndex]);
         rightIndex++;
       }
     }
 
-    return [...resultArray, ...left.slice(leftIndex), ...right.slice(rightIndex)];
+    return [...resultArr, ...left.slice(leftIndex), ...right.slice(rightIndex)];
   }
 }
