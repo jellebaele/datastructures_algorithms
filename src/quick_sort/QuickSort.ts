@@ -1,7 +1,9 @@
+import ISort from '../shared/ISort';
+
 // O(n^2) worst case
 // O(n logn) average
 
-export default class QuickSort<T> {
+export default class QuickSort<T> implements ISort<T> {
   public sort(arr: Array<T>): Array<T> {
     if (arr.length < 2) return arr;
 

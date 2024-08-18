@@ -1,6 +1,8 @@
+import ISort from '../shared/ISort';
+
 // O(n^2)
 
-export default class SelectionSort<T> {
+export default class SelectionSort<T> implements ISort<T> {
   public sort(arr: Array<T>): Array<T> {
     const resultArr = new Array<T>();
     const arrToSort = [...arr];
