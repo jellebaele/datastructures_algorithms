@@ -1,28 +1,26 @@
 // O(n^2)
 
 export default class SelectionSort<T> {
-  public sort(arr: Array<T>) {
-    const arrayToSort = [...arr];
-    const result = new Array<T>();
+  public sort(arr: Array<T>): Array<T> {
+    const resultArr = new Array<T>();
+    const arrToSort = [...arr];
 
     for (let i = 0; i < arr.length; i++) {
-      const indexSmallest = this.findIndexSmallest(arrayToSort);
-      result.push(arrayToSort[indexSmallest]);
-      arrayToSort.splice(indexSmallest, 1);
+      const indexSmallest = this.getIndexSmallest(arrToSort);
+      resultArr.push(arrToSort[indexSmallest]);
+      arrToSort.splice(indexSmallest, 1);
     }
 
-    return result;
+    return resultArr;
   }
 
-  private findIndexSmallest(arr: Array<T>): number {
-    if (arr.length <= 0) return -1;
+  private getIndexSmallest(arr: Array<T>): number {
     let indexSmallest = 0;
-    let smallest = arr[indexSmallest];
+    let smallest = arr[0];
 
     for (let i = 1; i < arr.length; i++) {
-      const element = arr[i];
-      if (element < smallest) {
-        smallest = element;
+      if (arr[i] < smallest) {
+        smallest = arr[i];
         indexSmallest = i;
       }
     }
