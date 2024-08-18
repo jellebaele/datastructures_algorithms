@@ -1,4 +1,10 @@
-import { binarySearch, countLengthArray, getHighest, sumArray } from './recursion';
+import {
+  binarySearch,
+  countLengthArray,
+  getHighest,
+  getLargestSquareSize,
+  sumArray,
+} from './recursion';
 
 describe('sumArray', () => {
   test('should return 0 for an empty array', () => {
@@ -71,6 +77,40 @@ describe('countLengthArray', () => {
   test('should return the correct count for an array with mixed positive and negative numbers', () => {
     const result = countLengthArray([-1, 0, 1, 2, -2]);
     expect(result).toBe(5);
+  });
+});
+
+describe('getLargestSquareSize', () => {
+  test('should return the smaller dimension when one dimension is a multiple of the other', () => {
+    expect(getLargestSquareSize(50, 25)).toBe(25);
+    expect(getLargestSquareSize(1680, 840)).toBe(840);
+    expect(getLargestSquareSize(640, 320)).toBe(320);
+  });
+
+  test('should return the greatest common divisor for non-multiple dimensions', () => {
+    expect(getLargestSquareSize(1680, 640)).toBe(80); // GCD of 1680 and 640 is 80
+    expect(getLargestSquareSize(640, 400)).toBe(80); // GCD of 640 and 400 is 80
+    expect(getLargestSquareSize(35, 10)).toBe(5); // GCD of 35 and 10 is 5
+  });
+
+  test('should handle cases where both dimensions are equal', () => {
+    expect(getLargestSquareSize(50, 50)).toBe(50);
+    expect(getLargestSquareSize(100, 100)).toBe(100);
+  });
+
+  test('should handle cases where one of the dimensions is 1', () => {
+    expect(getLargestSquareSize(1, 50)).toBe(1);
+    expect(getLargestSquareSize(50, 1)).toBe(1);
+  });
+
+  test('should handle cases with prime number dimensions', () => {
+    expect(getLargestSquareSize(17, 31)).toBe(1); // GCD of 17 and 31 is 1
+    expect(getLargestSquareSize(29, 7)).toBe(1); // GCD of 29 and 7 is 1
+  });
+
+  test('should handle large dimensions', () => {
+    expect(getLargestSquareSize(1000000, 250000)).toBe(250000); // GCD of 1000000 and 250000 is 250000
+    expect(getLargestSquareSize(123456789, 987654321)).toBe(9); // GCD of 123456789 and 987654321 is 9
   });
 });
 
