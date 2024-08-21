@@ -12,6 +12,16 @@ const isArrayEmpty = (arr: number[]): boolean => {
   return arr.every(item => item === undefined);
 };
 
+/**
+ *
+ * 100, 50
+ * highest % lowest = 0 -> return lowest
+ *
+ * 100, 24
+ * highest % lowest = 4
+ *
+ * 24 % 4 = 0 -> return lowest = 4
+ */
 const getLargestSquareSize = (length: number, width: number): number => {
   if (length % width === 0 || width % length === 0) return Math.min(length, width);
 
