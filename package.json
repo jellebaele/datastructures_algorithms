@@ -10,7 +10,8 @@
     "start": "npm run build && node build/index.js",
     "precommit": "npm run lint",
     "prepare": "husky",
-    "test": "jest --watch"
+    "test:smart": "jest --watch",
+    "test:all": "jest --watchAll"
   },
   "repository": {
     "type": "git",
