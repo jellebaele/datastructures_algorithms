@@ -54,7 +54,10 @@ describe('Graph', () => {
     graph.addEdge('A', 'C');
 
     const graphString = graph.toString();
-    expect(graphString).toBe('Graph connections:\n' + 'A: B C \n' + 'B: A \n' + 'C: A \n');
+
+    expect(graphString).toBe(
+      'Graph connections:\nA: B C\nB: A\nC: A\n\nAdjacencyMatrix:\n   A  B  C\nA [0, 1, 1]\nB [1, 0, 0]\nC [1, 0, 0]\n',
+    );
   });
 
   test('should return undefined when trying to get a node that does not exist', () => {
