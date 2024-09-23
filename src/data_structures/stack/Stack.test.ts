@@ -1,5 +1,5 @@
 import Stack from './Stack';
-import IndexOutOfBoundsError from '../shared/errors/IndexOutOfBoundsError';
+import IndexOutOfBoundsError from '../../shared/errors/IndexOutOfBoundsError';
 
 describe('Stack', () => {
   let stack: Stack<number>;

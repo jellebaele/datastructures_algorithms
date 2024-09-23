@@ -1,5 +1,5 @@
-import IndexOutOfBoundsError from '../shared/errors/IndexOutOfBoundsError';
-import NotFoundError from '../shared/errors/NotFoundError';
+import IndexOutOfBoundsError from '../../shared/errors/IndexOutOfBoundsError';
+import NotFoundError from '../../shared/errors/NotFoundError';
 import ILinkedList from './ILinkedList';
 
 type Node<T> = {

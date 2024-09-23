@@ -86,6 +86,17 @@ General table average time complexity of different data structures for different
       commonly used in libraries (e.g., Java's TreeMap, C++'s map).
     - **Avoid When**: Memory overhead of maintaining color information isn't justified.
 
+#### Javascript specific
+
+[Unveiling the Speed of JavaScript Collections: Set vs. Map vs. Array vs. Object](https://medium.com/@dm_md/unveiling-the-speed-of-javascript-collections-set-vs-map-vs-array-vs-object-3f6e44f24505#:~:text=Map%20is%20optimized%20for%20key,leading%20to%20higher%20memory%20usage.)
+
+- Use Set when you need to store unique values and perform fast lookups.
+- Use Map when you need to associate values with keys and perform fast lookups based on keys.
+- Use Array when you need to maintain an ordered collection of items and perform operations that
+  benefit from the array's index-based access.
+- Use Object when you need a simple key-value store and don't require the additional features
+  provided by Map.
+
 #### Key Takeaway
 
 - **Arrays** are best for static data where random access is key.

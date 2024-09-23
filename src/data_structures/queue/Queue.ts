@@ -1,5 +1,5 @@
-import IndexOutOfBoundsError from '../shared/errors/IndexOutOfBoundsError';
-import Collection from './Collection';
+import IndexOutOfBoundsError from '../../shared/errors/IndexOutOfBoundsError';
+import Collection from '../Collection';
 
 export interface IQueue<T> {
   enqueue(element: T): void;

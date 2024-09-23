@@ -1,5 +1,5 @@
 import Queue from './Queue';
-import IndexOutOfBoundsError from '../shared/errors/IndexOutOfBoundsError';
+import IndexOutOfBoundsError from '../../shared/errors/IndexOutOfBoundsError';
 
 describe('Queue', () => {
   let queue: Queue<number>;
