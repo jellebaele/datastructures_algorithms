@@ -577,3 +577,57 @@ vertices (V) and edges (E) in the graph, as well as the specific algorithm used:
 Imagine a map of a city with streets as edges and intersections as vertices. A graph can represent
 this map, where you can use graph algorithms to find the shortest path between two points
 (navigation), identify central locations (centrality analysis), or explore connected areas (BFS).
+
+## Algorithms
+
+### Algorithm Efficiency
+
+The efficiency of an algorithm depends on two parameters:
+
+#### 1. Time Complexity
+
+Time Complexity is defined as the number of times a particular instruction set is executed, rather
+than the total time taken. This is because the total time also depends on external factors such as
+the compiler used, the processor’s speed, etc.
+
+#### 2. Space Complexity
+
+Space Complexity refers to the total memory space required by the program for its execution.
+
+### Types of Time Complexity
+
+Both complexities are calculated as a function of input size (n). It's important to note that the
+efficiency of an algorithm also depends on the nature and size of the input.
+
+There are three types:
+
+- **Best Time Complexity**: This defines the input for which the algorithm takes the least time or
+  minimum time. In this case, we calculate the lower bound of an algorithm.  
+  _Example_: In linear search, if the search data is present at the first location in a large
+  dataset, the best case occurs.
+
+- **Average Time Complexity**: This considers all random inputs and calculates the computation time
+  for all inputs, which is then divided by the total number of inputs.
+
+- **Worst Time Complexity**: This defines the input for which the algorithm takes the longest time
+  or maximum time. In this case, we calculate the upper bound of an algorithm.  
+  _Example_: In linear search, if the search data is present at the last location in a large
+  dataset, the worst case occurs.
+
+### Sorting
+
+| Algorithm      | Best Time Complexity | Average Time Complexity | Worst Time Complexity | Worst Space Complexity |
+| -------------- | -------------------- | ----------------------- | --------------------- | ---------------------- |
+| Selection Sort | O(n²)                | O(n²)                   | O(n²)                 | O(1)                   |
+| Bubble Sort    | O(n)                 | O(n²)                   | O(n²)                 | O(1)                   |
+| Insertion Sort | O(n)                 | O(n²)                   | O(n²)                 | O(1)                   |
+| Heap Sort      | O(n log(n))          | O(n log(n))             | O(n log(n))           | O(1)                   |
+| Quick Sort     | O(n log(n))          | O(n log(n))             | O(n²)                 | O(n)                   |
+| Merge Sort     | O(n log(n))          | O(n log(n))             | O(n log(n))           | O(n)                   |
+| Bucket Sort    | O(n + k)             | O(n + k)                | O(n²)                 | O(n)                   |
+| Radix Sort     | O(nk)                | O(nk)                   | O(nk)                 | O(n + k)               |
+| Count Sort     | O(n + k)             | O(n + k)                | O(n + k)              | O(k)                   |
+| Shell Sort     | O(n log(n))          | O(n log(n))             | O(n²)                 | O(1)                   |
+| Tim Sort       | O(n)                 | O(n log(n))             | O(n log(n))           | O(n)                   |
+| Tree Sort      | O(n log(n))          | O(n log(n))             | O(n²)                 | O(n)                   |
+| Cube Sort      | O(n)                 | O(n log(n))             | O(n log(n))           | O(n)                   |
