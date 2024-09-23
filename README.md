@@ -580,6 +580,8 @@ this map, where you can use graph algorithms to find the shortest path between t
 
 ## Algorithms
 
+[Basic Algorithms](https://dev.to/m__mdy__m/basic-algorithms-5bep)
+
 ### Algorithm Efficiency
 
 The efficiency of an algorithm depends on two parameters:
@@ -616,6 +618,8 @@ There are three types:
 
 ### Sorting
 
+#### General overview
+
 | Algorithm      | Best Time Complexity | Average Time Complexity | Worst Time Complexity | Worst Space Complexity |
 | -------------- | -------------------- | ----------------------- | --------------------- | ---------------------- |
 | Selection Sort | O(n²)                | O(n²)                   | O(n²)                 | O(1)                   |
@@ -631,3 +635,23 @@ There are three types:
 | Tim Sort       | O(n)                 | O(n log(n))             | O(n log(n))           | O(n)                   |
 | Tree Sort      | O(n log(n))          | O(n log(n))             | O(n²)                 | O(n)                   |
 | Cube Sort      | O(n)                 | O(n log(n))             | O(n log(n))           | O(n)                   |
+
+### Searching
+
+Linear Search Sentinel Linear Search Binary Search Meta Binary Search | One-Sided Binary Search
+Ternary Search Jump Search Interpolation Search Exponential Search Fibonacci Search The Ubiquitous
+Binary Search
+
+| Algorithm                    | Best Time Complexity | Average Time Complexity | Worst Time Complexity | Worst Space Complexity |
+| ---------------------------- | -------------------- | ----------------------- | --------------------- | ---------------------- |
+| Linear Search                | O(1)                 | O(n)                    | O(n)                  | O(1)                   |
+| Sentinel Linear Search       | O(1)                 | O(n)                    | O(n)                  | O(1)                   |
+| Binary Search                | O(1)                 | O(log n)                | O(log n)              | O(1)                   |
+| Ternary Search               | O(1)                 | O(log n)                | O(log n)              | O(1)                   |
+| Jump Search                  | O(1)                 | O(√n)                   | O(√n)                 | O(1)                   |
+| Interpolation Search         | O(1)                 | O(log log n)            | O(n)                  | O(1)                   |
+| Exponential Search           | O(1)                 | O(log n)                | O(log n)              | O(1)                   |
+| Fibonacci Search             | O(1)                 | O(log n)                | O(log n)              | O(1)                   |
+| The Ubiquitous Binary Search | O(1)                 | O(log n)                | O(log n)              | O(1)                   |
+
+### Tree Traversal Algorithms
