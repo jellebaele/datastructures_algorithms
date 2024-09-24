@@ -1,7 +1,7 @@
 import { modularHash } from './hashing';
 
 describe('modularHash', () => {
-  const size = 100; // You can set this to whatever size you deem appropriate
+  const size = 1000;
 
   test('should return a consistent hash for the same input', () => {
     const input = 'testKey';
