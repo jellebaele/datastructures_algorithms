@@ -19,6 +19,8 @@ General table average time complexity of different data structures for different
 | B Tree             | O(log N) | O(log N) | O(log N)  | O(log N) |
 | Red Black Tree     | O(log N) | O(log N) | O(log N)  | O(log N) |
 
+TODO GRAPH?
+
 #### Conclusion
 
 1. **Array**
@@ -85,6 +87,8 @@ General table average time complexity of different data structures for different
     - **Use When**: You need a self-balancing BST with good performance guarantees (O(log N)),
       commonly used in libraries (e.g., Java's TreeMap, C++'s map).
     - **Avoid When**: Memory overhead of maintaining color information isn't justified.
+
+TODO: GRPAH?
 
 #### Javascript specific
 

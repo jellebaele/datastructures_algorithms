@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import Graph from './Graph';
+import Graph from '../../data_structures/graph/Graph';
 import NodeAlreadyExistsError from './errors/NodeAlreadyExistsError';
 import NodeNotFoundError from './errors/NodeNotFoundError';
 
