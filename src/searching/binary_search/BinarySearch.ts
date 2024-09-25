@@ -7,7 +7,7 @@ export default class BinarySearch<T> implements ISearch<T> {
     let high = sortedArr.length - 1;
 
     while (low <= high) {
-      const middle = Math.floor((low + high) / 2);
+      const middle = Math.floor((high + low) / 2);
       const guess = sortedArr[middle];
 
       if (guess === target) return middle;
@@ -21,16 +21,16 @@ export default class BinarySearch<T> implements ISearch<T> {
   searchRecursive = (
     sortedArr: Array<number>,
     target: number,
-    left = 0,
-    right = sortedArr.length - 1,
+    low = 0,
+    high = sortedArr.length - 1,
   ): number => {
-    if (right < left) return -1;
+    if (low > high) return -1;
 
-    const middle = Math.floor((left + right) / 2);
+    const middle = Math.floor((low + high) / 2);
     const guess = sortedArr[middle];
 
     if (guess === target) return middle;
-    else if (guess < target) return this.searchRecursive(sortedArr, target, middle + 1, right);
-    else return this.searchRecursive(sortedArr, target, left, middle - 1);
+    else if (guess < target) return this.searchRecursive(sortedArr, target, middle + 1, high);
+    else return this.searchRecursive(sortedArr, target, low, middle - 1);
   };
 }
