@@ -1,5 +1,5 @@
 interface ISearch<T> {
-  search(arr: T[], element: T): number;
+  search(arr: T[], target: T): number;
 }
 
 export default ISearch;
