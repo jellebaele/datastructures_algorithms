@@ -1,4 +1,4 @@
-import ISort from '../shared/ISort';
+import ISort from '../ISort';
 
 // O(n^2) worst case
 // O(n logn) average

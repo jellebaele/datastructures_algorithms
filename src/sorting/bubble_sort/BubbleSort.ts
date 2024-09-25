@@ -1,4 +1,4 @@
-import ISort from '../shared/ISort';
+import ISort from '../ISort';
 
 //  O(n^2)
 export default class BubbleSort<T> implements ISort<T> {

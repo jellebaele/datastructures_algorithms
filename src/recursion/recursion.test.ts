@@ -1,10 +1,4 @@
-import {
-  binarySearch,
-  countLengthArray,
-  getHighest,
-  getLargestSquareSize,
-  sumArray,
-} from './recursion';
+import { countLengthArray, getHighest, getLargestSquareSize, sumArray } from './recursion';
 
 describe('sumArray', () => {
   test('should return 0 for an empty array', () => {
@@ -149,37 +143,5 @@ describe('getHighest', () => {
 
   test('should handle an empty array gracefully', () => {
     expect(() => getHighest([])).toThrow(); // Assuming an error should be thrown for an empty array
-  });
-});
-
-describe('BinarySearch', () => {
-  test('should return correct index when target is found in the array', () => {
-    const arr = [5, 8, 9, 12, 15];
-
-    expect(binarySearch(arr, 12)).toEqual(3);
-    expect(binarySearch(arr, 5)).toEqual(0);
-    expect(binarySearch(arr, 15)).toEqual(4);
-  });
-
-  test('should return -1 when target is not found in the array', () => {
-    const arr = [5, 8, 9, 12, 15];
-    expect(binarySearch(arr, 10)).toEqual(-1);
-    expect(binarySearch(arr, 1)).toEqual(-1);
-    expect(binarySearch(arr, 20)).toEqual(-1);
-  });
-
-  test('should return -1 for an empty array', () => {
-    const arr: number[] = [];
-    expect(binarySearch(arr, 10)).toEqual(-1);
-  });
-
-  test('should return correct index when the array has one element and it is the target', () => {
-    const arr = [7];
-    expect(binarySearch(arr, 7)).toEqual(0);
-  });
-
-  test('should return -1 when the array has one element and it is not the target', () => {
-    const arr = [7];
-    expect(binarySearch(arr, 10)).toEqual(-1);
   });
 });

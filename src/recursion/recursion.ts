@@ -40,20 +40,4 @@ const getHighest = (arr: Array<number>): number => {
   return arr[0] > subHighest ? arr[0] : subHighest;
 };
 
-const binarySearch = (
-  arr: Array<number>,
-  target: number,
-  left = 0,
-  right = arr.length - 1,
-): number => {
-  if (right < left) return -1;
-
-  const middle = Math.floor((left + right) / 2);
-  const guess = arr[middle];
-
-  if (guess === target) return middle;
-  else if (guess < target) return binarySearch(arr, target, middle + 1, right);
-  else return binarySearch(arr, target, left, middle - 1);
-};
-
-export { sumArray, countLengthArray, getLargestSquareSize, getHighest, binarySearch };
+export { sumArray, countLengthArray, getLargestSquareSize, getHighest };

@@ -1,4 +1,4 @@
-import ISort from '../shared/ISort';
+import ISort from '../ISort';
 
 export default class MergeSort<T> implements ISort<T> {
   sort(arr: T[]): Array<T> {
