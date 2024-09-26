@@ -8,13 +8,11 @@ export type IsEdge = 0 | 1;
 
 export default class Graph<T> implements IGraph<T> {
   protected vertices: Map<VertexName, Vertex<T>>;
-  private adjacencyMatrix: Array<Array<IsEdge>>;
-  private weights: Array<Array<number>>;
+  protected adjacencyMatrix: Array<Array<IsEdge>>;
 
   constructor() {
     this.vertices = new Map();
     this.adjacencyMatrix = [];
-    this.weights = [];
   }
 
   public addVertex(vertexId: string, data: T): Vertex<T> {
