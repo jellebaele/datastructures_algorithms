@@ -11,7 +11,8 @@ describe('Graph', () => {
   });
 
   test('should add a new node and retrieve it', () => {
-    const nodeId = graph.addNode('A', 1);
+    const nodeId = 'A';
+    graph.addNode(nodeId, 1);
     const node = graph.getNode(nodeId);
 
     expect(node).toBeDefined();

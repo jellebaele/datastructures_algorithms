@@ -12,7 +12,7 @@ describe('Stack', () => {
     stack.push(1);
     stack.push(2);
 
-    expect(stack.size()).toBe(2);
+    expect(stack.getSize()).toBe(2);
   });
 
   test('should pop elements in LIFO order', () => {
@@ -46,7 +46,7 @@ describe('Stack', () => {
   });
 
   test('should handle an empty stack correctly', () => {
-    expect(stack.size()).toBe(0);
+    expect(stack.getSize()).toBe(0);
     expect(stack.pop()).toBeUndefined(); // Pop from an empty stack should return undefined
     expect(stack.peek()).toBeUndefined(); // Peek on an empty stack should return undefined
   });

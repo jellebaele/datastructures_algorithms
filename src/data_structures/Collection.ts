@@ -6,7 +6,7 @@ export default abstract class Collection<T> {
     this.capacity = capacity;
   }
 
-  size(): number {
+  getSize(): number {
     return this.data.length;
   }
 

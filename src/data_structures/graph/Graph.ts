@@ -6,7 +6,7 @@ export type NodeName = string;
 export type IsEdge = 0 | 1;
 
 export default class Graph<T> {
-  private nodes: Map<NodeName, Node<T>>;
+  protected nodes: Map<NodeName, Node<T>>;
   private adjacencyMatrix: Array<Array<IsEdge>>;
 
   constructor() {
@@ -14,16 +14,17 @@ export default class Graph<T> {
     this.adjacencyMatrix = [];
   }
 
-  public addNode(id: string, data: T): string {
+  public addNode(id: string, data: T): Node<T> {
     if (this.nodes.has(id)) throw new NodeAlreadyExistsError(id);
 
-    this.nodes.set(id, new Node(id, data));
+    const newNode = new Node(id, data);
+    this.nodes.set(id, newNode);
 
     // Extract to private functions to explain why this happens
     this.adjacencyMatrix.map(subMatrix => subMatrix.push(0));
     this.adjacencyMatrix.push(new Array(this.nodes.size).fill(0));
 
-    return id;
+    return newNode;
   }
 
   public getNode(nodeId: string): Node<T> | undefined {
