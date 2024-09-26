@@ -1,27 +1,30 @@
 import VertexAlreadyExistsError from './errors/VertexAlreadyExistsError';
 import VertexNotFoundError from './errors/VertexNotFoundError';
+import IGraph from './IGraph';
 import Vertex from './Vertex';
 
 export type VertexName = string;
 export type IsEdge = 0 | 1;
 
-export default class Graph<T> {
+export default class Graph<T> implements IGraph<T> {
   protected vertices: Map<VertexName, Vertex<T>>;
   private adjacencyMatrix: Array<Array<IsEdge>>;
+  private weights: Array<Array<number>>;
 
   constructor() {
     this.vertices = new Map();
     this.adjacencyMatrix = [];
+    this.weights = [];
   }
 
-  public addVertex(id: string, data: T): Vertex<T> {
-    if (this.vertices.has(id)) throw new VertexAlreadyExistsError(id);
+  public addVertex(vertexId: string, data: T): Vertex<T> {
+    if (this.vertices.has(vertexId)) throw new VertexAlreadyExistsError(vertexId);
 
-    const newVertex = new Vertex(id, data);
-    this.vertices.set(id, newVertex);
+    const newVertex = new Vertex(vertexId, data);
+    this.vertices.set(vertexId, newVertex);
 
     // Extract to private functions to explain why this happens
-    this.adjacencyMatrix.map(subMatrix => subMatrix.push(0));
+    this.adjacencyMatrix.map(row => row.push(0));
     this.adjacencyMatrix.push(new Array(this.vertices.size).fill(0));
 
     return newVertex;
@@ -50,7 +53,7 @@ export default class Graph<T> {
     this.adjacencyMatrix[indexVertexB][indexVertexA] = 1;
   }
 
-  public replaceData(vertexId: string, newData: T) {
+  public replaceData(vertexId: string, newData: T): void {
     const vertex = this.vertices.get(vertexId);
 
     if (!vertex) throw new VertexNotFoundError(vertexId);
