@@ -10,21 +10,21 @@ describe('BreadthFirstSearch', () => {
 
   test('Should return true or false if an element with correct data is present or not in unconnected graph', () => {
     const graph = new Graph<number>();
-    const startNode = graph.addNode('A', 1);
+    const startVertex = graph.addVertex('A', 1);
 
     const breadthFirstSearch = new BreadthFirstSearch<number>(comparator);
 
-    expect(breadthFirstSearch.search(startNode, 1)).toBeTruthy();
-    expect(breadthFirstSearch.search(startNode, 2)).toBeFalsy();
+    expect(breadthFirstSearch.search(startVertex, 1)).toBeTruthy();
+    expect(breadthFirstSearch.search(startVertex, 2)).toBeFalsy();
   });
 
   test('Should return true or false if an element with correct data is present or not in a connected graph', () => {
     const graph = new Graph<number>();
-    const nodeA = graph.addNode('A', 1);
-    graph.addNode('B', 2);
-    graph.addNode('C', 3);
-    graph.addNode('D', 4);
-    graph.addNode('E', 5);
+    const vertexA = graph.addVertex('A', 1);
+    graph.addVertex('B', 2);
+    graph.addVertex('C', 3);
+    graph.addVertex('D', 4);
+    graph.addVertex('E', 5);
 
     graph.addEdge('A', 'B');
     graph.addEdge('A', 'C');
@@ -33,18 +33,18 @@ describe('BreadthFirstSearch', () => {
 
     const breadthFirstSearch = new BreadthFirstSearch<number>(comparator);
 
-    expect(breadthFirstSearch.search(nodeA, 1)).toBeTruthy();
-    expect(breadthFirstSearch.search(nodeA, 2)).toBeTruthy();
-    expect(breadthFirstSearch.search(nodeA, 5)).toBeTruthy();
+    expect(breadthFirstSearch.search(vertexA, 1)).toBeTruthy();
+    expect(breadthFirstSearch.search(vertexA, 2)).toBeTruthy();
+    expect(breadthFirstSearch.search(vertexA, 5)).toBeTruthy();
   });
 
   test('Should return true or false if an element with correct data is present or not in a connected graph and undirected', () => {
     const graph = new Graph<number>();
-    graph.addNode('A', 1);
-    graph.addNode('B', 2);
-    graph.addNode('C', 3);
-    graph.addNode('D', 4);
-    const startNode = graph.addNode('E', 5);
+    graph.addVertex('A', 1);
+    graph.addVertex('B', 2);
+    graph.addVertex('C', 3);
+    graph.addVertex('D', 4);
+    const startVertex = graph.addVertex('E', 5);
 
     graph.addEdge('A', 'B');
     graph.addEdge('A', 'C');
@@ -53,8 +53,8 @@ describe('BreadthFirstSearch', () => {
 
     const breadthFirstSearch = new BreadthFirstSearch<number>(comparator);
 
-    expect(breadthFirstSearch.search(startNode, 1)).toBeTruthy();
-    expect(breadthFirstSearch.search(startNode, 2)).toBeTruthy();
-    expect(breadthFirstSearch.search(startNode, 5)).toBeTruthy();
+    expect(breadthFirstSearch.search(startVertex, 1)).toBeTruthy();
+    expect(breadthFirstSearch.search(startVertex, 2)).toBeTruthy();
+    expect(breadthFirstSearch.search(startVertex, 5)).toBeTruthy();
   });
 });

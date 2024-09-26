@@ -1,4 +1,4 @@
-import Node from '../../../data_structures/graph/Node';
+import Vertex from '../../../data_structures/graph/Vertex';
 import Stack from '../../../data_structures/stack/Stack';
 
 export default class DepthFirstSearch<T> {
@@ -8,25 +8,25 @@ export default class DepthFirstSearch<T> {
     this.comparator = comparator;
   }
 
-  public search(startNode: Node<T>, searchElement: T): boolean {
+  public search(startVertex: Vertex<T>, searchElement: T): boolean {
     /**
      * instead of queueing -> stacking
      */
-    const searchStack = new Stack<Node<T>>();
-    const visitedNodes: Set<string> = new Set();
+    const searchStack = new Stack<Vertex<T>>();
+    const visitedVertices: Set<string> = new Set();
 
-    searchStack.push(startNode);
+    searchStack.push(startVertex);
 
     while (searchStack.getSize() > 0) {
-      const node = searchStack.pop();
+      const vertex = searchStack.pop();
 
-      if (!node || visitedNodes.has(node.id)) continue;
+      if (!vertex || visitedVertices.has(vertex.id)) continue;
 
-      visitedNodes.add(node.id);
-      if (this.comparator(node.data, searchElement)) {
+      visitedVertices.add(vertex.id);
+      if (this.comparator(vertex.data, searchElement)) {
         return true;
       } else {
-        node.neighbors.forEach(neighbor => searchStack.push(neighbor));
+        vertex.neighbors.forEach(neighbor => searchStack.push(neighbor));
       }
     }
 

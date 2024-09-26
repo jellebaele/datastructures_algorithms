@@ -1,4 +1,4 @@
-import Node from '../../../data_structures/graph/Node';
+import Vertex from '../../../data_structures/graph/Vertex';
 import Queue from '../../../data_structures/queue/Queue';
 
 export default class BreadthFirstSearch<T> {
@@ -9,21 +9,21 @@ export default class BreadthFirstSearch<T> {
   }
 
   // O(V+E) (V = vertices, E = edges)
-  public search(startNode: Node<T>, searchTerm: T): boolean {
-    const searchQueue = new Queue<Node<T>>();
-    const visitedNodes = new Set();
+  public search(startVertex: Vertex<T>, searchTerm: T): boolean {
+    const searchQueue = new Queue<Vertex<T>>();
+    const visitedVertices = new Set();
 
-    searchQueue.enqueue(startNode);
+    searchQueue.enqueue(startVertex);
     while (searchQueue.getSize() > 0) {
-      const node = searchQueue.dequeue();
+      const vertex = searchQueue.dequeue();
 
-      if (!node || visitedNodes.has(node.id)) continue;
+      if (!vertex || visitedVertices.has(vertex.id)) continue;
 
-      visitedNodes.add(node.id);
-      if (this.comparator(node.data, searchTerm)) {
+      visitedVertices.add(vertex.id);
+      if (this.comparator(vertex.data, searchTerm)) {
         return true;
       } else {
-        node.neighbors.forEach(neighbor => searchQueue.enqueue(neighbor));
+        vertex.neighbors.forEach(neighbor => searchQueue.enqueue(neighbor));
       }
     }
 

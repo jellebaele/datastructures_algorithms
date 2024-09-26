@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import Graph from '../../data_structures/graph/Graph';
-import NodeAlreadyExistsError from './errors/NodeAlreadyExistsError';
-import NodeNotFoundError from './errors/NodeNotFoundError';
+import VertexAlreadyExistsError from './errors/VertexAlreadyExistsError';
+import VertexNotFoundError from './errors/VertexNotFoundError';
 
 describe('Graph', () => {
   let graph: Graph<number>;
@@ -10,46 +10,46 @@ describe('Graph', () => {
     graph = new Graph<number>();
   });
 
-  test('should add a new node and retrieve it', () => {
-    const nodeId = 'A';
-    graph.addNode(nodeId, 1);
-    const node = graph.getNode(nodeId);
+  test('should add a new vertex and retrieve it', () => {
+    const vertexId = 'A';
+    graph.addVertex(vertexId, 1);
+    const vertex = graph.getVertex(vertexId);
 
-    expect(node).toBeDefined();
-    expect(node?.id).toBe('A');
-    expect(node?.data).toBe(1);
+    expect(vertex).toBeDefined();
+    expect(vertex?.id).toBe('A');
+    expect(vertex?.data).toBe(1);
   });
 
-  test('should throw an error when adding a node with a duplicate ID', () => {
-    graph.addNode('A', 1);
+  test('should throw an error when adding a vertex with a duplicate ID', () => {
+    graph.addVertex('A', 1);
 
-    expect(() => graph.addNode('A', 2)).toThrow(NodeAlreadyExistsError);
+    expect(() => graph.addVertex('A', 2)).toThrow(VertexAlreadyExistsError);
   });
 
-  test('should add an edge between two existing nodes', () => {
-    graph.addNode('A', 1);
-    graph.addNode('B', 2);
+  test('should add an edge between two existing vertexs', () => {
+    graph.addVertex('A', 1);
+    graph.addVertex('B', 2);
 
     graph.addEdge('A', 'B');
 
-    const nodeA = graph.getNode('A');
-    const nodeB = graph.getNode('B');
+    const vertexA = graph.getVertex('A');
+    const vertexB = graph.getVertex('B');
 
-    expect(nodeA?.neighbors).toContain(nodeB);
-    expect(nodeB?.neighbors).toContain(nodeA);
+    expect(vertexA?.neighbors).toContain(vertexB);
+    expect(vertexB?.neighbors).toContain(vertexA);
   });
 
-  test('should throw an error when adding an edge if one node does not exist', () => {
-    graph.addNode('A', 1);
+  test('should throw an error when adding an edge if one vertex does not exist', () => {
+    graph.addVertex('A', 1);
 
-    expect(() => graph.addEdge('A', 'B')).toThrow(NodeNotFoundError);
-    expect(() => graph.addEdge('B', 'A')).toThrow(NodeNotFoundError);
+    expect(() => graph.addEdge('A', 'B')).toThrow(VertexNotFoundError);
+    expect(() => graph.addEdge('B', 'A')).toThrow(VertexNotFoundError);
   });
 
   test('should correctly represent the graph as a string', () => {
-    graph.addNode('A', 1);
-    graph.addNode('B', 2);
-    graph.addNode('C', 3);
+    graph.addVertex('A', 1);
+    graph.addVertex('B', 2);
+    graph.addVertex('C', 3);
 
     graph.addEdge('A', 'B');
     graph.addEdge('A', 'C');
@@ -61,73 +61,73 @@ describe('Graph', () => {
     );
   });
 
-  test('should return undefined when trying to get a node that does not exist', () => {
-    const node = graph.getNode('Z');
+  test('should return undefined when trying to get a vertex that does not exist', () => {
+    const vertex = graph.getVertex('Z');
 
-    expect(node).toBeUndefined();
+    expect(vertex).toBeUndefined();
   });
 
   test('should create a cyclic graph', () => {
-    graph.addNode('A', 1);
-    graph.addNode('B', 2);
-    graph.addNode('C', 3);
+    graph.addVertex('A', 1);
+    graph.addVertex('B', 2);
+    graph.addVertex('C', 3);
 
     graph.addEdge('A', 'B');
     graph.addEdge('B', 'C');
     graph.addEdge('C', 'A'); // Creating a cycle
 
-    const nodeA = graph.getNode('A');
-    const nodeB = graph.getNode('B');
-    const nodeC = graph.getNode('C');
+    const vertexA = graph.getVertex('A');
+    const vertexB = graph.getVertex('B');
+    const vertexC = graph.getVertex('C');
 
-    expect(nodeA).toBeDefined();
-    expect(nodeB).toBeDefined();
-    expect(nodeC).toBeDefined();
+    expect(vertexA).toBeDefined();
+    expect(vertexB).toBeDefined();
+    expect(vertexC).toBeDefined();
 
-    expect(nodeA!.neighbors.has(nodeB!)).toBe(true);
-    expect(nodeB!.neighbors.has(nodeC!)).toBe(true);
-    expect(nodeC!.neighbors.has(nodeA!)).toBe(true); // Cycle exists
+    expect(vertexA!.neighbors.has(vertexB!)).toBe(true);
+    expect(vertexB!.neighbors.has(vertexC!)).toBe(true);
+    expect(vertexC!.neighbors.has(vertexA!)).toBe(true); // Cycle exists
   });
 
   test('should create a disconnected graph with multiple subgraphs', () => {
     // Subgraph 1
-    graph.addNode('A', 1);
-    graph.addNode('B', 2);
+    graph.addVertex('A', 1);
+    graph.addVertex('B', 2);
     graph.addEdge('A', 'B');
 
     // Subgraph 2
-    graph.addNode('C', 3);
-    graph.addNode('D', 4);
+    graph.addVertex('C', 3);
+    graph.addVertex('D', 4);
     graph.addEdge('C', 'D');
 
-    const nodeA = graph.getNode('A');
-    const nodeB = graph.getNode('B');
-    const nodeC = graph.getNode('C');
-    const nodeD = graph.getNode('D');
+    const vertexA = graph.getVertex('A');
+    const vertexB = graph.getVertex('B');
+    const vertexC = graph.getVertex('C');
+    const vertexD = graph.getVertex('D');
 
-    expect(nodeA).toBeDefined();
-    expect(nodeB).toBeDefined();
-    expect(nodeC).toBeDefined();
-    expect(nodeD).toBeDefined();
+    expect(vertexA).toBeDefined();
+    expect(vertexB).toBeDefined();
+    expect(vertexC).toBeDefined();
+    expect(vertexD).toBeDefined();
 
     // Check connections in subgraph 1
-    expect(nodeA!.neighbors.has(nodeB!)).toBe(true);
-    expect(nodeB!.neighbors.has(nodeA!)).toBe(true);
+    expect(vertexA!.neighbors.has(vertexB!)).toBe(true);
+    expect(vertexB!.neighbors.has(vertexA!)).toBe(true);
 
     // Check connections in subgraph 2
-    expect(nodeC!.neighbors.has(nodeD!)).toBe(true);
-    expect(nodeD!.neighbors.has(nodeC!)).toBe(true);
+    expect(vertexC!.neighbors.has(vertexD!)).toBe(true);
+    expect(vertexD!.neighbors.has(vertexC!)).toBe(true);
 
     // Ensure subgraph 1 is not connected to subgraph 2
-    expect(nodeA!.neighbors.has(nodeC!)).toBe(false);
-    expect(nodeB!.neighbors.has(nodeD!)).toBe(false);
+    expect(vertexA!.neighbors.has(vertexC!)).toBe(false);
+    expect(vertexB!.neighbors.has(vertexD!)).toBe(false);
   });
 
   test('should add edges to create a fully connected graph (clique)', () => {
-    graph.addNode('A', 1);
-    graph.addNode('B', 2);
-    graph.addNode('C', 3);
-    graph.addNode('D', 4);
+    graph.addVertex('A', 1);
+    graph.addVertex('B', 2);
+    graph.addVertex('C', 3);
+    graph.addVertex('D', 4);
 
     graph.addEdge('A', 'B');
     graph.addEdge('A', 'C');
@@ -136,72 +136,72 @@ describe('Graph', () => {
     graph.addEdge('B', 'D');
     graph.addEdge('C', 'D');
 
-    const nodeA = graph.getNode('A');
-    const nodeB = graph.getNode('B');
-    const nodeC = graph.getNode('C');
-    const nodeD = graph.getNode('D');
+    const vertexA = graph.getVertex('A');
+    const vertexB = graph.getVertex('B');
+    const vertexC = graph.getVertex('C');
+    const vertexD = graph.getVertex('D');
 
-    expect(nodeA).toBeDefined();
-    expect(nodeB).toBeDefined();
-    expect(nodeC).toBeDefined();
-    expect(nodeD).toBeDefined();
+    expect(vertexA).toBeDefined();
+    expect(vertexB).toBeDefined();
+    expect(vertexC).toBeDefined();
+    expect(vertexD).toBeDefined();
 
-    // Verify full connectivity (each node should be connected to every other node)
-    expect(nodeA!.neighbors.has(nodeB!)).toBe(true);
-    expect(nodeA!.neighbors.has(nodeC!)).toBe(true);
-    expect(nodeA!.neighbors.has(nodeD!)).toBe(true);
+    // Verify full connectivity (each vertex should be connected to every other vertex)
+    expect(vertexA!.neighbors.has(vertexB!)).toBe(true);
+    expect(vertexA!.neighbors.has(vertexC!)).toBe(true);
+    expect(vertexA!.neighbors.has(vertexD!)).toBe(true);
 
-    expect(nodeB!.neighbors.has(nodeA!)).toBe(true);
-    expect(nodeB!.neighbors.has(nodeC!)).toBe(true);
-    expect(nodeB!.neighbors.has(nodeD!)).toBe(true);
+    expect(vertexB!.neighbors.has(vertexA!)).toBe(true);
+    expect(vertexB!.neighbors.has(vertexC!)).toBe(true);
+    expect(vertexB!.neighbors.has(vertexD!)).toBe(true);
 
-    expect(nodeC!.neighbors.has(nodeA!)).toBe(true);
-    expect(nodeC!.neighbors.has(nodeB!)).toBe(true);
-    expect(nodeC!.neighbors.has(nodeD!)).toBe(true);
+    expect(vertexC!.neighbors.has(vertexA!)).toBe(true);
+    expect(vertexC!.neighbors.has(vertexB!)).toBe(true);
+    expect(vertexC!.neighbors.has(vertexD!)).toBe(true);
 
-    expect(nodeD!.neighbors.has(nodeA!)).toBe(true);
-    expect(nodeD!.neighbors.has(nodeB!)).toBe(true);
-    expect(nodeD!.neighbors.has(nodeC!)).toBe(true);
+    expect(vertexD!.neighbors.has(vertexA!)).toBe(true);
+    expect(vertexD!.neighbors.has(vertexB!)).toBe(true);
+    expect(vertexD!.neighbors.has(vertexC!)).toBe(true);
   });
 
-  test('should handle a graph with a single node and no edges', () => {
-    graph.addNode('A', 1);
+  test('should handle a graph with a single vertex and no edges', () => {
+    graph.addVertex('A', 1);
 
-    const nodeA = graph.getNode('A');
+    const vertexA = graph.getVertex('A');
 
-    expect(nodeA).toBeDefined();
-    expect(nodeA!.neighbors.size).toBe(0);
+    expect(vertexA).toBeDefined();
+    expect(vertexA!.neighbors.size).toBe(0);
   });
 
-  test('should replace data for an existing node', () => {
-    graph.addNode('A', 1);
+  test('should replace data for an existing vertex', () => {
+    graph.addVertex('A', 1);
 
     graph.replaceData('A', 10);
 
-    const nodeA = graph.getNode('A');
-    expect(nodeA).toBeDefined();
-    expect(nodeA!.data).toBe(10);
+    const vertexA = graph.getVertex('A');
+    expect(vertexA).toBeDefined();
+    expect(vertexA!.data).toBe(10);
   });
 
-  test('should throw an error when trying to replace data for a non-existent node', () => {
-    expect(() => graph.replaceData('Z', 100)).toThrow(NodeNotFoundError);
+  test('should throw an error when trying to replace data for a non-existent vertex', () => {
+    expect(() => graph.replaceData('Z', 100)).toThrow(VertexNotFoundError);
   });
 
   test('should maintain connections after replacing data', () => {
-    graph.addNode('A', 1);
-    graph.addNode('B', 2);
+    graph.addVertex('A', 1);
+    graph.addVertex('B', 2);
     graph.addEdge('A', 'B');
 
     graph.replaceData('A', 10);
 
-    const nodeA = graph.getNode('A');
-    const nodeB = graph.getNode('B');
+    const vertexA = graph.getVertex('A');
+    const vertexB = graph.getVertex('B');
 
-    expect(nodeA).toBeDefined();
-    expect(nodeB).toBeDefined();
+    expect(vertexA).toBeDefined();
+    expect(vertexB).toBeDefined();
 
-    expect(nodeA?.data).toBe(10);
-    expect(nodeA?.neighbors.has(nodeB!)).toBe(true);
-    expect(nodeB?.neighbors.has(nodeA!)).toBe(true);
+    expect(vertexA?.data).toBe(10);
+    expect(vertexA?.neighbors.has(vertexB!)).toBe(true);
+    expect(vertexB?.neighbors.has(vertexA!)).toBe(true);
   });
 });
