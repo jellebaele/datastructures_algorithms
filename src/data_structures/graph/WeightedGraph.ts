@@ -1,9 +1,9 @@
 import WeightUndefinedError from './errors/WeightUndefinedError';
 import VertexNotFoundError from './errors/VertexNotFoundError';
-import Graph from './Graph';
 import Vertex from './Vertex';
+import BaseGraph from './BaseGraph';
 
-export default class WeightedGraph<T> extends Graph<T> {
+export default class WeightedGraph<T> extends BaseGraph<T> {
   private weightsMatrix: Array<Array<number>>;
 
   constructor() {
@@ -19,6 +19,9 @@ export default class WeightedGraph<T> extends Graph<T> {
 
     return newVertex;
   }
+
+  public addEdge(vertexIdA: string, vertexIdB: string): void;
+  public addEdge(vertexIdA: string, vertexIdB: string, weight: number): void;
 
   public addEdge(vertexIdA: string, vertexIdB: string, weight?: number): void {
     if (!weight) throw new WeightUndefinedError();

@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import Graph from '../../data_structures/graph/Graph';
+import DirectedGraph from './DirectedGraph';
 import VertexAlreadyExistsError from './errors/VertexAlreadyExistsError';
 import VertexNotFoundError from './errors/VertexNotFoundError';
 
-describe('Graph', () => {
-  let graph: Graph<number>;
+describe('DirectedGraph', () => {
+  let graph: DirectedGraph<number>;
 
   beforeEach(() => {
-    graph = new Graph<number>();
+    graph = new DirectedGraph<number>();
   });
 
   test('should add a new vertex and retrieve it', () => {
