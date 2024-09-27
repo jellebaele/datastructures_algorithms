@@ -39,7 +39,7 @@ export default class Graph<T> implements IGraph<T> {
     if (!vertexA) throw new VertexNotFoundError(vertexIdA);
     if (!vertexB) throw new VertexNotFoundError(vertexIdB);
 
-    // Bidirectional?
+    // Directional
     vertexA.addNeighbor(vertexB);
     vertexB.addNeighbor(vertexA);
 
@@ -82,14 +82,18 @@ export default class Graph<T> implements IGraph<T> {
   }
 
   private visualizeAdjacencyMatrix(): string {
-    let result = 'AdjacencyMatrix:\n   ';
+    return this.visualizeMatrix(this.adjacencyMatrix, 'AdjacencyMatrix');
+  }
+
+  protected visualizeMatrix(matrix: Array<Array<number>>, title: string) {
+    let result = `${title}:\n   `;
 
     const vertexKeysArray = Array.from(this.vertices.keys());
     vertexKeysArray.forEach(
       (key, index) => (result += `${key}${index === vertexKeysArray.length - 1 ? '\n' : '  '}`),
     );
 
-    this.adjacencyMatrix.forEach((adjacencRow, index) => {
+    matrix.forEach((adjacencRow, index) => {
       result += `${vertexKeysArray[index]} [`;
       adjacencRow.forEach(
         (element, index) =>
