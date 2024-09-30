@@ -2,6 +2,7 @@
 import VertexAlreadyExistsError from './errors/VertexAlreadyExistsError';
 import VertexNotFoundError from './errors/VertexNotFoundError';
 import WeightedGraph from './WeightedGraph';
+import WeightUndefinedError from './errors/WeightUndefinedError';
 
 describe('WeightedGraph', () => {
   let weightedGraph: WeightedGraph<number>;
@@ -26,17 +27,25 @@ describe('WeightedGraph', () => {
     expect(() => weightedGraph.addVertex('A', 2)).toThrow(VertexAlreadyExistsError);
   });
 
-  test('should add an edge between two existing vertices', () => {
+  test('should add an edge between two existing vertices with weight', () => {
     weightedGraph.addVertex('A', 1);
     weightedGraph.addVertex('B', 2);
 
-    weightedGraph.addEdge('A', 'B', 1);
+    weightedGraph.addEdge('A', 'B', 5);
 
     const vertexA = weightedGraph.getVertex('A');
     const vertexB = weightedGraph.getVertex('B');
 
     expect(vertexA?.neighbors).toContain(vertexB);
     expect(vertexB?.neighbors).not.toContain(vertexA);
+    expect(weightedGraph.getWeight(vertexA!, vertexB!)).toBe(5);
+  });
+
+  test('should throw an error when adding an edge without a weight', () => {
+    weightedGraph.addVertex('A', 1);
+    weightedGraph.addVertex('B', 2);
+
+    expect(() => weightedGraph.addEdge('A', 'B')).toThrow(WeightUndefinedError);
   });
 
   test('should throw an error when adding an edge if one vertex does not exist', () => {
@@ -46,7 +55,7 @@ describe('WeightedGraph', () => {
     expect(() => weightedGraph.addEdge('B', 'A', 2)).toThrow(VertexNotFoundError);
   });
 
-  test('should correctly represent the graph as a string', () => {
+  test('should correctly represent the graph as a string with weights', () => {
     weightedGraph.addVertex('A', 1);
     weightedGraph.addVertex('B', 2);
     weightedGraph.addVertex('C', 3);
@@ -67,14 +76,14 @@ describe('WeightedGraph', () => {
     expect(vertex).toBeUndefined();
   });
 
-  test('should create a cyclic graph', () => {
+  test('should create a cyclic graph with weights', () => {
     weightedGraph.addVertex('A', 1);
     weightedGraph.addVertex('B', 2);
     weightedGraph.addVertex('C', 3);
 
     weightedGraph.addEdge('A', 'B', 3);
     weightedGraph.addEdge('B', 'C', 4);
-    weightedGraph.addEdge('C', 'A', 2); // Creating a cycle
+    weightedGraph.addEdge('C', 'A', 2);
 
     const vertexA = weightedGraph.getVertex('A');
     const vertexB = weightedGraph.getVertex('B');
@@ -84,12 +93,12 @@ describe('WeightedGraph', () => {
     expect(vertexB).toBeDefined();
     expect(vertexC).toBeDefined();
 
-    expect(vertexA!.neighbors.has(vertexB!)).toBe(true);
-    expect(vertexB!.neighbors.has(vertexC!)).toBe(true);
-    expect(vertexC!.neighbors.has(vertexA!)).toBe(true); // Cycle exists
+    expect(weightedGraph.getWeight(vertexA!, vertexB!)).toBe(3);
+    expect(weightedGraph.getWeight(vertexB!, vertexC!)).toBe(4);
+    expect(weightedGraph.getWeight(vertexC!, vertexA!)).toBe(2);
   });
 
-  test('should create a disconnected graph with multiple subgraphs', () => {
+  test('should create a disconnected graph with multiple subgraphs and weights', () => {
     // Subgraph 1
     weightedGraph.addVertex('A', 1);
     weightedGraph.addVertex('B', 2);
@@ -110,17 +119,12 @@ describe('WeightedGraph', () => {
     expect(vertexC).toBeDefined();
     expect(vertexD).toBeDefined();
 
-    // Check connections in subgraph 1
-    expect(vertexA!.neighbors.has(vertexB!)).toBe(true);
-
-    // Check connections in subgraph 2
-    expect(vertexC!.neighbors.has(vertexD!)).toBe(true);
-
-    // Ensure subgraph 1 is not connected to subgraph 2
-    expect(vertexA!.neighbors.has(vertexC!)).toBe(false);
+    expect(weightedGraph.getWeight(vertexA!, vertexB!)).toBe(5);
+    expect(weightedGraph.getWeight(vertexC!, vertexD!)).toBe(1);
+    expect(weightedGraph.getWeight(vertexA!, vertexC!)).toBe(0);
   });
 
-  test('should add edges to create a fully connected graph (clique)', () => {
+  test('should add edges with weights to create a fully connected graph (clique)', () => {
     weightedGraph.addVertex('A', 1);
     weightedGraph.addVertex('B', 2);
     weightedGraph.addVertex('C', 3);
@@ -143,15 +147,12 @@ describe('WeightedGraph', () => {
     expect(vertexC).toBeDefined();
     expect(vertexD).toBeDefined();
 
-    // Verify full connectivity (each vertex should be connected to every other vertex)
-    expect(vertexA!.neighbors.has(vertexB!)).toBe(true);
-    expect(vertexA!.neighbors.has(vertexC!)).toBe(true);
-    expect(vertexA!.neighbors.has(vertexD!)).toBe(true);
-
-    expect(vertexB!.neighbors.has(vertexC!)).toBe(true);
-    expect(vertexB!.neighbors.has(vertexD!)).toBe(true);
-
-    expect(vertexC!.neighbors.has(vertexD!)).toBe(true);
+    expect(weightedGraph.getWeight(vertexA!, vertexB!)).toBe(1);
+    expect(weightedGraph.getWeight(vertexA!, vertexC!)).toBe(1);
+    expect(weightedGraph.getWeight(vertexA!, vertexD!)).toBe(1);
+    expect(weightedGraph.getWeight(vertexB!, vertexC!)).toBe(1);
+    expect(weightedGraph.getWeight(vertexB!, vertexD!)).toBe(1);
+    expect(weightedGraph.getWeight(vertexC!, vertexD!)).toBe(1);
   });
 
   test('should handle a graph with a single vertex and no edges', () => {
@@ -177,7 +178,7 @@ describe('WeightedGraph', () => {
     expect(() => weightedGraph.replaceData('Z', 100)).toThrow(VertexNotFoundError);
   });
 
-  test('should maintain connections after replacing data', () => {
+  test('should maintain connections and weights after replacing data', () => {
     weightedGraph.addVertex('A', 1);
     weightedGraph.addVertex('B', 2);
     weightedGraph.addEdge('A', 'B', 2);
@@ -192,5 +193,6 @@ describe('WeightedGraph', () => {
 
     expect(vertexA?.data).toBe(10);
     expect(vertexA?.neighbors.has(vertexB!)).toBe(true);
+    expect(weightedGraph.getWeight(vertexA!, vertexB!)).toBe(2);
   });
 });
