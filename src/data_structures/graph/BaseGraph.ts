@@ -31,6 +31,10 @@ export default abstract class BaseGraph<T> {
     return this.vertices.get(vertexId);
   }
 
+  public getVertices(): Map<VertexName, Vertex<T>> {
+    return this.vertices;
+  }
+
   public abstract addEdge(vertexIdA: string, vertexIdB: string): void;
 
   public replaceData(vertexId: string, newData: T): void {

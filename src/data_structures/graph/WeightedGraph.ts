@@ -43,6 +43,15 @@ export default class WeightedGraph<T> extends BaseGraph<T> {
     this.weightsMatrix[indexVertexA][indexVertexB] = weight;
   }
 
+  public getWeight(vertexA: Vertex<T>, vertexB: Vertex<T>): number {
+    const vertexArray = Array.from(this.vertices.keys());
+
+    const indexVertexA = vertexArray.indexOf(vertexA.id);
+    const indexVertexB = vertexArray.indexOf(vertexB.id);
+
+    return this.weightsMatrix[indexVertexA][indexVertexB];
+  }
+
   public toString(): string {
     const weightMatrixString = this.visualizeWeightsMatrix();
 
