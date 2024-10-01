@@ -62,4 +62,15 @@ describe('Dijkstra', () => {
 
     expect(result).toEqual(['start', 'B', 'A', 'finish']);
   });
+
+  test('should correctly find the shortes path when there is a short in the graph', () => {
+    weightedGraph.addEdge('start', 'finish', 2);
+    const start = weightedGraph.getVertex('start')!;
+    const finish = weightedGraph.getVertex('finish')!;
+
+    const result = dijkstra.search(start, finish);
+    console.log(result);
+
+    expect(result).toEqual(['start', 'finish']);
+  });
 });
