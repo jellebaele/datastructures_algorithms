@@ -20,7 +20,7 @@ export default class Dijkstra<T> {
     this.initializeDistances(startVertex, distances);
     let closestVertex = this.getClosestVertex(distances, visitedVertices);
 
-    while (closestVertex !== null) {
+    while (closestVertex !== null && closestVertex !== targetVertex) {
       const distance = distances.get(closestVertex);
       if (distance === undefined)
         throw new Error(`No distance found for Vertex '${closestVertex.id}'`);
