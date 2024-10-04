@@ -69,7 +69,6 @@ describe('Dijkstra', () => {
     const finish = weightedGraph.getVertex('finish')!;
 
     const result = dijkstra.search(start, finish);
-    console.log(result);
 
     expect(result).toEqual(['start', 'finish']);
   });
