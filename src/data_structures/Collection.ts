@@ -4,7 +4,7 @@ export default abstract class Collection<T> {
 
   constructor(capacity: number) {
     this.capacity = capacity;
-    this.data = new Array<T>(capacity);
+    this.data = new Array<T>();
   }
 
   getSize(): number {
