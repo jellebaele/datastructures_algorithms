@@ -50,4 +50,13 @@ describe('Stack', () => {
     expect(stack.pop()).toBeUndefined(); // Pop from an empty stack should return undefined
     expect(stack.peek()).toBeUndefined(); // Peek on an empty stack should return undefined
   });
+
+  test('should return true if stack is empty', () => {
+    expect(stack.isEmpty()).toBeTruthy();
+  });
+
+  test('should return false if stack is not empty', () => {
+    stack.push(1);
+    expect(stack.isEmpty()).toBeFalsy();
+  });
 });

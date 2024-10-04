@@ -4,11 +4,18 @@ import Collection from '../Collection';
 export interface IStack<T> {
   push(element: T): void;
   pop(): T | undefined;
+  isEmpty(): boolean;
+  isFull(): boolean;
+  peek(): T | undefined;
 }
 
 export default class Stack<T> extends Collection<T> implements IStack<T> {
   constructor(capacity = 1000) {
     super(capacity);
+  }
+
+  isEmpty(): boolean {
+    return this.getSize() === 0;
   }
 
   push(element: T): void {
