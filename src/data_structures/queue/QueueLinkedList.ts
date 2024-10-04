@@ -1,4 +1,4 @@
-import Collection from '../Collection';
+import IndexOutOfBoundsError from '../../shared/errors/IndexOutOfBoundsError';
 import IQueue from './IQueue';
 
 type Node<T> = {
@@ -29,9 +29,16 @@ export default class QueueLinkedList<T> implements IQueue<T> {
   }
 
   enqueueList(elements: T[] | undefined): void {
-    throw new Error('Method not implemented.');
+    if (elements && elements.length > this.size + this.capacity) throw new IndexOutOfBoundsError();
+
+    elements?.forEach(element => {
+      this.enqueue(element);
+    });
   }
+
   enqueue(element: T): void {
+    if (this.getSize() === this.capacity) throw new IndexOutOfBoundsError();
+
     const newNode = this.makeNode(element);
     if (!this.rear) {
       this.front = this.rear = newNode;
@@ -46,11 +53,16 @@ export default class QueueLinkedList<T> implements IQueue<T> {
 
   dequeue(): T | undefined {
     if (this.isEmpty()) return undefined;
+    if (!this.front) return undefined;
 
-    throw new Error('Method not implemented.');
+    const node = this.front;
+    this.front = this.front.next;
+    this.size--;
+    return node.data;
   }
+
   peek(): T | undefined {
-    throw new Error('Method not implemented.');
+    return this.front?.data;
   }
 
   private makeNode(element: T, next: Node<T> | null = null): Node<T> {
