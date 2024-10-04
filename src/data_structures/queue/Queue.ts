@@ -4,10 +4,13 @@ import Collection from '../Collection';
 export interface IQueue<T> {
   enqueue(element: T): void;
   dequeue(): T | undefined;
+  isEmpty(): boolean;
+  isFull(): boolean;
+  peek(): T | undefined;
 }
 
 export default class Queue<T> extends Collection<T> implements IQueue<T> {
-  constructor(capacity = 2000) {
+  constructor(capacity = 1000) {
     super(capacity);
   }
 

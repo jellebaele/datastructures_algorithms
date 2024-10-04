@@ -14,10 +14,6 @@ export default class Stack<T> extends Collection<T> implements IStack<T> {
     super(capacity);
   }
 
-  isEmpty(): boolean {
-    return this.getSize() === 0;
-  }
-
   push(element: T): void {
     if (this.isFull()) throw new IndexOutOfBoundsError();
     else this.data.push(element);
