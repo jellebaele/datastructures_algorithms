@@ -24,10 +24,9 @@ Reasons for **not** using arrays to implement queues:
   memory than needed, or if the array fills up, it cannot hold more elements. And resizing an array
   can be costly.
 - Shifting cost: Dequeue causes the first element in a queue to be removed, and the other elements
-  must be shifted to take the removed elements' place. This is inefficient and can cause problems,
-  especially if the queue is long.
-- Alternatives: Some programming languages have built-in data structures optimized for queue
-  operations that are better than using arrays.
+  must be shifted to take the removed elements' place. This is inefficient and can cause problems, especially if the queue is long.
+- It is faster compared to a list-based queue due to contigous memory allocation.
+- Alternatives: Some programming languages have built-in data structures optimized for queue  operations that are better than using arrays.
 
 ## Queue Implementation using Linked Lists
 
@@ -40,6 +39,12 @@ Reasons for using linked lists to implement queues:
 Reasons for **not** using linked lists to implement queues:
 
 - Extra memory: Each queue element must contain the address to the next element (the next linked
-  list node).
+  list node) in addition to the actual data.
 - Readability: The code might be harder to read and write for some because it is longer and more
   complex.
+
+Advantages of array-based queues:
+
+
+## Conditions when to use each of these:
+Array-based queues are used when we have to access elements randomly and with less memory. List-based queues are used when there are a greater number of enqueue and dequeue operations and the size of the queue is not known in advance.
