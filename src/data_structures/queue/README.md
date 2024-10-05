@@ -10,41 +10,24 @@ Basic operations we can do on a queue are:
 - isEmpty: Checks if the queue is empty.
 - Size: Finds the number of elements in the queue.
 
-## Queue Implementation using Arrays
+## Queue Implementation using Arrays vs Linked Lists
+You can implement a queue using either an array or a linked list. Both have advantages and disadvantages.
 
-Reasons to implement queues using arrays:
+### Array-based
+#### Advantages
+- **Memory Efficient**: Array elements do not hold the next elements address like linked list nodes do.
+- **Easier to implement** and understand: Using arrays to implement queues require less code than using linked lists, and for this reason it is typically easier to understand as well.
+- **It is faster compared to a list-based** queue due to contigous memory allocation.
 
-- Memory Efficient: Array elements do not hold the next elements address like linked list nodes do.
-- Easier to implement and understand: Using arrays to implement queues require less code than using
-  linked lists, and for this reason it is typically easier to understand as well.
+#### Disadvantages
+- **Fixed size**: An array occupies a fixed part of the memory. This means that it could take up more memory than needed, or if the array fills up, it cannot hold more elements. And resizing an array can be costly.
+- **Shifting cost**: Dequeue causes the first element in a queue to be removed, and the other elements must be shifted to take the removed elements' place. This is inefficient and can cause problems, especially if the queue is long.
 
-Reasons for **not** using arrays to implement queues:
+### Linked list-based
+#### Advantages
+- **Dynamic size**: The queue can grow and shrink dynamically, unlike with arrays.
+- **No shifting**: The front element of the queue can be removed (enqueue) without having to shift other elements in the memory.
 
-- Fixed size: An array occupies a fixed part of the memory. This means that it could take up more
-  memory than needed, or if the array fills up, it cannot hold more elements. And resizing an array
-  can be costly.
-- Shifting cost: Dequeue causes the first element in a queue to be removed, and the other elements
-  must be shifted to take the removed elements' place. This is inefficient and can cause problems, especially if the queue is long.
-- It is faster compared to a list-based queue due to contigous memory allocation.
-- Alternatives: Some programming languages have built-in data structures optimized for queue  operations that are better than using arrays.
-
-## Queue Implementation using Linked Lists
-
-Reasons for using linked lists to implement queues:
-
-- Dynamic size: The queue can grow and shrink dynamically, unlike with arrays.
-- No shifting: The front element of the queue can be removed (enqueue) without having to shift other
-  elements in the memory.
-
-Reasons for **not** using linked lists to implement queues:
-
-- Extra memory: Each queue element must contain the address to the next element (the next linked
-  list node) in addition to the actual data.
-- Readability: The code might be harder to read and write for some because it is longer and more
-  complex.
-
-Advantages of array-based queues:
-
-
-## Conditions when to use each of these:
-Array-based queues are used when we have to access elements randomly and with less memory. List-based queues are used when there are a greater number of enqueue and dequeue operations and the size of the queue is not known in advance.
+#### Disadvantages
+- **Extra memory**: Each queue element must contain the address to the next element (the next linked list node) in addition to the actual data.
+- **Readability**: The code might be harder to read and write for some because it is longer and more complex.

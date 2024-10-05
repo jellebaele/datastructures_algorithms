@@ -5,6 +5,7 @@ interface IQueue<T> {
   isEmpty(): boolean;
   isFull(): boolean;
   peek(): T | undefined;
+  getSize(): number;
 }
 
 export default IQueue;
