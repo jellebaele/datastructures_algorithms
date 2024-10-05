@@ -25,67 +25,48 @@ TODO GRAPH?
 
 1. **Array**
 
-   - **Use When**: You need fast access to elements by index (O(1) time complexity) and the size of
-     the data does not change frequently.
-   - **Avoid When**: Frequent insertions or deletions are required, as these operations are costly
-     (O(N)).
+   - **Use When**: You need fast access to elements by index (O(1) time complexity) and the size of the data does not change frequently.
+   - **Avoid When**: Frequent insertions or deletions are required, as these operations are costly (O(N)).
 
 2. **Stack**
-
-   - **Use When**: You need Last-In-First-Out (LIFO) order for elements, such as in undo mechanisms,
-     parsing expressions, and function call management.
-   - **Avoid When**: Random access or searching within the stack is needed, as these operations are
-     O(N).
+   - **Use When**: You need Last-In-First-Out (LIFO) order for elements, such as in undo mechanisms,parsing expressions, and function call management.
+   - **Avoid When**: Random access or searching within the stack is needed, as these operations are O(N).
 
 3. **Queue**
 
-   - **Use When**: You need First-In-First-Out (FIFO) order, such as in scheduling, task management,
-     and breadth-first traversal of graphs.
-   - **Avoid When**: You need random access or searching within the queue, as these operations are
-     O(N).
+   - **Use When**: You need First-In-First-Out (FIFO) order, such as in scheduling, task management, and breadth-first traversal of graphs.
+   - **Avoid When**: You need random access or searching within the queue, as these operations are O(N).
 
 4. **Singly Linked List**
 
-   - **Use When**: You need frequent insertions and deletions, especially at the beginning or end,
-     and access/search times are not critical.
-   - **Avoid When**: Fast access or searching is required, as accessing and searching take O(N)
-     time.
+   - **Use When**: You need frequent insertions and deletions, especially at the beginning or end, and access/search times are not critical.
+   - **Avoid When**: Fast access or searching is required, as accessing and searching take O(N) time.
 
 5. **Doubly Linked List**
 
-   - **Use When**: You need bidirectional traversal, and frequent insertions and deletions from both
-     ends are required.
+   - **Use When**: You need bidirectional traversal, and frequent insertions and deletions from both ends are required.
    - **Avoid When**: Access or search times are critical, similar to a singly linked list.
 
 6. **Hash Table**
 
-   - **Use When**: You need fast access, insertion, and deletion by key (average O(1) time
-     complexity), such as in caching, lookup tables, and managing sets of data.
+   - **Use When**: You need fast access, insertion, and deletion by key (average O(1) time complexity), such as in caching, lookup tables, and managing sets of data.
    - **Avoid When**: There is a need for ordered data or when hash collisions degrade performance.
 
 7. **Binary Search Tree (BST)**
-
-   - **Use When**: You need sorted data with reasonably fast access, insertion, and deletion (O(log
-     N)). Useful for dynamic data that needs to be kept sorted.
+   - **Use When**: You need sorted data with reasonably fast access, insertion, and deletion (O(logN)). Useful for dynamic data that needs to be kept sorted.
    - **Avoid When**: The data is unbalanced, which can degrade performance to O(N).
 
 8. **AVL Tree**
-
-   - **Use When**: You need a balanced BST with guaranteed O(log N) performance for access,
-     insertion, and deletion, such as in databases and memory management.
-   - **Avoid When**: Overhead of maintaining balance is not justified, such as when data doesn't
-     require frequent modifications.
+   - **Use When**: You need a balanced BST with guaranteed O(log N) performance for access, insertion, and deletion, such as in databases and memory management.
+   - **Avoid When**: Overhead of maintaining balance is not justified, such as when data doesn't require frequent modifications.
 
 9. **B Tree**
 
-   - **Use When**: You need balanced multi-way search trees for disk storage and databases, as they
-     handle large blocks of data efficiently.
-   - **Avoid When**: Data is small or resides in memory where simpler structures like AVL or
-     Red-Black Trees suffice.
+   - **Use When**: You need balanced multi-way search trees for disk storage and databases, as they handle large blocks of data efficiently.
+   - **Avoid When**: Data is small or resides in memory where simpler structures like AVL or Red-Black Trees suffice.
 
 10. **Red-Black Tree**
-    - **Use When**: You need a self-balancing BST with good performance guarantees (O(log N)),
-      commonly used in libraries (e.g., Java's TreeMap, C++'s map).
+    - **Use When**: You need a self-balancing BST with good performance guarantees (O(log N)),commonly used in libraries (e.g., Java's TreeMap, C++'s map).
     - **Avoid When**: Memory overhead of maintaining color information isn't justified.
 
 TODO: GRPAH?
@@ -96,20 +77,16 @@ TODO: GRPAH?
 
 - Use Set when you need to store unique values and perform fast lookups.
 - Use Map when you need to associate values with keys and perform fast lookups based on keys.
-- Use Array when you need to maintain an ordered collection of items and perform operations that
-  benefit from the array's index-based access.
-- Use Object when you need a simple key-value store and don't require the additional features
-  provided by Map.
+- Use Array when you need to maintain an ordered collection of items and perform operations that benefit from the array's index-based access.
+- Use Object when you need a simple key-value store and don't require the additional features provided by Map.
 
 #### Key Takeaway
 
 - **Arrays** are best for static data where random access is key.
-- **Stacks** and **queues** are ideal for managing sequential access with specific LIFO or FIFO
-  requirements.
+- **Stacks** and **queues** are ideal for managing sequential access with specific LIFO or FIFO requirements.
 - **Linked lists** are suitable for dynamic data with frequent insertions/deletions.
 - **Hash tables** provide fast access when key lookups are frequent.
-- **Trees** (BST, AVL, Red-Black, B-Tree) are optimal for maintaining sorted order with fast access,
-  insertion, and deletion, particularly when balance is critical.
+- **Trees** (BST, AVL, Red-Black, B-Tree) are optimal for maintaining sorted order with fast access, insertion, and deletion, particularly when balance is critical.
 
 Sources:
 
@@ -121,9 +98,7 @@ Sources:
 
 ### Array
 
-An array is a fundamental data structure that stores a fixed-size, ordered collection of elements of
-the same data type. Elements are accessed using a numerical index, starting from 0. It's like a
-shelf where each item has a designated position.
+An array is a fundamental data structure that stores a fixed-size, ordered collection of elements of the same data type. Elements are accessed using a numerical index, starting from 0. It's like a shelf where each item has a designated position.
 
 #### Time Complexity
 
@@ -131,16 +106,12 @@ shelf where each item has a designated position.
   providing exceptionally fast access.
 - **Search**: O(n) - Linear time in the worst case. Searching for an element without knowing its
   index can be slow, as it may require traversing the entire array.
-- **Insertion**: O(n) - Linear time in the worst case. Inserting in the middle requires shifting
-  elements, making it costly. Insertion at the beginning or end can be optimized to O(1) in some
-  implementations.
-- **Deletion**: O(n) - Linear time in the worst case. Deleting an element in the middle requires
-  shifting elements. Deletion at the beginning or end can be O(1) in some implementations.
+- **Insertion**: O(n) - Linear time in the worst case. Inserting in the middle requires shifting elements, making it costly. Insertion at the beginning or end can be optimized to O(1) in some implementations.
+- **Deletion**: O(n) - Linear time in the worst case. Deleting an element in the middle requires shifting elements. Deletion at the beginning or end can be O(1) in some implementations.
 
 #### Applications of Arrays
 
-- **Storing Large Datasets**: Efficient for storing extensive collections like student grades,
-  inventory items, or image pixel values.
+- **Storing Large Datasets**: Efficient for storing extensive collections like student grades, inventory items, or image pixel values.
 - **Building Block for Other Structures**: Used to construct matrices, stacks, and queues.
 - **Random Access Operations**: Ideal when frequent retrieval of elements by position is crucial.
 
@@ -158,61 +129,46 @@ shelf where each item has a designated position.
 
 ### Linked Lists
 
-Linked lists offer a dynamic alternative to arrays, particularly when dealing with data of varying
-sizes or requiring frequent insertions and deletions. Unlike arrays, linked lists are dynamic data
-structures, meaning their size can adjust as needed at runtime. This flexibility comes at the cost
-of slightly slower random access compared to arrays.
+Linked lists offer a dynamic alternative to arrays, particularly when dealing with data of varying sizes or requiring frequent insertions and deletions. Unlike arrays, linked lists are dynamic data
+structures, meaning their size can adjust as needed at runtime. This flexibility comes at the cost of slightly slower random access compared to arrays.
 
 #### Understanding the Structure
 
 A linked list is a collection of nodes, where each node stores two pieces of information:
 
 - **Data**: The actual element held by the node (can be of any data type).
-- **Pointer (or reference)**: A reference (address) to the next node in the sequence. The last
-  node's pointer typically points to null (or an equivalent value), indicating the end of the list.
+- **Pointer (or reference)**: A reference (address) to the next node in the sequence. The last node's pointer typically points to null (or an equivalent value), indicating the end of the list.
 
 #### Time Complexity
 
-- **Access**: O(n) - Linear time in the worst case. Random access is slower than arrays as you need
-  to traverse the list from the beginning, following pointers, until you reach the desired node.
+- **Access**: O(n) - Linear time in the worst case. Random access is slower than arrays as you need to traverse the list from the beginning, following pointers, until you reach the desired node.
 - **Search**: O(n) - Linear time in the worst case. Similar to access, searching for a specific
   element involves iterating through the list.
 - **Insertion**: O(1) - Constant time in the average case. Inserting a new node at the beginning of
   a singly linked list is a constant time operation, as you only need to update the head pointer.
   Insertion at any other position can also be done in constant time with appropriate pointer
   manipulation.
-- **Deletion**: O(1) - Constant time in the average case, assuming you have a reference to the node
-  to be deleted. Deletion involves adjusting pointers to bypass the unwanted node.
+- **Deletion**: O(1) - Constant time in the average case, assuming you have a reference to the node to be deleted. Deletion involves adjusting pointers to bypass the unwanted node.
 
 #### Applications of Linked Lists
 
 - **Implementing Stacks and Queues**: They are the foundation for building stacks (LIFO -
   Last-In-First-Out) and queues (FIFO - First-In-First-Out) due to their efficient insertion and
   deletion operations at specific ends.
-- **Sparse Data Representation**: When dealing with sparse data structures like adjacency lists for
-  graphs, where most elements might be empty, linked lists avoid wasting memory compared to arrays
-  that allocate space for all elements.
-- **Dynamic Data Management**: They are well-suited for situations where the data collection's size
-  is unknown beforehand or needs to grow or shrink during program execution.
+- **Sparse Data Representation**: When dealing with sparse data structures like adjacency lists for graphs, where most elements might be empty, linked lists avoid wasting memory compared to arrays that allocate space for all elements.
+- **Dynamic Data Management**: They are well-suited for situations where the data collection's size is unknown beforehand or needs to grow or shrink during program execution.
 
 #### Advantages
 
-- **Dynamic Size**: Linked lists can grow or shrink as needed, making them ideal for data of varying
-  sizes.
-- **Efficient Insertions/Deletions**: Inserting or deleting elements at any point in the list is
-  generally a constant time operation (O(1)), especially at the beginning or end, unlike arrays that
-  require shifting elements.
-- **No Memory Wastage**: Memory is allocated only for the nodes that are present in the list,
-  avoiding wasted space for unused elements in arrays.
+- **Dynamic Size**: Linked lists can grow or shrink as needed, making them ideal for data of varying sizes.
+- **Efficient Insertions/Deletions**: Inserting or deleting elements at any point in the list is generally a constant time operation (O(1)), especially at the beginning or end, unlike arrays that require shifting elements.
+- **No Memory Wastage**: Memory is allocated only for the nodes that are present in the list, avoiding wasted space for unused elements in arrays.
 
 #### Disadvantages
 
-- **Slower Random Access**: Compared to arrays, accessing elements by their index is slower (O(n))
-  as you need to traverse the list.
-- **More Complex Implementation**: The pointer-based structure can introduce additional complexity
-  compared to the simpler contiguous memory allocation of arrays.
-- **Memory Overhead**: Each node stores an extra pointer reference, which can lead to slightly
-  higher memory usage compared to arrays for storing basic data types.
+- **Slower Random Access**: Compared to arrays, accessing elements by their index is slower (O(n)) as you need to traverse the list.
+- **More Complex Implementation**: The pointer-based structure can introduce additional complexity compared to the simpler contiguous memory allocation of arrays.
+- **Memory Overhead**: Each node stores an extra pointer reference, which can lead to slightly higher memory usage compared to arrays for storing basic data types.
 
 #### Simple Example
 
@@ -221,188 +177,117 @@ Imagine a train with linked cabins. Each cabin (node) has:
 - Passengers (data)
 - A door leading to the next cabin (pointer)
 
-The first cabin (head) has a special marker indicating it's the beginning. The last cabin's door
-leads to nowhere (null pointer), signifying the end. To add a new cabin, you simply connect it to
+The first cabin (head) has a special marker indicating it's the beginning. The last cabin's door leads to nowhere (null pointer), signifying the end. To add a new cabin, you simply connect it to
 the existing train. To remove a cabin, you adjust the pointers to bypass it.
 
 ### Stack
 
-A stack is a fundamental data structure that adheres to the LIFO (Last-In-First-Out) principle.
-Imagine a stack of plates: the last plate added (pushed) is the first one retrieved (popped). Stacks
-excel in scenarios where the order of element insertion and removal is crucial.
+A stack is a fundamental data structure that adheres to the LIFO(Last-In-First-Out) principle.
+Imagine a stack of plates: the last plate added (pushed) is the first one retrieved (popped). Stacks excel in scenarios where the order of element insertion and removal is crucial.
 
 #### Time Complexity Analysis
 
-- **Push**: O(1) - Constant time. Adding an element (pushing a plate) to the top of the stack is a
-  quick operation, typically involving updating a single pointer (reference) to the top element.
-- **Pop**: O(1) - Constant time. Removing the top element (popping a plate) is also a constant time
-  operation, as you simply access and remove the element referenced by the top pointer.
-- **Peek**: O(1) - Constant time. In some implementations, you can examine the top element without
-  removing it (peeking at the top plate). This operation usually takes constant time as well.
-- **Search**: O(n) - Linear time in the worst case. While pushing and popping are efficient,
-  searching for a specific element within the stack can be slow (O(n)) in the worst case. You might
-  need to traverse the entire stack to find the desired element.
+- **Push**: O(1) - Constant time. Adding an element (pushing a plate) to the top of the stack is a quick operation, typically involving updating a single pointer (reference) to the top element.
+- **Pop**: O(1) - Constant time. Removing the top element (popping a plate) is also a constant time operation, as you simply access and remove the element referenced by the top pointer.
+- **Peek**: O(1) - Constant time. In some implementations, you can examine the top element without removing it (peeking at the top plate). This operation usually takes constant time as well.
+- **Search**: O(n) - Linear time in the worst case. While pushing and popping are efficient, searching for a specific element within the stack can be slow (O(n)) in the worst case. You might need to traverse the entire stack to find the desired element.
 
 #### Applications of Stacks
 
-- **Function Call Stack**: Used by computer systems to manage function calls. When a function is
-  called, its arguments and local variables are pushed onto the stack. When the function returns,
-  its information is popped off the stack.
-- **Expression Evaluation**: Stacks are instrumental in evaluating expressions using postfix or
-  prefix notation. Operators and operands are pushed onto the stack, and calculations are performed
-  based on the LIFO order.
-- **Undo/Redo Functionality**: Stacks are used to implement undo/redo functions in various software
-  applications. Each action can be pushed onto the stack, allowing users to revert to previous
-  states by popping elements off the stack.
-- **Backtracking Algorithms**: Stacks are employed in backtracking algorithms, where exploration
-  paths are pushed onto the stack. If an unsuitable path is encountered, the stack can be used to
-  backtrack and explore alternative paths.
+- **Function Call Stack**: Used by computer systems to manage function calls. When a function is called, its arguments and local variables are pushed onto the stack. When the function returns, its information is popped off the stack.
+- **Expression Evaluation**: Stacks are instrumental in evaluating expressions using postfix or prefix notation. Operators and operands are pushed onto the stack, and calculations are performed based on the LIFO order.
+- **Undo/Redo Functionality**: Stacks are used to implement undo/redo functions in various software applications. Each action can be pushed onto the stack, allowing users to revert to previous states by popping elements off the stack.
+- **Backtracking Algorithms**: Stacks are employed in backtracking algorithms, where exploration paths are pushed onto the stack. If an unsuitable path is encountered, the stack can be used to  backtrack and explore alternative paths.
 
 #### Advantages of Stacks
 
-- **LIFO Order Guarantee**: The LIFO principle ensures a well-defined order for element access,
-  making stacks suitable for operations that rely on processing elements in the reverse order they
-  were added.
-- **Efficient Push/Pop**: Adding and removing elements from the top of the stack are constant time
-  operations, offering efficient management of the topmost element.
-- **Simple Implementation**: The core concept of stacks is relatively straightforward, making them a
-  good starting point for understanding data structures.
+- **LIFO Order Guarantee**: The LIFO principle ensures a well-defined order for element access, making stacks suitable for operations that rely on processing elements in the reverse order they were added.
+- **Efficient Push/Pop**: Adding and removing elements from the top of the stack are constant time operations, offering efficient management of the topmost element.
+- **Simple Implementation**: The core concept of stacks is relatively straightforward, making them a good starting point for understanding data structures.
 
 #### Disadvantages of Stacks
 
-- **Limited Access**: Random access to elements within the stack is generally not supported
-  efficiently. You can only access the top element directly, and searching for a specific element
-  can be slow.
-- **Fixed-Size Limitation (Optional)**: Some stack implementations might have a predefined size
-  limit, restricting the number of elements that can be stored.
+- **Limited Access**: Random access to elements within the stack is generally not supported efficiently. You can only access the top element directly, and searching for a specific element can be slow.
+- **Fixed-Size Limitation (Optional)**: Some stack implementations might have a predefined size limit, restricting the number of elements that can be stored.
 
 #### Simple Example
 
-Imagine a stack of plates at a cafeteria. People take plates from the top (push operation) and
-return them by placing them on top (pop operation). This adheres to the LIFO principle. Here's a
-real-world analogy for each operation:
+Imagine a stack of plates at a cafeteria. People take plates from the top (push operation) and return them by placing them on top (pop operation). This adheres to the LIFO principle. Here's a real-world analogy for each operation:
 
 - **Push**: Adding a new item to your shopping cart (pushing an item onto the stack).
 - **Pop**: Taking the topmost item out of your backpack (popping an item from the stack).
-- **Peek**: Checking the topmost item in your laundry basket without removing it (peeking at the top
-  element of the stack).
+- **Peek**: Checking the topmost item in your laundry basket without removing it (peeking at the top element of the stack).
 
 ### Queue
 
-A queue adheres to the FIFO (First-In-First-Out) principle, similar to a waiting line at a store.
-The first element added (enqueued) is the first element removed (dequeued). Queues are ideal for
-managing tasks or data that needs to be processed in the order they were received.
+A queue adheres to the FIFO (First-In-First-Out) principle, similar to a waiting line at a store. The first element added (enqueued) is the first element removed (dequeued). Queues are ideal for managing tasks or data that needs to be processed in the order they were received.
 
 #### Time Complexity Analysis
 
-- **Enqueue**: O(1) - Constant time. Adding an element (joining the back of the line) is a quick
-  operation, typically involving updating a pointer (reference) to the last element in the queue.
-- **Dequeue**: O(1) - Constant time. Removing the front element (the one who has been waiting the
-  longest) is also a constant time operation, as you simply access and remove the element referenced
-  by the front pointer.
-- **Peek**: O(1) - Constant time (optional). In some implementations, you can examine the front
-  element without removing it (peeking at the front of the line). This operation usually takes
-  constant time as well.
-- **Search**: O(n) - Linear time in the worst case. While enqueue and dequeue are efficient,
-  searching for a specific element within the queue can be slow (O(n)) in the worst case. You might
-  need to traverse the entire queue to find the desired element.
+- **Enqueue**: O(1) - Constant time. Adding an element (joining the back of the line) is a quick operation, typically involving updating a pointer (reference) to the last element in the queue.
+- **Dequeue**: O(1) - Constant time. Removing the front element (the one who has been waiting the longest) is also a constant time operation, as you simply access and remove the element referenced by the front pointer.
+- **Peek**: O(1) - Constant time. In some implementations, you can examine the front element without removing it (peeking at the front of the line). This operation usually takes constant time as well.
+- **Search**: O(n) - Linear time in the worst case. While enqueue and dequeue are efficient, searching for a specific element within the queue can be slow (O(n)) in the worst case. You might need to traverse the entire queue to find the desired element.
 
 #### Applications of Queues
 
-- **Task Scheduling**: Operating systems use queues to manage processes waiting for CPU resources.
-  Processes are enqueued, and the CPU dequeues them for execution in a FIFO order.
-- **Breadth-First Search (BFS) Algorithms**: Queues are employed in BFS algorithms for graph
-  traversal. Nodes are explored level by level, with neighbors of the current node enqueued for
+- **Task Scheduling**: Operating systems use queues to manage processes waiting for CPU resources. Processes are enqueued, and the CPU dequeues them for execution in a FIFO order.
+- **Breadth-First Search (BFS) Algorithms**: Queues are employed in BFS algorithms for graph traversal. Nodes are explored level by level, with neighbors of the current node enqueued for
   future exploration.
-- **Data Processing Pipelines**: Queues can be used to buffer data between different stages of a
-  processing pipeline. Data is enqueued as it becomes available, and processing units dequeue and
-  handle it in the order it was received.
-- **Message Passing Systems**: Queues are used in message passing systems to manage the transmission
-  and reception of messages between different components. Messages are enqueued and then dequeued
-  for processing by the receiving component.
+- **Data Processing Pipelines**: Queues can be used to buffer data between different stages of a processing pipeline. Data is enqueued as it becomes available, and processing units dequeue and handle it in the order it was received.
+- **Message Passing Systems**: Queues are used in message passing systems to manage the transmission and reception of messages between different components. Messages are enqueued and then dequeued for processing by the receiving component.
 
 #### Advantages of Queues
 
-- **FIFO Order Guarantee**: The FIFO principle ensures elements are processed in the order they were
-  added, making queues suitable for scenarios where the order of processing is crucial.
-- **Efficient Enqueue/Dequeue**: Adding and removing elements from the front and back of the queue
-  are constant time operations, offering efficient management of elements.
-- **Simple Implementation**: The concept of queues is intuitive, making them a fundamental building
-  block for more complex data management strategies.
+- **FIFO Order Guarantee**: The FIFO principle ensures elements are processed in the order they were added, making queues suitable for scenarios where the order of processing is crucial.
+- **Efficient Enqueue/Dequeue**: Adding and removing elements from the front and back of the queue are constant time operations, offering efficient management of elements.
+- **Simple Implementation**: The concept of queues is intuitive, making them a fundamental building block for more complex data management strategies.
 
 #### Disadvantages of Queues
 
-- **Limited Access**: Only the front and back elements can be accessed directly. Random access to
-  other elements within the queue is not supported efficiently.
-- **Fixed-Size Limitation (Optional)**: Some queue implementations may have size constraints,
-  restricting the number of elements that can be stored.
+- **Limited Access**: Only the front and back elements can be accessed directly. Random access to other elements within the queue is not supported efficiently.
+- **Fixed-Size Limitation (Optional)**: Some queue implementations may have size constraints, restricting the number of elements that can be stored.
 
 #### Simple Example
 
-Imagine a line of people waiting for a movie ticket. People join the back of the line (enqueue
-operation) and get their tickets when they reach the front (dequeue operation). This follows the
-FIFO principle, ensuring fair and orderly processing.
+Imagine a line of people waiting for a movie ticket. People join the back of the line (enqueue operation) and get their tickets when they reach the front (dequeue operation). This follows the FIFO principle, ensuring fair and orderly processing.
 
 ### Binary Tree
 
-Binary trees are fundamental data structures that organize elements in a tree-like structure, where
-each node can have at most two child nodes (left and right). They excel at representing hierarchical
-relationships and enabling efficient searching, sorting, and traversal operations.
+Binary trees are fundamental data structures that organize elements in a tree-like structure, where each node can have at most two child nodes (left and right). They excel at representing hierarchical relationships and enabling efficient searching, sorting, and traversal operations.
 
 #### Time Complexity Analysis (Average Case)
 
-- **Access**: O(log n) - Logarithmic time in the number of nodes (n). Due to the hierarchical
-  structure, accessing a specific element involves traversing the tree, which can be done
-  efficiently in log n time on average.
-- **Search**: O(log n) - Logarithmic time. Similar to access, searching for a specific element
-  within a binary tree is a log n operation on average, assuming the tree is balanced.
-- **Insertion**: O(log n) - Logarithmic time. Inserting a new element into a balanced binary tree
-  typically takes log n time to find the appropriate insertion point.
-- **Deletion**: O(log n) - Logarithmic time. Deleting an element from a balanced binary tree also
-  involves log n time on average for locating and restructuring the tree.
+- **Access**: O(log n) - Logarithmic time in the number of nodes (n). Due to the hierarchical structure, accessing a specific element involves traversing the tree, which can be done efficiently in log n time on average.
+- **Search**: O(log n) - Logarithmic time. Similar to access, searching for a specific element within a binary tree is a log n operation on average, assuming the tree is balanced.
+- **Insertion**: O(log n) - Logarithmic time. Inserting a new element into a balanced binary tree typically takes log n time to find the appropriate insertion point.
+- **Deletion**: O(log n) - Logarithmic time. Deleting an element from a balanced binary tree also involves log n time on average for locating and restructuring the tree.
 
 #### Applications of Binary Trees
 
-- **Binary Search Trees (BSTs)**: A specific type of binary tree where each node's value is greater
-  than all elements in its left subtree and less than all elements in its right subtree. BSTs enable
-  efficient searching and sorting of data.
-- **Heaps**: Specialized binary trees where the value of a node adheres to a specific order
-  (max-heap or min-heap). Heaps are ideal for priority queues and efficient retrieval of the element
-  with the highest or lowest value.
-- **Trie Data Structures**: Employ binary trees to store strings efficiently, allowing for fast
-  retrieval of prefixes or words with a common beginning.
-- **File Systems**: Hierarchical directory structures in file systems can be represented using
-  binary trees.
+- **Binary Search Trees (BSTs)**: A specific type of binary tree where each node's value is greater than all elements in its left subtree and less than all elements in its right subtree. BSTs enable efficient searching and sorting of data.
+- **Heaps**: Specialized binary trees where the value of a node adheres to a specific order (max-heap or min-heap). Heaps are ideal for priority queues and efficient retrieval of the element with the highest or lowest value.
+- **Trie Data Structures**: Employ binary trees to store strings efficiently, allowing for fast retrieval of prefixes or words with a common beginning.
+- **File Systems**: Hierarchical directory structures in file systems can be represented using binary trees.
 
 #### Advantages of Binary Trees
 
-- **Efficient Search and Access**: Binary trees offer efficient searching and access operations (log
-  n on average) due to their hierarchical organization.
-- **Dynamic Data Management**: Binary trees can grow or shrink as needed, adapting to the size of
-  the data set.
-- **Foundation for Other Structures**: Binary trees serve as the basis for more advanced data
-  structures like BSTs, heaps, and tries, which offer specialized functionalities.
+- **Efficient Search and Access**: Binary trees offer efficient searching and access operations (log n on average) due to their hierarchical organization.
+- **Dynamic Data Management**: Binary trees can grow or shrink as needed, adapting to the size of the data set.
+- **Foundation for Other Structures**: Binary trees serve as the basis for more advanced data structures like BSTs, heaps, and tries, which offer specialized functionalities.
 
 #### Disadvantages of Binary Trees
 
-- **Performance Relies on Balance**: The efficiency of binary trees depends heavily on their
-  balance. Imbalanced trees can lead to O(n) worst-case time complexity for operations like search
-  and insertion.
-- **Limited Functionality for Unsorted Data**: Basic binary trees are not inherently sorted, making
-  them less efficient for general-purpose sorting compared to sorted arrays or balanced binary
-  search trees.
+- **Performance Relies on Balance**: The efficiency of binary trees depends heavily on their balance. Imbalanced trees can lead to O(n) worst-case time complexity for operations like search and insertion.
+- **Limited Functionality for Unsorted Data**: Basic binary trees are not inherently sorted, making them less efficient for general-purpose sorting compared to sorted arrays or balanced binary search trees.
 
 #### Simple Example
 
-Imagine a family tree. Each person is a node in the binary tree, with parents as the parent nodes
-and children as the child nodes. This structure allows for efficient navigation (finding a specific
-ancestor or descendant) based on the hierarchical relationships between family members.
+Imagine a family tree. Each person is a node in the binary tree, with parents as the parent nodes and children as the child nodes. This structure allows for efficient navigation (finding a specific ancestor or descendant) based on the hierarchical relationships between family members.
 
 ### Binary Search Tree (BST)
 
-A Binary Search Tree (BST) is a hierarchical data structure where each node can have a maximum of
-two child nodes: a left child and a right child. Nodes contain data of any type, and each node's
-value maintains the property that values in the left subtree are less than the node, while values in
+A Binary Search Tree (BST) is a hierarchical data structure where each node can have a maximum of two child nodes: a left child and a right child. Nodes contain data of any type, and each node's value maintains the property that values in the left subtree are less than the node, while values in
 the right subtree are greater. This structure enables efficient searching, insertion, and deletion
 operations.
 
