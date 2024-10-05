@@ -1,12 +1,7 @@
 import IndexOutOfBoundsError from '../../shared/errors/IndexOutOfBoundsError';
 import NotFoundError from '../../shared/errors/NotFoundError';
+import Node from '../shared/Node';
 import ILinkedList from './ILinkedList';
-
-type Node<T> = {
-  data: T;
-  prev: Node<T> | null;
-  next: Node<T> | null;
-};
 
 export default class DoublyLinkedList<T> implements ILinkedList<T> {
   private head: Node<T> | null = null;
@@ -22,7 +17,7 @@ export default class DoublyLinkedList<T> implements ILinkedList<T> {
   }
 
   public addFirst(element: T): T {
-    const newNode = this.makeNode(element);
+    const newNode = new Node(element);
 
     if (!this.head) {
       this.head = this.tail = newNode;
@@ -39,7 +34,7 @@ export default class DoublyLinkedList<T> implements ILinkedList<T> {
 
   // O(1)
   public add(element: T): T {
-    const newNode = this.makeNode(element);
+    const newNode = new Node(element);
 
     if (this.size === 0) this.head = newNode;
     if (this.tail) {
@@ -60,7 +55,7 @@ export default class DoublyLinkedList<T> implements ILinkedList<T> {
 
     const prevNode = this.getNode(index - 1);
     const nextNode = prevNode?.next;
-    const newNode = this.makeNode(element, prevNode, nextNode);
+    const newNode = new Node(element, nextNode, prevNode);
 
     if (prevNode) {
       prevNode.next = newNode;
@@ -219,14 +214,6 @@ export default class DoublyLinkedList<T> implements ILinkedList<T> {
     }
 
     return -1;
-  }
-
-  private makeNode(element: T, prev: Node<T> | null = null, next: Node<T> | null = null): Node<T> {
-    return {
-      data: element,
-      prev: prev,
-      next: next,
-    };
   }
 
   private getNode(index: number): Node<T> | null {

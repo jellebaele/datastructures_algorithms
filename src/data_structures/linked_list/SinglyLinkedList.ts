@@ -1,11 +1,7 @@
 import IndexOutOfBoundsError from '../../shared/errors/IndexOutOfBoundsError';
 import NotFoundError from '../../shared/errors/NotFoundError';
+import Node from '../shared/Node';
 import ILinkedList from './ILinkedList';
-
-type Node<T> = {
-  data: T;
-  next: Node<T> | null;
-};
 
 export default class SinglyLinkedList<T> implements ILinkedList<T> {
   private size = 0;
@@ -25,7 +21,7 @@ export default class SinglyLinkedList<T> implements ILinkedList<T> {
   // With tail: O(1)
   // Without tail: traverse to end and add: O(N)
   public add(element: T): T {
-    const newNode = this.makeNode(element);
+    const newNode = new Node(element);
 
     if (this.size === 0) this.head = newNode;
     if (this.tail) this.tail.next = newNode;
@@ -38,7 +34,7 @@ export default class SinglyLinkedList<T> implements ILinkedList<T> {
 
   // O(1)
   public addFirst(element: T): T {
-    const newNode = this.makeNode(element, this.head);
+    const newNode = new Node(element);
 
     this.head = newNode;
     if (this.size === 0) this.tail = newNode;
@@ -55,7 +51,7 @@ export default class SinglyLinkedList<T> implements ILinkedList<T> {
 
     const prevNode = this.findNodeBefore(index);
     if (prevNode) {
-      const newNode = this.makeNode(element, prevNode.next);
+      const newNode = new Node(element, prevNode.next);
       prevNode.next = newNode;
       this.size++;
     }
@@ -183,13 +179,6 @@ export default class SinglyLinkedList<T> implements ILinkedList<T> {
     }
 
     return result;
-  }
-
-  private makeNode(element: T, next: Node<T> | null = null): Node<T> {
-    return {
-      data: element,
-      next: next,
-    };
   }
 
   private findNodeBefore(index: number): Node<T> | null {

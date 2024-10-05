@@ -1,10 +1,6 @@
 import IndexOutOfBoundsError from '../../shared/errors/IndexOutOfBoundsError';
+import Node from '../shared/Node';
 import IQueue from './IQueue';
-
-type Node<T> = {
-  data: T;
-  next: Node<T> | null;
-};
 
 export default class QueueLinkedList<T> implements IQueue<T> {
   private capacity: number;
@@ -39,7 +35,7 @@ export default class QueueLinkedList<T> implements IQueue<T> {
   enqueue(element: T): void {
     if (this.getSize() === this.capacity) throw new IndexOutOfBoundsError();
 
-    const newNode = this.makeNode(element);
+    const newNode = new Node(element);
     if (!this.rear) {
       this.front = this.rear = newNode;
     } else {
@@ -63,12 +59,5 @@ export default class QueueLinkedList<T> implements IQueue<T> {
 
   peek(): T | undefined {
     return this.front?.data;
-  }
-
-  private makeNode(element: T, next: Node<T> | null = null): Node<T> {
-    return {
-      data: element,
-      next: next,
-    };
   }
 }
