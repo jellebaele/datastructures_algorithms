@@ -1,13 +1,6 @@
 import IndexOutOfBoundsError from '../../shared/errors/IndexOutOfBoundsError';
 import Collection from '../Collection';
-
-export interface IStack<T> {
-  push(element: T): void;
-  pop(): T | undefined;
-  isEmpty(): boolean;
-  isFull(): boolean;
-  peek(): T | undefined;
-}
+import IStack from './IStack';
 
 export default class Stack<T> extends Collection<T> implements IStack<T> {
   constructor(capacity = 1000) {
@@ -18,6 +11,7 @@ export default class Stack<T> extends Collection<T> implements IStack<T> {
     if (this.isFull()) throw new IndexOutOfBoundsError();
     else this.data.push(element);
   }
+
   pop(): T | undefined {
     return this.data.pop();
   }
