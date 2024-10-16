@@ -1,7 +1,9 @@
 // https://dtjv.io/the-generic-tree-data-structure/
 
+import BreadthFirstSearch from '../../searching/binary_tree/breadth_first_search/BreadthFirstSearch';
+import DepthFirstSearch from '../../searching/binary_tree/depth_first_search/DepthFirstSearch';
 import Queue from '../queue/Queue';
-import { TraversalStrategy } from './ITree';
+import { SearchStrategy, TraversalStrategy } from './ITree';
 
 interface IBinaryTree<T> {
   insert(element: T): void;
@@ -67,6 +69,21 @@ export default class BinaryTree<T> {
     }
 
     throw new Error('Unable to insert a new node');
+  }
+
+  // Any traversal method can be used to search.
+  // The most common methods are depth-first search (DFS)
+  // and breadth-first search (BFS)
+  public search(element: T, searchStrategy: SearchStrategy): TreeNode<T> | null {
+    const comparator = (a: T, b: T) => (a === b ? 1 : 0);
+    // DFS
+    switch (searchStrategy) {
+      case SearchStrategy.BFS:
+        return new BreadthFirstSearch(comparator).search(element, this.root);
+      case SearchStrategy.DFS:
+        return new DepthFirstSearch(comparator).search(element, this.root);
+    }
+    return null;
   }
 
   public toArray(traversalStrategy: TraversalStrategy): Array<T> {

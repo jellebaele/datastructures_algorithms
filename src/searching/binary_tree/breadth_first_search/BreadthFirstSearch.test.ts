@@ -19,25 +19,25 @@ describe('BreadthFirstSearch', () => {
 
   test('should find a node with the given value', () => {
     const root = createTree();
-    const result = bfs.search(root, 5);
+    const result = bfs.search(5, root);
     expect(result).not.toBeNull();
     expect(result?.data).toBe(5);
   });
 
   test('should return null if the node with the value does not exist', () => {
     const root = createTree();
-    const result = bfs.search(root, 8);
+    const result = bfs.search(8, root);
     expect(result).toBeNull();
   });
 
   test('should return null when searching an empty tree', () => {
-    const result = bfs.search(null as unknown as TreeNode<number>, 1);
+    const result = bfs.search(1, null as unknown as TreeNode<number>);
     expect(result).toBeNull();
   });
 
   test('should find a leaf node', () => {
     const root = createTree();
-    const result = bfs.search(root, 7);
+    const result = bfs.search(7, root);
     expect(result).not.toBeNull();
     expect(result?.data).toBe(7);
   });
