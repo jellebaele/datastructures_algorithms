@@ -15,7 +15,7 @@ export default class BreadthFirstSearch<T> {
 
     while (searchQueue.getSize() > 0) {
       const temp = searchQueue.dequeue();
-      if (!temp) return null;
+      if (!temp) continue;
 
       if (this.comparator(temp.data, searchTerm)) return temp;
       if (temp.leftChild) searchQueue.enqueue(temp.leftChild);
