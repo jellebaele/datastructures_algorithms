@@ -2,8 +2,10 @@ import IndexOutOfBoundsError from '../../shared/errors/IndexOutOfBoundsError';
 import Collection from '../Collection';
 import IQueue from './IQueue';
 
+const DEFAULT_CAPACITY = 1000;
+
 export default class Queue<T> extends Collection<T> implements IQueue<T> {
-  constructor(capacity = 1000) {
+  constructor(capacity = DEFAULT_CAPACITY) {
     super(capacity);
   }
 
