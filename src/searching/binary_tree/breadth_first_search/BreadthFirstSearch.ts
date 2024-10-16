@@ -11,14 +11,11 @@ export default class BreadthFirstSearch<T> {
   // O(V+E) (V = vertices, E = edges)
   public search(startNode: TreeNode<T>, searchTerm: T): TreeNode<T> | null {
     const searchQueue = new Queue<TreeNode<T>>();
-    const visitedNodes = new Set<TreeNode<T>>();
     searchQueue.enqueue(startNode);
 
     while (searchQueue.getSize() > 0) {
       const temp = searchQueue.dequeue();
-      if (!temp || visitedNodes.has(temp)) return null;
-
-      visitedNodes.add(temp);
+      if (!temp) return null;
 
       if (this.comparator(temp.data, searchTerm)) return temp;
       if (temp.leftChild) searchQueue.enqueue(temp.leftChild);
