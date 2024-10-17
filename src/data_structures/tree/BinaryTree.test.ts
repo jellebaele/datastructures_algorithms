@@ -202,4 +202,61 @@ describe('BinaryTree', () => {
 
     expect(tree.getLevel(20)).toBe(-1);
   });
+
+  test('getLeafs should return an empty array for an empty tree', () => {
+    tree.root = null;
+
+    const result = tree.getLeafs();
+    expect(result).toEqual([]);
+  });
+
+  test('getLeafs should return the only node as a leaf in a single-node tree', () => {
+    const result = tree.getLeafs();
+    expect(result).toEqual([1]);
+  });
+
+  test('getLeafs should return all nodes as leaves in a tree with only leaf nodes', () => {
+    tree.insert(2);
+    tree.insert(3);
+
+    const result = tree.getLeafs();
+    expect(result).toEqual([3, 2]);
+  });
+
+  test('getLeafs should return the correct leaf nodes in a balanced tree', () => {
+    tree.insert(2);
+    tree.insert(3);
+    tree.insert(4);
+    tree.insert(5);
+
+    const result = tree.getLeafs();
+    expect(result).toEqual([3, 5, 4]);
+  });
+
+  test('getLeafs should return the correct leaf nodes in an unbalanced tree', () => {
+    tree.insert(2);
+    tree.insert(3);
+    tree.insert(4);
+    tree.insert(5);
+    tree.insert(6);
+    tree.remove(3);
+
+    const result = tree.getLeafs();
+    expect(result).toEqual([6, 5, 4]);
+  });
+
+  test('getLeafs should return leaf nodes at different levels', () => {
+    tree.insert(2);
+    tree.insert(3);
+    tree.insert(4);
+    tree.insert(5);
+    tree.insert(6);
+    tree.insert(7);
+    tree.insert(8);
+
+    const result = tree.getLeafs();
+    console.log(result);
+
+    expect(result).toEqual([7, 6, 5, 8]);
+  });
 });

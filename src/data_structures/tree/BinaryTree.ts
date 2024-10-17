@@ -220,7 +220,23 @@ export default class BinaryTree<T> implements IBinaryTree<T> {
   }
 
   getLeafs(): T[] {
-    throw new Error('Method not implemented.');
+    const leafNodes: Array<T> = [];
+
+    if (!this.root) return leafNodes;
+
+    const stack = new Stack<TreeNode<T>>();
+    stack.push(this.root);
+
+    while (stack.size > 0) {
+      const currentNode = stack.pop();
+      if (!currentNode) continue;
+
+      if (this.isLeafNode(currentNode)) leafNodes.push(currentNode.data);
+      if (currentNode.leftChild) stack.push(currentNode.leftChild);
+      if (currentNode.rightChild) stack.push(currentNode.rightChild);
+    }
+
+    return leafNodes;
   }
 
   // In-order DFS: Left, Root, Right
