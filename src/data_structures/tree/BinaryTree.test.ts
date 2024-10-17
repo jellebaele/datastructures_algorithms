@@ -255,8 +255,6 @@ describe('BinaryTree', () => {
     tree.insert(8);
 
     const result = tree.getLeafs();
-    console.log(result);
-
     expect(result).toEqual([7, 6, 5, 8]);
   });
 });

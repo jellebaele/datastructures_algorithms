@@ -31,6 +31,10 @@ export class TreeNode<T> {
     this.leftChild = leftChild;
     this.rightChild = rightChild;
   }
+
+  public isLeaf(): boolean {
+    return !this.leftChild && !this.rightChild;
+  }
 }
 
 export default class BinaryTree<T> implements IBinaryTree<T> {
@@ -102,7 +106,7 @@ export default class BinaryTree<T> implements IBinaryTree<T> {
   remove(key: T): void {
     if (!this.root) return;
 
-    if (this.isLeafNode(this.root)) {
+    if (this.root.isLeaf()) {
       if (this.root.data === key) {
         this.root = null;
         return;
@@ -231,7 +235,7 @@ export default class BinaryTree<T> implements IBinaryTree<T> {
       const currentNode = stack.pop();
       if (!currentNode) continue;
 
-      if (this.isLeafNode(currentNode)) leafNodes.push(currentNode.data);
+      if (currentNode.isLeaf()) leafNodes.push(currentNode.data);
       if (currentNode.leftChild) stack.push(currentNode.leftChild);
       if (currentNode.rightChild) stack.push(currentNode.rightChild);
     }
@@ -291,9 +295,5 @@ export default class BinaryTree<T> implements IBinaryTree<T> {
     }
 
     return arr;
-  }
-
-  private isLeafNode(node: TreeNode<T>): boolean {
-    return !node.leftChild && !node.rightChild;
   }
 }
