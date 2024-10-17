@@ -169,4 +169,37 @@ describe('BinaryTree', () => {
 
     expect(tree.height).toBe(3);
   });
+
+  it('getLevel should return -1 for an empty tree', () => {
+    tree.root = null;
+
+    expect(tree.getLevel(10)).toBe(-1);
+  });
+
+  it('getLevel should return 1 for the root element', () => {
+    expect(tree.getLevel(1)).toBe(1);
+  });
+
+  it('getLevel should return 2 for a direct child of the root', () => {
+    tree.insert(2);
+    tree.insert(3);
+
+    expect(tree.getLevel(2)).toBe(2);
+    expect(tree.getLevel(3)).toBe(2);
+  });
+
+  it('getLevel should return 3 for a child of a child', () => {
+    tree.insert(5);
+    tree.insert(15);
+    tree.insert(3);
+
+    expect(tree.getLevel(3)).toBe(3);
+  });
+
+  it('getLevel should return -1 for an element not in the tree', () => {
+    tree.insert(5);
+    tree.insert(15);
+
+    expect(tree.getLevel(20)).toBe(-1);
+  });
 });

@@ -9,10 +9,9 @@ import { SearchStrategy, TraversalStrategy } from './ITree';
 
 interface IBinaryTree<T> {
   insert(key: T): TreeNode<T>;
-  remove(element: T): void;
+  remove(key: T): void;
   get height(): number;
-  get depth(): number;
-  getLevel(targetNodeId: string): number;
+  getLevel(key: T): number;
   getLeafs(): Array<T>;
   toArray(traversalStrategy: TraversalStrategy): Array<T>;
   search(element: T, searchStrategy: SearchStrategy): TreeNode<T> | null;
@@ -195,12 +194,29 @@ export default class BinaryTree<T> implements IBinaryTree<T> {
     return Math.max(leftDepth, rightDepth) + 1;
   }
 
-  get depth(): number {
-    throw new Error('Method not implemented.');
-  }
+  getLevel(key: T): number {
+    if (!this.root) return -1;
+    let level = 1;
 
-  getLevel(targetNodeId: string): number {
-    throw new Error('Method not implemented.');
+    const queue = new Queue<TreeNode<T>>();
+    queue.enqueue(this.root);
+
+    while (queue.size > 0) {
+      const qSize = queue.size;
+
+      for (let i = 0; i < qSize; i++) {
+        const curr = queue.dequeue();
+        if (!curr) continue;
+
+        if (curr.data === key) return level;
+        if (curr.leftChild) queue.enqueue(curr.leftChild);
+        if (curr.rightChild) queue.enqueue(curr.rightChild);
+      }
+
+      level++;
+    }
+
+    return -1;
   }
 
   getLeafs(): T[] {
