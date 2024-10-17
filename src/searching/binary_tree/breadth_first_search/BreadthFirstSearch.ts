@@ -13,7 +13,7 @@ export default class BreadthFirstSearch<T> {
     const searchQueue = new Queue<TreeNode<T>>();
     searchQueue.enqueue(startNode);
 
-    while (searchQueue.getSize() > 0) {
+    while (searchQueue.size > 0) {
       const temp = searchQueue.dequeue();
       if (!temp) continue;
 

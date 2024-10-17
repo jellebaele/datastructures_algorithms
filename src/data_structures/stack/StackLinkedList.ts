@@ -5,14 +5,14 @@ import IStack from './IStack';
 export default class StackLinkedList<T> implements IStack<T> {
   private capacity: number;
   private front: Node<T> | null = null;
-  private size = 0;
+  private _size = 0;
 
   constructor(capacity = 1000) {
     this.capacity = capacity;
   }
 
-  getSize(): number {
-    return this.size;
+  get size(): number {
+    return this._size;
   }
 
   push(element: T): void {
@@ -24,7 +24,7 @@ export default class StackLinkedList<T> implements IStack<T> {
     }
 
     this.front = newNode;
-    this.size++;
+    this._size++;
   }
 
   pop(): T | undefined {
@@ -32,17 +32,17 @@ export default class StackLinkedList<T> implements IStack<T> {
 
     const temp = this.front;
     this.front = temp.next;
-    this.size--;
+    this._size--;
 
     return temp.data;
   }
 
   isEmpty(): boolean {
-    return this.size === 0;
+    return this._size === 0;
   }
 
   isFull(): boolean {
-    return this.size === this.capacity;
+    return this._size === this.capacity;
   }
 
   peek(): T | undefined {

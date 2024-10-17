@@ -7,7 +7,7 @@ export default abstract class Collection<T> {
     this.data = new Array<T>();
   }
 
-  getSize(): number {
+  get size(): number {
     return this.data.length;
   }
 
@@ -16,7 +16,7 @@ export default abstract class Collection<T> {
   }
 
   isEmpty(): boolean {
-    return this.getSize() === 0;
+    return this.size === 0;
   }
 
   abstract peek(): T | undefined;

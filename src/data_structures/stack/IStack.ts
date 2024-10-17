@@ -4,7 +4,7 @@ interface IStack<T> {
   isEmpty(): boolean;
   isFull(): boolean;
   peek(): T | undefined;
-  getSize(): number;
+  size: number;
 }
 
 export default IStack;

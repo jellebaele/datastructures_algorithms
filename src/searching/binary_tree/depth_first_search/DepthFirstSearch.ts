@@ -12,7 +12,7 @@ export default class DepthFirstSearch<T> {
     const stack = new Stack<TreeNode<T>>(10);
     stack.push(node);
 
-    while (stack.getSize() > 0) {
+    while (stack.size > 0) {
       const temp = stack.pop();
 
       if (!temp) continue;

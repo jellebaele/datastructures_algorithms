@@ -49,7 +49,7 @@ export default class BinaryTree<T> {
     queue.enqueue(this.root);
 
     // BFS to insert a new node
-    while (queue.getSize() > 0) {
+    while (queue.size > 0) {
       const temp = queue.dequeue();
       if (!temp) break;
 
@@ -140,7 +140,7 @@ export default class BinaryTree<T> {
     const queue = new Queue<TreeNode<T>>();
     queue.enqueue(node);
 
-    while (queue.getSize() > 0) {
+    while (queue.size > 0) {
       const temp = queue.dequeue();
       if (!temp) break;
 

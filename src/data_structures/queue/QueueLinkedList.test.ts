@@ -12,7 +12,7 @@ describe('QueueLinkedList', () => {
     queue.enqueue(1);
     queue.enqueue(2);
 
-    expect(queue.getSize()).toBe(2);
+    expect(queue.size).toBe(2);
   });
 
   test('should dequeue elements in FIFO order', () => {
@@ -46,7 +46,7 @@ describe('QueueLinkedList', () => {
   });
 
   test('should handle an empty queue correctly', () => {
-    expect(queue.getSize()).toBe(0);
+    expect(queue.size).toBe(0);
     expect(queue.dequeue()).toBeUndefined(); // Dequeue from an empty queue should return undefined
     expect(queue.peek()).toBeUndefined(); // Peek on an empty queue should return undefined
   });
@@ -54,7 +54,7 @@ describe('QueueLinkedList', () => {
   test('should enqueue multiple elements from a list and increase the size', () => {
     queue.enqueueList([1, 2, 3]);
 
-    expect(queue.getSize()).toBe(3);
+    expect(queue.size).toBe(3);
     expect(queue.dequeue()).toBe(1);
     expect(queue.dequeue()).toBe(2);
     expect(queue.dequeue()).toBe(3);
@@ -64,7 +64,7 @@ describe('QueueLinkedList', () => {
     queue.enqueue(1);
     queue.enqueueList([2, 3]);
 
-    expect(queue.getSize()).toBe(3);
+    expect(queue.size).toBe(3);
     expect(queue.dequeue()).toBe(1);
     expect(queue.dequeue()).toBe(2);
     expect(queue.dequeue()).toBe(3);
@@ -79,7 +79,7 @@ describe('QueueLinkedList', () => {
     queue.enqueue(1);
     queue.enqueueList([2, 3, 4]);
 
-    expect(queue.getSize()).toBe(4);
+    expect(queue.size).toBe(4);
     expect(queue.dequeue()).toBe(1);
     expect(queue.dequeue()).toBe(2);
     expect(queue.dequeue()).toBe(3);
@@ -90,14 +90,14 @@ describe('QueueLinkedList', () => {
     queue.enqueue(1);
     queue.enqueueList([]);
 
-    expect(queue.getSize()).toBe(1);
+    expect(queue.size).toBe(1);
     expect(queue.peek()).toBe(1);
   });
 
   test('should correctly handle enqueuing a list to an empty queue', () => {
     queue.enqueueList([7, 8, 9]);
 
-    expect(queue.getSize()).toBe(3);
+    expect(queue.size).toBe(3);
     expect(queue.dequeue()).toBe(7);
     expect(queue.dequeue()).toBe(8);
     expect(queue.dequeue()).toBe(9);

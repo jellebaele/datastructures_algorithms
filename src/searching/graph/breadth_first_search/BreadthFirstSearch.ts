@@ -14,7 +14,7 @@ export default class BreadthFirstSearch<T> {
     const visitedVertices = new Set();
 
     searchQueue.enqueue(startVertex);
-    while (searchQueue.getSize() > 0) {
+    while (searchQueue.size > 0) {
       const vertex = searchQueue.dequeue();
 
       if (!vertex || visitedVertices.has(vertex.id)) continue;

@@ -17,7 +17,7 @@ export default class DepthFirstSearch<T> {
 
     searchStack.push(startVertex);
 
-    while (searchStack.getSize() > 0) {
+    while (searchStack.size > 0) {
       const vertex = searchStack.pop();
 
       if (!vertex || visitedVertices.has(vertex.id)) continue;
