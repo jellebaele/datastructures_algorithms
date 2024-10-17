@@ -120,4 +120,53 @@ describe('BinaryTree', () => {
     const result = tree.toArray(TraversalStrategy.LEVEL_ORDER_TRAVERSAL);
     expect(result).toEqual([]);
   });
+
+  it('should return 0 as height for an empty tree', () => {
+    tree.root = null;
+
+    expect(tree.height).toBe(0);
+  });
+
+  it('should return 1 as height for a tree with only the root node', () => {
+    expect(tree.height).toBe(1);
+  });
+
+  it('should return 2 as height for a tree with a root and one child', () => {
+    tree.insert(5);
+
+    expect(tree.height).toBe(2);
+  });
+
+  it('should return 2 as height for a tree with a root and two children', () => {
+    tree.insert(5);
+    tree.insert(15);
+
+    expect(tree.height).toBe(2);
+  });
+
+  it('should return 3 as height for a balanced tree with three levels', () => {
+    tree.insert(5);
+    tree.insert(15);
+    tree.insert(3);
+    tree.insert(7);
+    tree.insert(13);
+    tree.insert(17);
+
+    expect(tree.height).toBe(3);
+  });
+
+  it('should return the correct height for an unbalanced tree', () => {
+    tree.insert(2);
+    tree.insert(3);
+    tree.insert(4);
+    tree.insert(5);
+    tree.insert(6);
+    tree.insert(7);
+
+    tree.remove(4);
+    tree.remove(5);
+    tree.remove(6);
+
+    expect(tree.height).toBe(3);
+  });
 });

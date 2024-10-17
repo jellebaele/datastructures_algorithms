@@ -183,8 +183,18 @@ export default class BinaryTree<T> implements IBinaryTree<T> {
   }
 
   get height(): number {
-    throw new Error('Method not implemented.');
+    return this.getHeight(this.root);
   }
+
+  private getHeight(node: TreeNode<T> | null): number {
+    if (!node) return 0;
+
+    const leftDepth = this.getHeight(node.leftChild);
+    const rightDepth = this.getHeight(node.rightChild);
+
+    return Math.max(leftDepth, rightDepth) + 1;
+  }
+
   get depth(): number {
     throw new Error('Method not implemented.');
   }
