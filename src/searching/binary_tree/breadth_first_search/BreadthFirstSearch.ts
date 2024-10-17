@@ -9,7 +9,9 @@ export default class BreadthFirstSearch<T> {
   }
 
   // O(V+E) (V = vertices, E = edges)
-  public search(searchTerm: T, startNode: TreeNode<T>): TreeNode<T> | null {
+  public search(searchTerm: T, startNode: TreeNode<T> | null): TreeNode<T> | null {
+    if (!startNode) return null;
+
     const searchQueue = new Queue<TreeNode<T>>();
     searchQueue.enqueue(startNode);
 

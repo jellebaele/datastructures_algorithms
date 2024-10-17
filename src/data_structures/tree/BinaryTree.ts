@@ -2,29 +2,31 @@
 
 import BreadthFirstSearch from '../../searching/binary_tree/breadth_first_search/BreadthFirstSearch';
 import DepthFirstSearch from '../../searching/binary_tree/depth_first_search/DepthFirstSearch';
+import NotFoundError from '../../shared/errors/NotFoundError';
 import Queue from '../queue/Queue';
+import Stack from '../stack/Stack';
 import { SearchStrategy, TraversalStrategy } from './ITree';
 
 interface IBinaryTree<T> {
-  insert(element: T): void;
+  insert(key: T): TreeNode<T>;
   remove(element: T): void;
   get height(): number;
   get depth(): number;
   getLevel(targetNodeId: string): number;
   getLeafs(): Array<T>;
   toArray(traversalStrategy: TraversalStrategy): Array<T>;
-  search(element: T, traversalStrategy: TraversalStrategy): boolean;
+  search(element: T, searchStrategy: SearchStrategy): TreeNode<T> | null;
 }
 
 export class TreeNode<T> {
   data: T;
-  leftChild: TreeNode<T> | undefined;
-  rightChild: TreeNode<T> | undefined;
+  leftChild: TreeNode<T> | null;
+  rightChild: TreeNode<T> | null;
 
   constructor(
     data: T,
-    leftChild: TreeNode<T> | undefined = undefined,
-    rightChild: TreeNode<T> | undefined = undefined,
+    leftChild: TreeNode<T> | null = null,
+    rightChild: TreeNode<T> | null = null,
   ) {
     this.data = data;
     this.leftChild = leftChild;
@@ -32,8 +34,8 @@ export class TreeNode<T> {
   }
 }
 
-export default class BinaryTree<T> {
-  root: TreeNode<T>;
+export default class BinaryTree<T> implements IBinaryTree<T> {
+  root: TreeNode<T> | null;
 
   constructor(rootData: T) {
     this.root = new TreeNode(rootData);
@@ -83,7 +85,6 @@ export default class BinaryTree<T> {
       case SearchStrategy.DFS:
         return new DepthFirstSearch(comparator).search(element, this.root);
     }
-    return null;
   }
 
   public toArray(traversalStrategy: TraversalStrategy): Array<T> {
@@ -99,8 +100,105 @@ export default class BinaryTree<T> {
     }
   }
 
+  remove(key: T): void {
+    if (!this.root) return;
+
+    if (this.isLeafNode(this.root)) {
+      if (this.root.data === key) {
+        this.root = null;
+        return;
+      }
+      return;
+    }
+
+    const { nodeToDelete, rightmostNode } = this.getKeyAndRightmostNode(key, this.root);
+
+    if (nodeToDelete) {
+      const data = rightmostNode.data;
+      this.removeNode(this.root, rightmostNode);
+      nodeToDelete.data = data;
+    }
+  }
+
+  private getKeyAndRightmostNode(
+    key: T,
+    startNode: TreeNode<T>,
+  ): {
+    nodeToDelete: TreeNode<T> | null;
+    rightmostNode: TreeNode<T>;
+  } {
+    let nodeToDelete: TreeNode<T> | null = null;
+    let currentNode: TreeNode<T> | undefined;
+    const stack = new Stack<TreeNode<T>>();
+    stack.push(startNode);
+
+    // DFS
+    while (stack.size > 0) {
+      currentNode = stack.pop();
+
+      if (!currentNode) continue;
+
+      if (currentNode.data === key) nodeToDelete = currentNode;
+      if (currentNode.rightChild) stack.push(currentNode.rightChild);
+      if (currentNode.leftChild) stack.push(currentNode.leftChild);
+    }
+
+    if (currentNode === undefined) throw new NotFoundError();
+
+    return { nodeToDelete, rightmostNode: currentNode };
+  }
+
+  private removeNode(startNode: TreeNode<T>, nodeToDelete: TreeNode<T>): void {
+    const stack = new Stack<TreeNode<T>>();
+    stack.push(startNode);
+
+    while (stack.size > 0) {
+      let currentNode: TreeNode<T> | null | undefined = stack.pop();
+
+      if (!currentNode) continue;
+
+      if (currentNode.data === nodeToDelete.data) {
+        currentNode = null;
+        return;
+      }
+
+      if (currentNode.leftChild) {
+        if (currentNode.leftChild.data === nodeToDelete.data) {
+          currentNode.leftChild = null;
+          return;
+        } else {
+          stack.push(currentNode.leftChild);
+        }
+      }
+
+      if (currentNode.rightChild) {
+        if (currentNode.rightChild.data === nodeToDelete.data) {
+          currentNode.rightChild = null;
+          return;
+        } else {
+          stack.push(currentNode.rightChild);
+        }
+      }
+    }
+  }
+
+  get height(): number {
+    throw new Error('Method not implemented.');
+  }
+  get depth(): number {
+    throw new Error('Method not implemented.');
+  }
+
+  getLevel(targetNodeId: string): number {
+    throw new Error('Method not implemented.');
+  }
+
+  getLeafs(): T[] {
+    throw new Error('Method not implemented.');
+  }
+
   // In-order DFS: Left, Root, Right
-  private inOrderTraversal(node?: TreeNode<T>, arr: Array<T> = []): Array<T> {
+  private inOrderTraversal(node?: TreeNode<T> | null, arr: Array<T> = []): Array<T> {
     if (!node) return [];
 
     this.inOrderTraversal(node.leftChild, arr);
@@ -111,7 +209,7 @@ export default class BinaryTree<T> {
   }
 
   // Pre-order DFS: Root, Left, Right
-  private preOrderTraversal(node?: TreeNode<T>, arr: Array<T> = []): Array<T> {
+  private preOrderTraversal(node?: TreeNode<T> | null, arr: Array<T> = []): Array<T> {
     if (!node) return [];
 
     arr.push(node.data);
@@ -122,7 +220,7 @@ export default class BinaryTree<T> {
   }
 
   // Post-order DFS: Left, Right, Root
-  private postOrderTraversal(node?: TreeNode<T>, arr: Array<T> = []): Array<T> {
+  private postOrderTraversal(node?: TreeNode<T> | null, arr: Array<T> = []): Array<T> {
     if (!node) return [];
 
     this.postOrderTraversal(node.leftChild, arr);
@@ -133,7 +231,7 @@ export default class BinaryTree<T> {
   }
 
   // BFS
-  private levelOrderTraversel(node?: TreeNode<T>): Array<T> {
+  private levelOrderTraversel(node?: TreeNode<T> | null): Array<T> {
     if (!node) return [];
 
     const arr: Array<T> = [];
@@ -151,5 +249,9 @@ export default class BinaryTree<T> {
     }
 
     return arr;
+  }
+
+  private isLeafNode(node: TreeNode<T>): boolean {
+    return !node.leftChild && !node.rightChild;
   }
 }

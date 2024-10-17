@@ -8,7 +8,8 @@ export default class DepthFirstSearch<T> {
     this.comparator = comparator;
   }
 
-  public search(searchElement: T, node: TreeNode<T>): TreeNode<T> | null {
+  public search(searchElement: T, node: TreeNode<T> | null): TreeNode<T> | null {
+    if (!node) return null;
     const stack = new Stack<TreeNode<T>>(10);
     stack.push(node);
 
@@ -25,7 +26,7 @@ export default class DepthFirstSearch<T> {
     return null;
   }
 
-  public searchRecursive(searchElement: T, node?: TreeNode<T>): TreeNode<T> | null {
+  public searchRecursive(searchElement: T, node: TreeNode<T> | null): TreeNode<T> | null {
     if (!node) return null;
 
     if (this.comparator(node.data, searchElement)) return node;
