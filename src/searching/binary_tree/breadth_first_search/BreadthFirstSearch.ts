@@ -1,5 +1,5 @@
 import Queue from '../../../data_structures/queue/Queue';
-import { TreeNode } from '../../../data_structures/tree/BinaryTree';
+import TreeNode from '../../../data_structures/tree/TreeNode';
 
 export default class BreadthFirstSearch<T> {
   private comparator: (a: T, b: T) => number;

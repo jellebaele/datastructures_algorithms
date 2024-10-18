@@ -1,43 +1,13 @@
 // https://dtjv.io/the-generic-tree-data-structure/
 
 import BreadthFirstSearch from '../../searching/binary_tree/breadth_first_search/BreadthFirstSearch';
-import DepthFirstSearch from '../../searching/binary_tree/depth_first_search/DepthFirstSearch';
 import NotFoundError from '../../shared/errors/NotFoundError';
 import Queue from '../queue/Queue';
 import Stack from '../stack/Stack';
-import { SearchStrategy, TraversalStrategy } from './ITree';
+import ITree, { TraversalStrategy } from './ITree';
+import TreeNode from './TreeNode';
 
-interface IBinaryTree<T> {
-  insert(key: T): TreeNode<T>;
-  remove(key: T): void;
-  get height(): number;
-  getLevel(key: T): number;
-  getLeafs(): Array<T>;
-  toArray(traversalStrategy: TraversalStrategy): Array<T>;
-  search(element: T, searchStrategy: SearchStrategy): TreeNode<T> | null;
-}
-
-export class TreeNode<T> {
-  data: T;
-  leftChild: TreeNode<T> | null;
-  rightChild: TreeNode<T> | null;
-
-  constructor(
-    data: T,
-    leftChild: TreeNode<T> | null = null,
-    rightChild: TreeNode<T> | null = null,
-  ) {
-    this.data = data;
-    this.leftChild = leftChild;
-    this.rightChild = rightChild;
-  }
-
-  public isLeaf(): boolean {
-    return !this.leftChild && !this.rightChild;
-  }
-}
-
-export default class BinaryTree<T> implements IBinaryTree<T> {
+export default class BinaryTree<T> implements ITree<T> {
   root: TreeNode<T> | null;
 
   constructor(rootData: T) {
@@ -75,19 +45,14 @@ export default class BinaryTree<T> implements IBinaryTree<T> {
 
     throw new Error(`Unable to insert a new TreeNode for key ${key}'.`);
   }
-
   // Any traversal method can be used to search.
   // The most common methods are depth-first search (DFS)
   // and breadth-first search (BFS)
-  public search(element: T, searchStrategy: SearchStrategy): TreeNode<T> | null {
+
+  public search(element: T): TreeNode<T> | null {
     const comparator = (a: T, b: T) => (a === b ? 1 : 0);
 
-    switch (searchStrategy) {
-      case SearchStrategy.BFS:
-        return new BreadthFirstSearch(comparator).search(element, this.root);
-      case SearchStrategy.DFS:
-        return new DepthFirstSearch(comparator).search(element, this.root);
-    }
+    return new BreadthFirstSearch(comparator).search(element, this.root);
   }
 
   public toArray(traversalStrategy: TraversalStrategy): Array<T> {

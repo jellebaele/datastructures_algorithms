@@ -1,5 +1,5 @@
 import Stack from '../../../data_structures/stack/Stack';
-import { TreeNode } from '../../../data_structures/tree/BinaryTree';
+import TreeNode from '../../../data_structures/tree/TreeNode';
 
 export default class DepthFirstSearch<T> {
   private comparator: (a: T, b: T) => number;

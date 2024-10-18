@@ -1,5 +1,5 @@
+import TreeNode from '../../../data_structures/tree/TreeNode';
 import BreadthFirstSearch from './BreadthFirstSearch';
-import { TreeNode } from '../../../data_structures/tree/BinaryTree';
 
 describe('BreadthFirstSearch', () => {
   const comparator = (a: number, b: number) => (a === b ? 1 : 0);

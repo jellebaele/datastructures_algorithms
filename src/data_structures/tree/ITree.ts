@@ -1,3 +1,5 @@
+import TreeNode from './TreeNode';
+
 export enum TraversalStrategy {
   PRE_ORDER_TRAVERSAL,
   IN_ORDER_TRAVERSAL,
@@ -11,14 +13,13 @@ export enum SearchStrategy {
 }
 
 interface ITree<T> {
-  insert(element: T): void;
-  remove(elemnt: T): void;
+  insert(key: T): TreeNode<T>;
+  remove(key: T): void;
   get height(): number;
-  get depth(): number;
-  getLevel(targetNodeId: string): number;
+  getLevel(key: T): number;
   getLeafs(): Array<T>;
   toArray(traversalStrategy: TraversalStrategy): Array<T>;
-  search(element: T, traversalStrategy: TraversalStrategy): boolean;
+  search(element: T): TreeNode<T> | null;
 }
 
 export default ITree;
