@@ -55,25 +55,25 @@ export default class BinaryTree<T> implements IBinaryTree<T> {
 
     // BFS to insert a new node
     while (queue.size > 0) {
-      const temp = queue.dequeue();
-      if (!temp) break;
+      const currNode = queue.dequeue();
+      if (!currNode) continue;
 
-      if (!temp.leftChild) {
-        temp.leftChild = new TreeNode(key);
-        return temp.leftChild;
+      if (!currNode.leftChild) {
+        currNode.leftChild = new TreeNode(key);
+        return currNode.leftChild;
       } else {
-        queue.enqueue(temp.leftChild);
+        queue.enqueue(currNode.leftChild);
       }
 
-      if (!temp.rightChild) {
-        temp.rightChild = new TreeNode(key);
-        return temp.rightChild;
+      if (!currNode.rightChild) {
+        currNode.rightChild = new TreeNode(key);
+        return currNode.rightChild;
       } else {
-        queue.enqueue(temp.rightChild);
+        queue.enqueue(currNode.rightChild);
       }
     }
 
-    throw new Error('Unable to insert a new node');
+    throw new Error(`Unable to insert a new TreeNode for key ${key}'.`);
   }
 
   // Any traversal method can be used to search.
@@ -81,7 +81,7 @@ export default class BinaryTree<T> implements IBinaryTree<T> {
   // and breadth-first search (BFS)
   public search(element: T, searchStrategy: SearchStrategy): TreeNode<T> | null {
     const comparator = (a: T, b: T) => (a === b ? 1 : 0);
-    // DFS
+
     switch (searchStrategy) {
       case SearchStrategy.BFS:
         return new BreadthFirstSearch(comparator).search(element, this.root);
@@ -109,55 +109,46 @@ export default class BinaryTree<T> implements IBinaryTree<T> {
     if (this.root.isLeaf()) {
       if (this.root.data === key) {
         this.root = null;
-        return;
       }
       return;
     }
 
-    const { nodeToDelete, rightmostNode } = this.getKeyAndRightmostNode(key, this.root);
+    const { nodeToDelete, rightmostNode } = this.getNodeToDeleteAndRightmostNode(key, this.root);
 
     if (nodeToDelete) {
-      const data = rightmostNode.data;
-      this.removeNode(this.root, rightmostNode);
-      nodeToDelete.data = data;
+      const newData = rightmostNode.data;
+      this.removeNode(rightmostNode, this.root);
+      nodeToDelete.data = newData;
     }
   }
 
-  private getKeyAndRightmostNode(
-    key: T,
-    startNode: TreeNode<T>,
-  ): {
-    nodeToDelete: TreeNode<T> | null;
-    rightmostNode: TreeNode<T>;
-  } {
+  private getNodeToDeleteAndRightmostNode(key: T, startNode: TreeNode<T>) {
     let nodeToDelete: TreeNode<T> | null = null;
-    let currentNode: TreeNode<T> | undefined;
-    const stack = new Stack<TreeNode<T>>();
-    stack.push(startNode);
+    let currNode: TreeNode<T> | undefined;
+    const queue = new Queue<TreeNode<T>>();
+    queue.enqueue(startNode);
 
-    // DFS
-    while (stack.size > 0) {
-      currentNode = stack.pop();
+    while (queue.size > 0) {
+      currNode = queue.dequeue();
+      if (!currNode) continue;
 
-      if (!currentNode) continue;
-
-      if (currentNode.data === key) nodeToDelete = currentNode;
-      if (currentNode.rightChild) stack.push(currentNode.rightChild);
-      if (currentNode.leftChild) stack.push(currentNode.leftChild);
+      if (currNode.data === key) nodeToDelete = currNode;
+      if (currNode.leftChild) queue.enqueue(currNode.leftChild);
+      if (currNode.rightChild) queue.enqueue(currNode.rightChild);
     }
 
-    if (currentNode === undefined) throw new NotFoundError();
+    if (currNode === undefined)
+      throw new NotFoundError('Cannot delete as the rightmost node is not found.');
 
-    return { nodeToDelete, rightmostNode: currentNode };
+    return { nodeToDelete, rightmostNode: currNode };
   }
 
-  private removeNode(startNode: TreeNode<T>, nodeToDelete: TreeNode<T>): void {
-    const stack = new Stack<TreeNode<T>>();
+  private removeNode(nodeToDelete: TreeNode<T>, startNode: TreeNode<T>) {
+    const stack = new Stack<TreeNode<T> | null>();
     stack.push(startNode);
 
     while (stack.size > 0) {
-      let currentNode: TreeNode<T> | null | undefined = stack.pop();
-
+      let currentNode = stack.pop();
       if (!currentNode) continue;
 
       if (currentNode.data === nodeToDelete.data) {
@@ -173,7 +164,6 @@ export default class BinaryTree<T> implements IBinaryTree<T> {
           stack.push(currentNode.leftChild);
         }
       }
-
       if (currentNode.rightChild) {
         if (currentNode.rightChild.data === nodeToDelete.data) {
           currentNode.rightChild = null;
@@ -186,22 +176,35 @@ export default class BinaryTree<T> implements IBinaryTree<T> {
   }
 
   get height(): number {
-    return this.getHeight(this.root);
-  }
+    if (!this.root) return 0;
+    if (this.root.isLeaf()) return 1;
 
-  private getHeight(node: TreeNode<T> | null): number {
-    if (!node) return 0;
+    let height = 0;
+    const queue = new Queue<TreeNode<T>>();
+    queue.enqueue(this.root);
 
-    const leftDepth = this.getHeight(node.leftChild);
-    const rightDepth = this.getHeight(node.rightChild);
+    while (queue.size > 0) {
+      const sQize = queue.size;
 
-    return Math.max(leftDepth, rightDepth) + 1;
+      for (let i = 0; i < sQize; i++) {
+        const currNode = queue.dequeue();
+        if (!currNode) continue;
+
+        if (currNode.leftChild) queue.enqueue(currNode.leftChild);
+        if (currNode.rightChild) queue.enqueue(currNode.rightChild);
+      }
+
+      height++;
+    }
+
+    return height;
   }
 
   getLevel(key: T): number {
     if (!this.root) return -1;
-    let level = 1;
+    if (this.root.data === key) return 1;
 
+    let level = 1;
     const queue = new Queue<TreeNode<T>>();
     queue.enqueue(this.root);
 
@@ -209,12 +212,12 @@ export default class BinaryTree<T> implements IBinaryTree<T> {
       const qSize = queue.size;
 
       for (let i = 0; i < qSize; i++) {
-        const curr = queue.dequeue();
-        if (!curr) continue;
+        const currNode = queue.dequeue();
+        if (!currNode) continue;
 
-        if (curr.data === key) return level;
-        if (curr.leftChild) queue.enqueue(curr.leftChild);
-        if (curr.rightChild) queue.enqueue(curr.rightChild);
+        if (currNode.data === key) return level;
+        if (currNode.leftChild) queue.enqueue(currNode.leftChild);
+        if (currNode.rightChild) queue.enqueue(currNode.rightChild);
       }
 
       level++;
@@ -224,43 +227,43 @@ export default class BinaryTree<T> implements IBinaryTree<T> {
   }
 
   getLeafs(): T[] {
-    const leafNodes: Array<T> = [];
+    if (!this.root) return [];
+    if (this.root.isLeaf()) return [this.root.data];
 
-    if (!this.root) return leafNodes;
-
+    const result: T[] = [];
     const stack = new Stack<TreeNode<T>>();
     stack.push(this.root);
 
     while (stack.size > 0) {
-      const currentNode = stack.pop();
-      if (!currentNode) continue;
+      const currNode = stack.pop();
+      if (!currNode) continue;
 
-      if (currentNode.isLeaf()) leafNodes.push(currentNode.data);
-      if (currentNode.leftChild) stack.push(currentNode.leftChild);
-      if (currentNode.rightChild) stack.push(currentNode.rightChild);
+      if (currNode.isLeaf()) result.push(currNode.data);
+      if (currNode.leftChild) stack.push(currNode.leftChild);
+      if (currNode.rightChild) stack.push(currNode.rightChild);
     }
 
-    return leafNodes;
+    return result;
   }
 
   // In-order DFS: Left, Root, Right
-  private inOrderTraversal(node?: TreeNode<T> | null, arr: Array<T> = []): Array<T> {
+  private inOrderTraversal(node: TreeNode<T> | null | null, arr: Array<T> = []): Array<T> {
     if (!node) return [];
 
-    this.inOrderTraversal(node.leftChild, arr);
+    if (node.leftChild) this.inOrderTraversal(node.leftChild, arr);
     arr.push(node.data);
-    this.inOrderTraversal(node.rightChild, arr);
+    if (node.rightChild) this.inOrderTraversal(node.rightChild, arr);
 
     return arr;
   }
 
   // Pre-order DFS: Root, Left, Right
-  private preOrderTraversal(node?: TreeNode<T> | null, arr: Array<T> = []): Array<T> {
+  private preOrderTraversal(node: TreeNode<T> | null, arr: Array<T> = []): Array<T> {
     if (!node) return [];
 
     arr.push(node.data);
-    this.preOrderTraversal(node.leftChild, arr);
-    this.preOrderTraversal(node.rightChild, arr);
+    if (node.leftChild) this.preOrderTraversal(node.leftChild, arr);
+    if (node.rightChild) this.preOrderTraversal(node.rightChild, arr);
 
     return arr;
   }
@@ -269,31 +272,31 @@ export default class BinaryTree<T> implements IBinaryTree<T> {
   private postOrderTraversal(node?: TreeNode<T> | null, arr: Array<T> = []): Array<T> {
     if (!node) return [];
 
-    this.postOrderTraversal(node.leftChild, arr);
-    this.postOrderTraversal(node.rightChild, arr);
+    if (node.leftChild) this.postOrderTraversal(node.leftChild, arr);
+    if (node.rightChild) this.postOrderTraversal(node.rightChild, arr);
     arr.push(node.data);
 
     return arr;
   }
 
   // BFS
-  private levelOrderTraversel(node?: TreeNode<T> | null): Array<T> {
-    if (!node) return [];
+  private levelOrderTraversel(node: TreeNode<T> | null): Array<T> {
+    const result: Array<T> = [];
+    if (!node) return result;
 
-    const arr: Array<T> = [];
     const queue = new Queue<TreeNode<T>>();
     queue.enqueue(node);
 
     while (queue.size > 0) {
-      const temp = queue.dequeue();
-      if (!temp) break;
+      const currNode = queue.dequeue();
+      if (!currNode) continue;
 
-      arr.push(temp.data);
+      result.push(currNode.data);
 
-      if (temp.leftChild) queue.enqueue(temp.leftChild);
-      if (temp.rightChild) queue.enqueue(temp.rightChild);
+      if (currNode.leftChild) queue.enqueue(currNode.leftChild);
+      if (currNode.rightChild) queue.enqueue(currNode.rightChild);
     }
 
-    return arr;
+    return result;
   }
 }
