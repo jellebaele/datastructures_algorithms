@@ -98,7 +98,53 @@ describe('BinarySearchTree', () => {
     it('should remove the root node in a tree with only one node', () => {
       binarySearchTree.remove(1);
 
-      expect(binarySearchTree.toArray(TraversalStrategy.IN_ORDER_TRAVERSAL)).toBe([]);
+      expect(binarySearchTree.toArray(TraversalStrategy.LEVEL_ORDER_TRAVERSAL)).toEqual([]);
+    });
+
+    it('should remove a leaf node', () => {
+      populateBinarySearchTree(binarySearchTree);
+      binarySearchTree.remove(3);
+
+      expect(binarySearchTree.toArray(TraversalStrategy.LEVEL_ORDER_TRAVERSAL)).toEqual([
+        1, 5, 15, 7, 18, 12,
+      ]);
+    });
+
+    it('should remove a node with only a left child', () => {
+      populateBinarySearchTree(binarySearchTree);
+      binarySearchTree.remove(7);
+
+      expect(binarySearchTree.toArray(TraversalStrategy.LEVEL_ORDER_TRAVERSAL)).toEqual([
+        1, 5, 3, 15, 12, 18,
+      ]);
+    });
+
+    it('should remove a node with only a right child', () => {
+      populateBinarySearchTree(binarySearchTree);
+      binarySearchTree.insert(19);
+      binarySearchTree.remove(18);
+
+      expect(binarySearchTree.toArray(TraversalStrategy.LEVEL_ORDER_TRAVERSAL)).toEqual([
+        1, 5, 3, 15, 7, 19, 12,
+      ]);
+    });
+
+    it('should remove a node with two children', () => {
+      populateBinarySearchTree(binarySearchTree);
+      binarySearchTree.remove(1);
+
+      expect(binarySearchTree.toArray(TraversalStrategy.LEVEL_ORDER_TRAVERSAL)).toEqual([
+        5, 3, 15, 7, 18, 12,
+      ]);
+    });
+
+    it('should not modify the tree when removing a non-existent element', () => {
+      populateBinarySearchTree(binarySearchTree);
+      binarySearchTree.remove(100);
+
+      expect(binarySearchTree.toArray(TraversalStrategy.LEVEL_ORDER_TRAVERSAL)).toEqual([
+        1, 5, 3, 15, 7, 18, 12,
+      ]);
     });
   });
 

@@ -1,4 +1,3 @@
-import NotImplementedError from '../../shared/errors/NotImplementedError';
 import BinaryTree from './BinaryTree';
 import ITree from './ITree';
 import TreeNode from './TreeNode';
@@ -30,14 +29,52 @@ export default class BinarySearchTree<T> extends BinaryTree<T> implements ITree<
     return this.searchRecursively(element, this.root);
   }
 
-  private searchRecursively(element: T, node: TreeNode<T> | null): TreeNode<T> | null {
+  private searchRecursively(data: T, node: TreeNode<T> | null): TreeNode<T> | null {
     if (!node) return null;
-    else if (node.data === element) return node;
-    else if (node.data > element) return this.searchRecursively(element, node.leftChild);
-    else return this.searchRecursively(element, node.rightChild);
+    else if (node.data === data) return node;
+    else if (node.data > data) return this.searchRecursively(data, node.leftChild);
+    else return this.searchRecursively(data, node.rightChild);
   }
 
   remove(key: T): void {
-    throw new NotImplementedError();
+    this.root = this.removeRecursively(key, this.root);
+  }
+
+  private removeRecursively(data: T, node: TreeNode<T> | null): TreeNode<T> | null {
+    if (!node) return null;
+
+    if (data < node.data) {
+      node.leftChild = this.removeRecursively(data, node.leftChild);
+    } else if (data > node.data) {
+      node.rightChild = this.removeRecursively(data, node.rightChild);
+    } else {
+      if (node.isLeaf()) {
+        node = null;
+        return node;
+      } else if (!node.leftChild) {
+        const temp = node.rightChild;
+        node = null;
+        return temp;
+      } else if (!node.rightChild) {
+        const temp = node.leftChild;
+        node = null;
+        return temp;
+      } else {
+        node.data = this.getLeftmostNode(node.rightChild).data;
+        node.rightChild = this.removeRecursively(node.data, node.rightChild);
+      }
+    }
+
+    return node;
+  }
+
+  private getLeftmostNode(node: TreeNode<T>): TreeNode<T> {
+    let result = node;
+
+    while (result.leftChild) {
+      result = result.leftChild;
+    }
+
+    return result;
   }
 }
