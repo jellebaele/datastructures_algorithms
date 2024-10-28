@@ -1,39 +1,43 @@
+import NotImplementedError from '../../shared/errors/NotImplementedError';
 import BinaryTree from './BinaryTree';
 import ITree from './ITree';
 import TreeNode from './TreeNode';
 
 export default class BinarySearchTree<T> extends BinaryTree<T> implements ITree<T> {
-  private comparator: (a: T, b: T) => number;
-
-  constructor(rootData: T, comparator?: (a: T, b: T) => number) {
+  constructor(rootData: T) {
     super(rootData);
-    this.comparator = comparator ? comparator : (a: T, b: T) => (a < b ? 1 : 0);
   }
 
   insert(data: T): TreeNode<T> {
-    if (!this.root) {
-      this.root = new TreeNode(data);
-      return this.root;
-    }
-
-    return this._insert(data, this.root);
+    return this.insertRecursively(data, this.root);
   }
 
-  private _insert(data: T, node: TreeNode<T> | null): TreeNode<T> {
-    if (!node) return new TreeNode(data);
+  private insertRecursively(data: T, node: TreeNode<T> | null): TreeNode<T> {
+    if (!node) {
+      const newNode = new TreeNode(data);
+      if (!this.root) this.root = newNode;
+      return newNode;
+    }
 
-    if (this.comparator(data, node.data)) node.leftChild = this._insert(data, node.leftChild);
-    else if (this.comparator(node.data, data))
-      node.rightChild = this._insert(data, node.rightChild);
+    if (data < node.data) node.leftChild = this.insertRecursively(data, node.leftChild);
+    else if (data > node.data) node.rightChild = this.insertRecursively(data, node.rightChild);
 
     return node;
   }
 
-  remove(key: T): void {
-    throw new Error('Method not implemented.');
+  // O(h) with h = height
+  search(element: T): TreeNode<T> | null {
+    return this.searchRecursively(element, this.root);
   }
 
-  search(element: T): TreeNode<T> | null {
-    throw new Error('Method not implemented.');
+  private searchRecursively(element: T, node: TreeNode<T> | null): TreeNode<T> | null {
+    if (!node) return null;
+    else if (node.data === element) return node;
+    else if (node.data > element) return this.searchRecursively(element, node.leftChild);
+    else return this.searchRecursively(element, node.rightChild);
+  }
+
+  remove(key: T): void {
+    throw new NotImplementedError();
   }
 }
