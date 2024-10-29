@@ -5,7 +5,6 @@ describe('BinaryTree', () => {
   let tree: BinaryTree<number>;
 
   beforeEach(() => {
-    // Initialize a new tree before each test
     tree = new BinaryTree<number>(1);
   });
 
@@ -126,6 +125,7 @@ describe('BinaryTree', () => {
   describe('getHeight', () => {
     it('should return 0 as height for an empty tree', () => {
       tree.root = null;
+
       expect(tree.height).toBe(0);
     });
 
