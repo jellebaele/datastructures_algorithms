@@ -9,7 +9,7 @@ describe('BinarySearchTree', () => {
   });
 
   describe('insert', () => {
-    it('should insert al right correctly', () => {
+    it('should insert all higher values to the right child', () => {
       binarySearchTree.insert(2);
       binarySearchTree.insert(3);
       binarySearchTree.insert(4);
@@ -49,6 +49,7 @@ describe('BinarySearchTree', () => {
   describe('search', () => {
     it('should find the root node', () => {
       const node = binarySearchTree.search(1);
+
       expect(node?.data).toBe(1);
     });
 
@@ -112,6 +113,16 @@ describe('BinarySearchTree', () => {
 
     it('should remove a node with only a left child', () => {
       populateBinarySearchTree(binarySearchTree);
+      binarySearchTree.insert(17);
+      binarySearchTree.remove(18);
+
+      expect(binarySearchTree.toArray(TraversalStrategy.LEVEL_ORDER_TRAVERSAL)).toEqual([
+        1, 5, 3, 15, 7, 17, 12,
+      ]);
+    });
+
+    it('should remove a node with only a right child', () => {
+      populateBinarySearchTree(binarySearchTree);
       binarySearchTree.remove(7);
 
       expect(binarySearchTree.toArray(TraversalStrategy.LEVEL_ORDER_TRAVERSAL)).toEqual([
@@ -119,22 +130,30 @@ describe('BinarySearchTree', () => {
       ]);
     });
 
-    it('should remove a node with only a right child', () => {
-      populateBinarySearchTree(binarySearchTree);
-      binarySearchTree.insert(19);
-      binarySearchTree.remove(18);
-
-      expect(binarySearchTree.toArray(TraversalStrategy.LEVEL_ORDER_TRAVERSAL)).toEqual([
-        1, 5, 3, 15, 7, 19, 12,
-      ]);
-    });
-
-    it('should remove a node with two children', () => {
+    it('should remove root correctly', () => {
       populateBinarySearchTree(binarySearchTree);
       binarySearchTree.remove(1);
 
       expect(binarySearchTree.toArray(TraversalStrategy.LEVEL_ORDER_TRAVERSAL)).toEqual([
         5, 3, 15, 7, 18, 12,
+      ]);
+    });
+
+    it('should remove a node with two children in the middle of the three case 1', () => {
+      populateBinarySearchTree(binarySearchTree);
+      binarySearchTree.remove(15);
+
+      expect(binarySearchTree.toArray(TraversalStrategy.LEVEL_ORDER_TRAVERSAL)).toEqual([
+        1, 5, 3, 7, 12, 18,
+      ]);
+    });
+
+    it('should remove a node with two children in the middle of the three case 2', () => {
+      populateBinarySearchTree(binarySearchTree);
+      binarySearchTree.remove(5);
+
+      expect(binarySearchTree.toArray(TraversalStrategy.LEVEL_ORDER_TRAVERSAL)).toEqual([
+        1, 3, 15, 7, 18, 12,
       ]);
     });
 
