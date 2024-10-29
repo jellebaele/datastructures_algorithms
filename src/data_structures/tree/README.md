@@ -67,3 +67,49 @@ Choose HashTable when:
 Choose a (balanced tree) when:
 - We want to keep our entries sorted
 - Memory limitations have to be taken into consideration
+
+## Binary search tree
+### Searching
+How it works:
+1. Start at the root node.
+2. If this is the value we are looking for, return.
+3. If the value we are looking for is higher, continue searching in the right subtree.
+4. If the value we are looking for is lower, continue searching in the left subtree.
+5. If the subtree we want to search does not exist, return `null`
+
+### Inserting
+How it works:
+
+1. Start at the root node.
+2. Compare each node: 
+   - Is the value lower? Go left.
+   - Is the value higher? Go right.
+3. Continue to compare nodes with the new value until there is no right or left to compare with. That is where the new node is inserted.
+
+### Removing
+How it works:
+
+1. If the node is a leaf node, remove it by removing the link to it.
+2. If the node only has one child node, connect the parent node of the node you want to remove to that child node.
+3. If the node has both right and left child nodes: Find the node's in-order successor, change values with that node, then delete it.
+
+### Time complexity
+On a Binary Search Tree, operations like inserting a new node, deleting a node, or searching for a node are actually $O(h)$. That means that the higher the tree is $(h)$, the longer the operation will take.
+
+For a balanced tree, with a large number of nodes (high $n$), we get the height to be:
+
+$$h ≈ log_2n$$
+
+And therefore the time complexity of searching, deleting or inserting becomes:
+
+$$O(h) = O(log n)$$
+
+But in case the tree is completely unbalances, the tree is approximately the as the number of nodes:
+
+$$h ≈ n$$
+
+And thus the time complexity for searching, deleting or inserting becomes:
+
+$$O(h) = O(n)$$
+
+Therefore, an AVL tree is better, as this tree is balanced.
