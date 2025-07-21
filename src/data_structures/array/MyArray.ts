@@ -35,7 +35,7 @@ export default class MyArray<T> {
   }
 
   public delete(index: number): void {
-    if (index > this.currentLength) return;
+    if (index > this.currentLength - 1) return;
 
     delete this.data[index];
 

@@ -93,7 +93,7 @@ describe('MyArray', () => {
     arr.push(10);
     arr.push(20);
 
-    arr.delete(10); // Out-of-bounds delete
+    arr.delete(2); // Out-of-bounds delete
 
     expect(arr.getLength()).toBe(2);
     expect(arr.get(0)).toBe(10);
