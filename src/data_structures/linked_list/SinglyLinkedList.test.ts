@@ -27,24 +27,22 @@ describe('LinkedList', () => {
     expect(list.get(1)).toBe(20);
   });
 
-  test('should insert an element at a specific index', () => {
+  test('should add three elements to the end of the list', () => {
     list.add(10);
     list.add(20);
     list.add(30);
-    list.insert(1, 15); // Add 15 at index 1
 
-    expect(list.getSize()).toBe(4);
+    expect(list.getSize()).toBe(3);
     expect(list.get(0)).toBe(10);
-    expect(list.get(1)).toBe(15);
-    expect(list.get(2)).toBe(20);
-    expect(list.get(3)).toBe(30);
+    expect(list.get(1)).toBe(20);
+    expect(list.get(2)).toBe(30);
   });
 
   test('should insert an element at a specific index', () => {
     list.add(10);
     list.add(20);
     list.add(30);
-    list.insert(1, 15); // Add 15 at index 1
+    list.insert(1, 15);
 
     expect(list.getSize()).toBe(4);
     expect(list.get(0)).toBe(10);
@@ -54,7 +52,7 @@ describe('LinkedList', () => {
   });
 
   test('should insert an element at index 0 in an empty list', () => {
-    list.insert(0, 10); // Add 10 at index 0
+    list.insert(0, 10);
     expect(list.getSize()).toBe(1);
     expect(list.get(0)).toBe(10);
   });
@@ -84,7 +82,8 @@ describe('LinkedList', () => {
 
   test('should add an element at the beginning of the list', () => {
     list.add(20);
-    list.addFirst(10); // Add 10 at the beginning
+    list.addFirst(10);
+
     expect(list.getSize()).toBe(2);
     expect(list.getFirst()).toBe(10);
     expect(list.getLast()).toBe(20);
@@ -120,6 +119,7 @@ describe('LinkedList', () => {
   test('should return the index of an element', () => {
     list.add(10);
     list.add(20);
+
     expect(list.indexOf(10)).toBe(0);
     expect(list.indexOf(20)).toBe(1);
     expect(list.indexOf(30)).toBe(-1); // Element not in the list
@@ -129,7 +129,7 @@ describe('LinkedList', () => {
     list.add(10);
     list.add(20);
     list.add(30);
-    list.remove(0); // Remove element at index 1 (20)
+    list.remove(0);
     expect(list.getSize()).toBe(2);
     expect(list.get(0)).toBe(20);
     expect(list.get(1)).toBe(30);
@@ -139,17 +139,18 @@ describe('LinkedList', () => {
     list.add(10);
     list.add(20);
     list.add(30);
-    list.remove(0); // Remove element at index 1 (20)
+    list.remove(2);
     expect(list.getSize()).toBe(2);
-    expect(list.get(0)).toBe(20);
-    expect(list.get(1)).toBe(30);
+    expect(list.get(0)).toBe(10);
+    expect(list.get(1)).toBe(20);
   });
 
   test('should remove an element by index', () => {
     list.add(10);
     list.add(20);
     list.add(30);
-    list.remove(1); // Remove element at index 1 (20)
+    list.remove(1);
+
     expect(list.getSize()).toBe(2);
     expect(list.get(0)).toBe(10);
     expect(list.get(1)).toBe(30);
