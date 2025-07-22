@@ -1,5 +1,5 @@
-import Queue from './Queue';
 import IndexOutOfBoundsError from '../../shared/errors/IndexOutOfBoundsError';
+import Queue from './Queue';
 
 describe('Queue', () => {
   let queue: Queue<number>;
@@ -23,7 +23,7 @@ describe('Queue', () => {
     expect(queue.dequeue()).toBe(1);
     expect(queue.dequeue()).toBe(2);
     expect(queue.dequeue()).toBe(3);
-    expect(queue.dequeue()).toBeUndefined(); // Empty queue should return undefined
+    expect(queue.dequeue()).toBeUndefined();
   });
 
   test('should throw an error when enqueuing into a full queue', () => {
@@ -51,63 +51,56 @@ describe('Queue', () => {
     expect(queue.peek()).toBeUndefined(); // Peek on an empty queue should return undefined
   });
 
-  describe('Queue', () => {
-    let queue: Queue<number>;
+  test('should enqueue multiple elements from a list and increase the size', () => {
+    queue.enqueueList([1, 2, 3]);
 
-    beforeEach(() => {
-      queue = new Queue(5); // Set a small capacity for testing
-    });
+    expect(queue.size).toBe(3);
+    expect(queue.dequeue()).toBe(1);
+    expect(queue.dequeue()).toBe(2);
+    expect(queue.dequeue()).toBe(3);
+  });
 
-    test('should enqueue multiple elements from a list and increase the size', () => {
-      queue.enqueueList([1, 2, 3]);
+  test('should enqueue elements from a list and handle partial filling of the queue', () => {
+    queue.enqueue(1);
+    queue.enqueueList([2, 3]);
 
-      expect(queue.size).toBe(3);
-      expect(queue.dequeue()).toBe(1);
-      expect(queue.dequeue()).toBe(2);
-      expect(queue.dequeue()).toBe(3);
-    });
+    expect(queue.size).toBe(3);
+    expect(queue.dequeue()).toBe(1);
+    expect(queue.dequeue()).toBe(2);
+    expect(queue.dequeue()).toBe(3);
+  });
 
-    test('should enqueue elements from a list and handle partial filling of the queue', () => {
-      queue.enqueue(1);
-      queue.enqueueList([2, 3]);
+  test('should throw an error if enqueuing a list that exceeds the queue capacity', () => {
+    queue.enqueue(1);
+    expect(() => queue.enqueueList([2, 3, 4, 5, 6])).toThrow(IndexOutOfBoundsError);
+    expect(queue.size).toBe(1);
+  });
 
-      expect(queue.size).toBe(3);
-      expect(queue.dequeue()).toBe(1);
-      expect(queue.dequeue()).toBe(2);
-      expect(queue.dequeue()).toBe(3);
-    });
+  test('should handle enqueuing a list with exactly enough space in the queue', () => {
+    queue.enqueue(1);
+    queue.enqueueList([2, 3, 4]);
 
-    test('should throw an error if enqueuing a list that exceeds the queue capacity', () => {
-      queue.enqueue(1);
-      expect(() => queue.enqueueList([2, 3, 4, 5, 6])).toThrow(IndexOutOfBoundsError);
-    });
+    expect(queue.size).toBe(4);
+    expect(queue.dequeue()).toBe(1);
+    expect(queue.dequeue()).toBe(2);
+    expect(queue.dequeue()).toBe(3);
+    expect(queue.dequeue()).toBe(4);
+  });
 
-    test('should handle enqueuing a list with exactly enough space in the queue', () => {
-      queue.enqueue(1);
-      queue.enqueueList([2, 3, 4]);
+  test('should not change the queue if enqueuing an empty list', () => {
+    queue.enqueue(1);
+    queue.enqueueList([]);
 
-      expect(queue.size).toBe(4);
-      expect(queue.dequeue()).toBe(1);
-      expect(queue.dequeue()).toBe(2);
-      expect(queue.dequeue()).toBe(3);
-      expect(queue.dequeue()).toBe(4);
-    });
+    expect(queue.size).toBe(1);
+    expect(queue.peek()).toBe(1);
+  });
 
-    test('should not change the queue if enqueuing an empty list', () => {
-      queue.enqueue(1);
-      queue.enqueueList([]);
+  test('should correctly handle enqueuing a list to an empty queue', () => {
+    queue.enqueueList([7, 8, 9]);
 
-      expect(queue.size).toBe(1);
-      expect(queue.peek()).toBe(1);
-    });
-
-    test('should correctly handle enqueuing a list to an empty queue', () => {
-      queue.enqueueList([7, 8, 9]);
-
-      expect(queue.size).toBe(3);
-      expect(queue.dequeue()).toBe(7);
-      expect(queue.dequeue()).toBe(8);
-      expect(queue.dequeue()).toBe(9);
-    });
+    expect(queue.size).toBe(3);
+    expect(queue.dequeue()).toBe(7);
+    expect(queue.dequeue()).toBe(8);
+    expect(queue.dequeue()).toBe(9);
   });
 });
