@@ -5,7 +5,7 @@ describe('QueueLinkedList', () => {
   let queue: QueueLinkedList<number>;
 
   beforeEach(() => {
-    queue = new QueueLinkedList(5); // Set a small capacity for testing
+    queue = new QueueLinkedList(5);
   });
 
   test('should enqueue elements and increase the size', () => {
@@ -23,7 +23,7 @@ describe('QueueLinkedList', () => {
     expect(queue.dequeue()).toBe(1);
     expect(queue.dequeue()).toBe(2);
     expect(queue.dequeue()).toBe(3);
-    expect(queue.dequeue()).toBeUndefined(); // Empty queue should return undefined
+    expect(queue.dequeue()).toBeUndefined();
   });
 
   test('should throw an error when enqueuing into a full queue', () => {
@@ -73,6 +73,7 @@ describe('QueueLinkedList', () => {
   test('should throw an error if enqueuing a list that exceeds the queue capacity', () => {
     queue.enqueue(1);
     expect(() => queue.enqueueList([2, 3, 4, 5, 6])).toThrow(IndexOutOfBoundsError);
+    expect(queue.size).toBe(1);
   });
 
   test('should handle enqueuing a list with exactly enough space in the queue', () => {
