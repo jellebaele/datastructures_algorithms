@@ -22,7 +22,7 @@ You can implement a stack using either an array or a linked list. Both have adva
 #### Disadvantages
 - **Fixed size**: An array occupies a fixed part of the memory. This means that it could take up more memory than needed, or if the array fills up, it cannot hold more elements. And resizing an array can be costly.
 
-In contrast to the queue, there is no shifting cost, as the last element is poppend from the array.
+In contrast to the queue, there is no shifting cost, as the last element is popped from the array.
 
 ### Linked list-based
 #### Advantages

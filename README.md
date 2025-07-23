@@ -6,20 +6,23 @@
 
 General table average time complexity of different data structures for different operations:
 
-| Data Structure     | Access   | Search   | Insertion | Deletion |
-| ------------------ | -------- | -------- | --------- | -------- |
-| Array              | O(1)     | O(N)     | O(N)      | O(N)     |
-| Stack              | O(N)     | O(N)     | O(1)      | O(1)     |
-| Queue              | O(N)     | O(N)     | O(1)      | O(1)     |
-| Singly Linked List | O(N)     | O(N)     | O(1)      | O(1)     |
-| Doubly Linked List | O(N)     | O(N)     | O(1)      | O(1)     |
-| Hash Table         | O(1)     | O(1)     | O(1)      | O(1)     |
-| Binary Search Tree | O(log N) | O(log N) | O(log N)  | O(log N) |
-| AVL Tree           | O(log N) | O(log N) | O(log N)  | O(log N) |
-| B Tree             | O(log N) | O(log N) | O(log N)  | O(log N) |
-| Red Black Tree     | O(log N) | O(log N) | O(log N)  | O(log N) |
+| Data Structure        | Access   | Search        | Insertion         | Deletion         | Notes                                                                                  |
+|-----------------------|----------|---------------|-------------------|------------------|----------------------------------------------------------------------------------------|
+| Array                 | O(1)     | O(N)          | O(N)              | O(N)             | Insertion/deletion at middle requires shifting.                                       |
+| Stack (Array-Based)   | O(1)     | O(N)          | O(1)              | O(1)             | Access/search is linear unless top is target.                                         |
+| Stack (Linked List)   | O(1)     | O(N)          | O(1)              | O(1)             | Push/pop at head; search is linear.                                                   |
+| Queue (Array-Based)   | O(1)     | O(N)          | O(1)              | O(N)             | Access front element O(1); deletion uses shift causing O(N).                          |
+| Queue (Linked List)   | O(1)     | O(N)          | O(1)              | O(1)             | Enqueue at tail, dequeue at head.                                                     |
+| Singly Linked List    | O(N)     | O(N)          | O(1)              | O(1)             | Insert/delete at head is O(1); elsewhere is O(N).                                     |
+| Doubly Linked List    | O(N)     | O(N)          | O(1)              | O(1)             | O(1) insertion/deletion if node reference is known.                                   |
+| Hash Table            | O(1)     | O(1)          | O(1)              | O(1)             | Assuming good hash function and no collisions.                                        |
+| Binary Search Tree    | O(log N) | O(log N)      | O(log N)          | O(log N)         | Assumes balanced BST.                                                                   |
+| AVL Tree              | O(log N) | O(log N)      | O(log N)          | O(log N)         | Self-balancing BST.                                                                     |
+| B Tree                | O(log N) | O(log N)      | O(log N)          | O(log N)         | Used in DB/indexing.                                                                    |
+| Red Black Tree        | O(log N) | O(log N)      | O(log N)          | O(log N)         | Self-balancing.                                                                         |
+| Graph (Adjacency List)| O(1)*    | O(V+E)        | O(1)              | O(V + E)         | V = vertices, E = edges; efficient for sparse graphs; access to adjacency list O(1).   |
+| Graph (Adjacency Matrix)| O(1)   | O(V^2)        | O(1)              | O(V^2)           | Uses VxV matrix; faster edge existence check; inefficient for sparse graphs.           |
 
-TODO GRAPH?
 
 #### Conclusion
 
