@@ -5,13 +5,13 @@ import IStack from './IStack';
 const DEFAULT_CAPACITY = 1000;
 
 export default class Stack<T> extends Collection<T> implements IStack<T> {
-  constructor(capacity = DEFAULT_CAPACITY) {
+  constructor(capacity: number = DEFAULT_CAPACITY) {
     super(capacity);
   }
 
   push(element: T): void {
     if (this.isFull()) throw new IndexOutOfBoundsError();
-    else this.data.push(element);
+    this.data.push(element);
   }
 
   pop(): T | undefined {
@@ -19,6 +19,6 @@ export default class Stack<T> extends Collection<T> implements IStack<T> {
   }
 
   peek(): T | undefined {
-    return this.data[this.data.length - 1];
+    return this.data[this.size - 1];
   }
 }
