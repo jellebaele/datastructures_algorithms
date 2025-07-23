@@ -5,7 +5,7 @@ describe('Stack', () => {
   let stack: StackLinkedList<number>;
 
   beforeEach(() => {
-    stack = new StackLinkedList<number>(5); // Set a small capacity for testing
+    stack = new StackLinkedList<number>(5);
   });
 
   test('should push elements and increase the size', () => {
@@ -21,9 +21,12 @@ describe('Stack', () => {
     stack.push(3);
 
     expect(stack.pop()).toBe(3);
+    expect(stack.size).toBe(2);
     expect(stack.pop()).toBe(2);
+    expect(stack.size).toBe(1);
     expect(stack.pop()).toBe(1);
-    expect(stack.pop()).toBeUndefined(); // Empty stack should return undefined
+    expect(stack.size).toBe(0);
+    expect(stack.pop()).toBeUndefined();
   });
 
   test('should throw an error when pushing into a full stack', () => {
@@ -40,15 +43,15 @@ describe('Stack', () => {
     stack.push(10);
     stack.push(20);
 
-    expect(stack.peek()).toBe(20); // Peek should return the last element
+    expect(stack.peek()).toBe(20);
     stack.pop();
-    expect(stack.peek()).toBe(10); // Peek should now return the next element
+    expect(stack.peek()).toBe(10);
   });
 
   test('should handle an empty stack correctly', () => {
     expect(stack.size).toBe(0);
-    expect(stack.pop()).toBeUndefined(); // Pop from an empty stack should return undefined
-    expect(stack.peek()).toBeUndefined(); // Peek on an empty stack should return undefined
+    expect(stack.pop()).toBeUndefined();
+    expect(stack.peek()).toBeUndefined();
   });
 
   test('should return true if stack is empty', () => {
