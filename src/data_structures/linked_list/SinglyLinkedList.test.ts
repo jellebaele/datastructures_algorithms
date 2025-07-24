@@ -192,4 +192,42 @@ describe('LinkedList', () => {
   test('should handle removing from an empty list', () => {
     expect(list.removeLast()).toBeNull();
   });
+
+  test('should return the index of the element if it exists', () => {
+    list.add(10);
+    list.add(20);
+    list.add(30);
+
+    expect(list.search(10)).toBe(0); // Element at the beginning
+    expect(list.search(20)).toBe(1); // Element in the middle
+    expect(list.search(30)).toBe(2); // Element at the end
+  });
+
+  test('should return -1 if the element does not exist', () => {
+    list.add(10);
+    list.add(20);
+    list.add(30);
+
+    expect(list.search(40)).toBe(-1); // Element not in the list
+  });
+
+  test('should return -1 for an empty list', () => {
+    expect(list.search(10)).toBe(-1);
+  });
+
+  test('should return the index of the first occurrence if there are duplicates', () => {
+    list.add(10);
+    list.add(20);
+    list.add(10); // Duplicate element
+
+    expect(list.search(10)).toBe(0); // Should return the first occurrence
+  });
+
+  test('should return -1 when searching for null or undefined values', () => {
+    list.add(10);
+    list.add(20);
+
+    expect(list.search(null as unknown as number)).toBe(-1);
+    expect(list.search(undefined as unknown as number)).toBe(-1);
+  });
 });

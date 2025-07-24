@@ -7,6 +7,7 @@ interface ILinkedList<T> {
   get(index: number): T | null;
   getFirst(): T | null;
   getLast(): T | null;
+  search(element: T): number;
   remove(index: number): T | null;
   removeFirst(): T | null;
   removeLast(): T | null;

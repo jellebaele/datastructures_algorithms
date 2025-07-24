@@ -77,6 +77,20 @@ export default class SinglyLinkedList<T> implements ILinkedList<T> {
   }
 
   // O(N)
+  public search(element: T): number {
+    let current = this.head;
+    let index = 0;
+
+    while (current) {
+      if (current.data === element) return index;
+      index++;
+      current = current.next;
+    }
+
+    return -1;
+  }
+
+  // O(N)
   // If input parameter is a node -> O(N) as you node to traverse
   // to the node before to be deleted
   public remove(index: number): T | null {
