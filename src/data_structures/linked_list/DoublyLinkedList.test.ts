@@ -12,14 +12,6 @@ describe('DoublyLinkedList', () => {
     expect(list.getSize()).toBe(0);
   });
 
-  test('should add an element to the beginning of an empty list', () => {
-    list.addFirst(10);
-
-    expect(list.getSize()).toBe(1);
-    expect(list.getFirst()).toBe(10);
-    expect(list.getLast()).toBe(10);
-  });
-
   test('should add an element to the end of the list', () => {
     list.add(10);
 
@@ -55,6 +47,14 @@ describe('DoublyLinkedList', () => {
     expect(list.toString()).toBe('10 <-> 20 <-> 30');
   });
 
+  test('should add an element to the beginning of an empty list', () => {
+    list.addFirst(10);
+
+    expect(list.getSize()).toBe(1);
+    expect(list.getFirst()).toBe(10);
+    expect(list.getLast()).toBe(10);
+  });
+
   test('should add an element to the beginning of a non-empty list', () => {
     list.add(20);
     list.addFirst(10);
@@ -70,10 +70,14 @@ describe('DoublyLinkedList', () => {
     list.add(10);
     list.add(20);
     list.add(30);
+    list.add(40);
+    list.add(50);
 
     expect(list.get(0)).toBe(10);
     expect(list.get(1)).toBe(20);
     expect(list.get(2)).toBe(30);
+    expect(list.get(3)).toBe(40);
+    expect(list.get(4)).toBe(50);
   });
 
   test('should throw an error when getting from an empty list', () => {
