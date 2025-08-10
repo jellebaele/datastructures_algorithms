@@ -45,30 +45,29 @@ export default class DoublyLinkedList<T> implements ILinkedList<T> {
     this.tail = newNode;
     this.size++;
 
-    return element;
+    return newNode.data;
   }
 
   insert(index: number, element: T): T {
-    if (index === 0) return this.addFirst(element);
     if (index < 0 || index > this.size) throw new IndexOutOfBoundsError();
+    if (index === 0) return this.addFirst(element);
     if (index === this.size) return this.add(element);
 
     const prevNode = this.getNode(index - 1);
     const nextNode = prevNode?.next;
     const newNode = new Node(element, nextNode, prevNode);
 
-    if (prevNode) {
-      prevNode.next = newNode;
-      // newNode.prev = prevNode;
-    }
-    if (nextNode) {
-      nextNode.prev = newNode;
-      // newNode.next = nextNode;
-    }
+    if (!prevNode || !nextNode) throw new NotFoundError();
+
+    prevNode.next = newNode;
+    newNode.prev = prevNode;
+
+    newNode.next = nextNode;
+    nextNode.prev = newNode;
 
     this.size++;
 
-    return element;
+    return newNode.data;
   }
 
   // O(N)
