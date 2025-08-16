@@ -1,6 +1,6 @@
 interface ILinkedList<T> {
   isEmpty(): boolean;
-  getSize(): number;
+  get size(): number;
   add(element: T): T;
   addFirst(element: T): T;
   insert(index: number, element: T): T;
@@ -15,6 +15,7 @@ interface ILinkedList<T> {
   contains(element: T): boolean;
   indexOf(element: T): number;
   toString(): string;
+  [Symbol.iterator](): IterableIterator<T>;
 }
 
 export default ILinkedList;

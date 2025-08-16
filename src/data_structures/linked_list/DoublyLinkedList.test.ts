@@ -9,13 +9,13 @@ describe('DoublyLinkedList', () => {
 
   test('should initialize an empty list', () => {
     expect(list.isEmpty()).toBe(true);
-    expect(list.getSize()).toBe(0);
+    expect(list.size).toBe(0);
   });
 
   test('should add an element to the end of the list', () => {
     list.add(10);
 
-    expect(list.getSize()).toBe(1);
+    expect(list.size).toBe(1);
     expect(list.getFirst()).toBe(10);
     expect(list.getLast()).toBe(10);
   });
@@ -25,7 +25,7 @@ describe('DoublyLinkedList', () => {
     list.add(20);
     list.add(30);
 
-    expect(list.getSize()).toBe(3);
+    expect(list.size).toBe(3);
     expect(list.getFirst()).toBe(10);
     expect(list.getLast()).toBe(30);
   });
@@ -50,7 +50,7 @@ describe('DoublyLinkedList', () => {
   test('should add an element to the beginning of an empty list', () => {
     list.addFirst(10);
 
-    expect(list.getSize()).toBe(1);
+    expect(list.size).toBe(1);
     expect(list.getFirst()).toBe(10);
     expect(list.getLast()).toBe(10);
   });
@@ -59,7 +59,7 @@ describe('DoublyLinkedList', () => {
     list.add(20);
     list.addFirst(10);
 
-    expect(list.getSize()).toBe(2);
+    expect(list.size).toBe(2);
     expect(list.getFirst()).toBe(10);
     expect(list.getLast()).toBe(20);
     expect(list.get(0)).toBe(10);
@@ -105,7 +105,7 @@ describe('DoublyLinkedList', () => {
     list.addFirst(20);
     list.addFirst(10);
 
-    expect(list.getSize()).toBe(3);
+    expect(list.size).toBe(3);
     expect(list.getFirst()).toBe(10);
     expect(list.getLast()).toBe(30);
     expect(list.get(0)).toBe(10);
@@ -163,7 +163,7 @@ describe('DoublyLinkedList', () => {
     list.add(30);
     list.insert(0, 10);
 
-    expect(list.getSize()).toBe(3);
+    expect(list.size).toBe(3);
     expect(list.get(0)).toBe(10);
     expect(list.get(1)).toBe(20);
     expect(list.get(2)).toBe(30);
@@ -174,7 +174,7 @@ describe('DoublyLinkedList', () => {
     list.add(20);
     list.insert(2, 30); // Insert at the end
 
-    expect(list.getSize()).toBe(3);
+    expect(list.size).toBe(3);
     expect(list.get(0)).toBe(10);
     expect(list.get(1)).toBe(20);
     expect(list.get(2)).toBe(30);
@@ -185,7 +185,7 @@ describe('DoublyLinkedList', () => {
     list.add(30);
     list.insert(1, 20); // Insert in the middle
 
-    expect(list.getSize()).toBe(3);
+    expect(list.size).toBe(3);
     expect(list.get(0)).toBe(10);
     expect(list.get(1)).toBe(20);
     expect(list.get(2)).toBe(30);
@@ -204,7 +204,7 @@ describe('DoublyLinkedList', () => {
   test('should insert an element into an empty list at index 0', () => {
     list.insert(0, 10);
 
-    expect(list.getSize()).toBe(1);
+    expect(list.size).toBe(1);
     expect(list.get(0)).toBe(10);
   });
 
@@ -220,7 +220,7 @@ describe('DoublyLinkedList', () => {
     list.insert(4, 50); // List: 10, 20, 30, 40, 50, 60, 70, 80, 90
     list.insert(0, 5); // List: 5, 10, 20, 30, 40, 50, 60, 70, 80, 90
 
-    expect(list.getSize()).toBe(10);
+    expect(list.size).toBe(10);
     expect(list.get(0)).toBe(5);
     expect(list.get(1)).toBe(10);
     expect(list.get(2)).toBe(20);
@@ -244,7 +244,7 @@ describe('DoublyLinkedList', () => {
     const removed = list.removeFirst();
 
     expect(removed).toBe(10);
-    expect(list.getSize()).toBe(2);
+    expect(list.size).toBe(2);
     expect(list.get(0)).toBe(20);
     expect(list.get(1)).toBe(30);
   });
@@ -255,7 +255,7 @@ describe('DoublyLinkedList', () => {
     const removed = list.removeFirst();
 
     expect(removed).toBe(10);
-    expect(list.getSize()).toBe(0);
+    expect(list.size).toBe(0);
     expect(list.isEmpty()).toBe(true);
   });
 
@@ -274,7 +274,7 @@ describe('DoublyLinkedList', () => {
     const removed = list.removeFirst(); // Remove 30
 
     expect(removed).toBe(30);
-    expect(list.getSize()).toBe(0);
+    expect(list.size).toBe(0);
     expect(list.isEmpty()).toBe(true);
   });
 
@@ -286,7 +286,7 @@ describe('DoublyLinkedList', () => {
     const removed = list.removeLast();
 
     expect(removed).toBe(30);
-    expect(list.getSize()).toBe(2);
+    expect(list.size).toBe(2);
     expect(list.get(0)).toBe(10);
     expect(list.get(1)).toBe(20);
   });
@@ -297,7 +297,7 @@ describe('DoublyLinkedList', () => {
     const removed = list.removeLast();
 
     expect(removed).toBe(10);
-    expect(list.getSize()).toBe(0);
+    expect(list.size).toBe(0);
     expect(list.isEmpty()).toBe(true);
   });
 
@@ -316,7 +316,7 @@ describe('DoublyLinkedList', () => {
     const removed = list.removeLast(); // Remove 10
 
     expect(removed).toBe(10);
-    expect(list.getSize()).toBe(0);
+    expect(list.size).toBe(0);
     expect(list.isEmpty()).toBe(true);
   });
 
@@ -328,7 +328,7 @@ describe('DoublyLinkedList', () => {
     const removed = list.remove(0); // Remove element at index 0 (10)
 
     expect(removed).toBe(10);
-    expect(list.getSize()).toBe(2);
+    expect(list.size).toBe(2);
     expect(list.get(0)).toBe(20);
     expect(list.get(1)).toBe(30);
   });
@@ -341,7 +341,7 @@ describe('DoublyLinkedList', () => {
     const removed = list.remove(2); // Remove element at index 2 (30)
 
     expect(removed).toBe(30);
-    expect(list.getSize()).toBe(2);
+    expect(list.size).toBe(2);
     expect(list.get(0)).toBe(10);
     expect(list.get(1)).toBe(20);
   });
@@ -355,7 +355,7 @@ describe('DoublyLinkedList', () => {
     const removed = list.remove(2); // Remove element at index 2 (30)
 
     expect(removed).toBe(30);
-    expect(list.getSize()).toBe(3);
+    expect(list.size).toBe(3);
     expect(list.get(0)).toBe(10);
     expect(list.get(1)).toBe(20);
     expect(list.get(2)).toBe(40);
@@ -385,7 +385,7 @@ describe('DoublyLinkedList', () => {
     const removed = list.remove(0); // Remove the last element (10)
 
     expect(removed).toBe(10);
-    expect(list.getSize()).toBe(0);
+    expect(list.size).toBe(0);
     expect(list.isEmpty()).toBe(true);
   });
 
@@ -397,7 +397,7 @@ describe('DoublyLinkedList', () => {
 
     list.remove(1); // Remove element at index 1 (20)
 
-    expect(list.getSize()).toBe(3);
+    expect(list.size).toBe(3);
     expect(list.get(0)).toBe(10);
     expect(list.get(1)).toBe(30);
     expect(list.get(2)).toBe(40);
@@ -410,7 +410,7 @@ describe('DoublyLinkedList', () => {
 
     list.clear();
 
-    expect(list.getSize()).toBe(0);
+    expect(list.size).toBe(0);
     expect(list.isEmpty()).toBe(true);
     expect(() => list.get(0)).toThrow('Index out of bounds'); // Check access after clear
     expect(list.getFirst()).toBeNull();
@@ -422,7 +422,7 @@ describe('DoublyLinkedList', () => {
 
     list.clear();
 
-    expect(list.getSize()).toBe(0);
+    expect(list.size).toBe(0);
     expect(list.isEmpty()).toBe(true);
     expect(() => list.get(0)).toThrow('Index out of bounds'); // Check access after clear
     expect(list.getFirst()).toBeNull();
@@ -432,7 +432,7 @@ describe('DoublyLinkedList', () => {
   test('should handle clearing an already empty list', () => {
     list.clear(); // Clear an empty list
 
-    expect(list.getSize()).toBe(0);
+    expect(list.size).toBe(0);
     expect(list.isEmpty()).toBe(true);
     expect(() => list.get(0)).toThrow('Index out of bounds'); // Check access after clear
     expect(list.getFirst()).toBeNull();
@@ -448,7 +448,7 @@ describe('DoublyLinkedList', () => {
 
     list.clear();
 
-    expect(list.getSize()).toBe(0);
+    expect(list.size).toBe(0);
     expect(list.isEmpty()).toBe(true);
     expect(() => list.get(0)).toThrow('Index out of bounds'); // Check access after clear
     expect(list.getFirst()).toBeNull();
@@ -521,5 +521,30 @@ describe('DoublyLinkedList', () => {
     expect(list.indexOf(10)).toBe(0);
     expect(list.indexOf(25)).toBe(1);
     expect(list.indexOf(30)).toBe(2);
+  });
+
+  test('should iterate over elements using for...of', () => {
+    list.add(10);
+    list.add(20);
+    list.add(30);
+
+    const result: number[] = [];
+    for (const value of list) {
+      result.push(value);
+    }
+
+    expect(result).toEqual([10, 20, 30]);
+  });
+
+  test('should support spread syntax', () => {
+    list.add(1);
+    list.add(2);
+    list.add(3);
+
+    expect([...list]).toEqual([1, 2, 3]);
+  });
+
+  test('should return empty iterator for empty list', () => {
+    expect([...list]).toEqual([]);
   });
 });

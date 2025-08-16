@@ -33,12 +33,12 @@ describe('LinkedList', () => {
 
   test('should initialize an empty list', () => {
     expect(list.isEmpty()).toBe(true);
-    expect(list.getSize()).toBe(0);
+    expect(list.size).toBe(0);
   });
 
   test('should add an element to the end of the list', () => {
     list.add(10);
-    expect(list.getSize()).toBe(1);
+    expect(list.size).toBe(1);
     expect(list.get(0)).toBe(10);
   });
 
@@ -46,7 +46,7 @@ describe('LinkedList', () => {
     list.add(10);
     list.add(20);
 
-    expect(list.getSize()).toBe(2);
+    expect(list.size).toBe(2);
     expect(list.get(0)).toBe(10);
     expect(list.get(1)).toBe(20);
   });
@@ -56,7 +56,7 @@ describe('LinkedList', () => {
     list.add(20);
     list.add(30);
 
-    expect(list.getSize()).toBe(3);
+    expect(list.size).toBe(3);
     expect(list.get(0)).toBe(10);
     expect(list.get(1)).toBe(20);
     expect(list.get(2)).toBe(30);
@@ -68,7 +68,7 @@ describe('LinkedList', () => {
     list.add(30);
     list.insert(1, 15);
 
-    expect(list.getSize()).toBe(4);
+    expect(list.size).toBe(4);
     expect(list.get(0)).toBe(10);
     expect(list.get(1)).toBe(15);
     expect(list.get(2)).toBe(20);
@@ -77,14 +77,14 @@ describe('LinkedList', () => {
 
   test('should insert an element at index 0 in an empty list', () => {
     list.insert(0, 10);
-    expect(list.getSize()).toBe(1);
+    expect(list.size).toBe(1);
     expect(list.get(0)).toBe(10);
   });
 
   test('should insert an element at the end of the list', () => {
     list.add(10);
     list.insert(1, 20); // Add 20 at index 1 (end of the list)
-    expect(list.getSize()).toBe(2);
+    expect(list.size).toBe(2);
     expect(list.get(0)).toBe(10);
     expect(list.get(1)).toBe(20);
   });
@@ -108,7 +108,7 @@ describe('LinkedList', () => {
     list.add(20);
     list.addFirst(10);
 
-    expect(list.getSize()).toBe(2);
+    expect(list.size).toBe(2);
     expect(list.getFirst()).toBe(10);
     expect(list.getLast()).toBe(20);
   });
@@ -117,7 +117,7 @@ describe('LinkedList', () => {
     list.add(10);
     list.add(20);
     list.clear();
-    expect(list.getSize()).toBe(0);
+    expect(list.size).toBe(0);
     expect(list.isEmpty()).toBe(true);
   });
 
@@ -154,7 +154,7 @@ describe('LinkedList', () => {
     list.add(20);
     list.add(30);
     list.remove(0);
-    expect(list.getSize()).toBe(2);
+    expect(list.size).toBe(2);
     expect(list.get(0)).toBe(20);
     expect(list.get(1)).toBe(30);
   });
@@ -164,7 +164,7 @@ describe('LinkedList', () => {
     list.add(20);
     list.add(30);
     list.remove(2);
-    expect(list.getSize()).toBe(2);
+    expect(list.size).toBe(2);
     expect(list.get(0)).toBe(10);
     expect(list.get(1)).toBe(20);
   });
@@ -175,7 +175,7 @@ describe('LinkedList', () => {
     list.add(30);
     list.remove(1);
 
-    expect(list.getSize()).toBe(2);
+    expect(list.size).toBe(2);
     expect(list.get(0)).toBe(10);
     expect(list.get(1)).toBe(30);
   });
@@ -190,7 +190,7 @@ describe('LinkedList', () => {
     list.add(10);
     list.add(20);
     list.removeFirst();
-    expect(list.getSize()).toBe(1);
+    expect(list.size).toBe(1);
     expect(list.getFirst()).toBe(20);
   });
 
@@ -202,14 +202,14 @@ describe('LinkedList', () => {
     list.add(10);
     list.add(20);
     list.removeLast();
-    expect(list.getSize()).toBe(1);
+    expect(list.size).toBe(1);
     expect(list.getLast()).toBe(10);
   });
 
   test('should handle removing from a list with one element', () => {
     list.add(10);
     list.removeLast();
-    expect(list.getSize()).toBe(0);
+    expect(list.size).toBe(0);
     expect(list.isEmpty()).toBe(true);
   });
 
@@ -285,5 +285,30 @@ describe('LinkedList', () => {
     expect(list.search(kvpB)).toBe(1); // Element in the middle
     expect(list.search(kvpC)).toBe(2); // Element at the end
     expect(list.search(new KeyValuePairWithEquals('a', 'b'))).toBe(0);
+  });
+
+  test('should iterate over elements using for...of', () => {
+    list.add(10);
+    list.add(20);
+    list.add(30);
+
+    const result: number[] = [];
+    for (const value of list) {
+      result.push(value);
+    }
+
+    expect(result).toEqual([10, 20, 30]);
+  });
+
+  test('should support spread syntax', () => {
+    list.add(1);
+    list.add(2);
+    list.add(3);
+
+    expect([...list]).toEqual([1, 2, 3]);
+  });
+
+  test('should return empty iterator for empty list', () => {
+    expect([...list]).toEqual([]);
   });
 });
