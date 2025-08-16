@@ -1,5 +1,29 @@
 import SinglyLinkedList from './SinglyLinkedList';
 
+class KeyValuePairWithoutEquals {
+  public key: string;
+  public value: string;
+
+  constructor(key: string, value: string) {
+    this.key = key;
+    this.value = value;
+  }
+}
+
+class KeyValuePairWithEquals {
+  public key: string;
+  public value: string;
+
+  constructor(key: string, value: string) {
+    this.key = key;
+    this.value = value;
+  }
+
+  public equals(element: this) {
+    return this.key === element.key;
+  }
+}
+
 describe('LinkedList', () => {
   let list: SinglyLinkedList<number>;
 
@@ -229,5 +253,37 @@ describe('LinkedList', () => {
 
     expect(list.search(null as unknown as number)).toBe(-1);
     expect(list.search(undefined as unknown as number)).toBe(-1);
+  });
+
+  test('should return the index of the element if it exists using shallow comparison', () => {
+    const list = new SinglyLinkedList<KeyValuePairWithoutEquals>();
+    const kvpA = new KeyValuePairWithoutEquals('a', 'b');
+    const kvpB = new KeyValuePairWithoutEquals('c', 'd');
+    const kvpC = new KeyValuePairWithoutEquals('e', 'f');
+
+    list.add(kvpA);
+    list.add(kvpB);
+    list.add(kvpC);
+
+    expect(list.search(kvpA)).toBe(0); // Element at the beginning
+    expect(list.search(kvpB)).toBe(1); // Element in the middle
+    expect(list.search(kvpC)).toBe(2); // Element at the end
+    expect(list.search(new KeyValuePairWithoutEquals('a', 'b'))).toBe(-1);
+  });
+
+  test('should return the index of the element if it exists using deep comparison', () => {
+    const list = new SinglyLinkedList<KeyValuePairWithEquals>();
+    const kvpA = new KeyValuePairWithEquals('a', 'b');
+    const kvpB = new KeyValuePairWithEquals('c', 'd');
+    const kvpC = new KeyValuePairWithEquals('e', 'f');
+
+    list.add(kvpA);
+    list.add(kvpB);
+    list.add(kvpC);
+
+    expect(list.search(kvpA)).toBe(0); // Element at the beginning
+    expect(list.search(kvpB)).toBe(1); // Element in the middle
+    expect(list.search(kvpC)).toBe(2); // Element at the end
+    expect(list.search(new KeyValuePairWithEquals('a', 'b'))).toBe(0);
   });
 });

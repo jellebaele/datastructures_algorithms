@@ -82,7 +82,7 @@ export default class SinglyLinkedList<T> implements ILinkedList<T> {
     let index = 0;
 
     while (current) {
-      if (current.data === element) return index;
+      if (this.isEqual(current.data, element)) return index;
       index++;
       current = current.next;
     }
@@ -161,7 +161,7 @@ export default class SinglyLinkedList<T> implements ILinkedList<T> {
     let currentNode = this.head;
 
     while (currentNode) {
-      if (currentNode.data === element) return true;
+      if (this.isEqual(currentNode.data, element)) return true;
       currentNode = currentNode.next;
     }
 
@@ -174,7 +174,7 @@ export default class SinglyLinkedList<T> implements ILinkedList<T> {
     let index = 0;
 
     while (currentNode) {
-      if (currentNode.data === element) return index;
+      if (this.isEqual(currentNode.data, element)) return index;
       currentNode = currentNode.next;
       index++;
     }
@@ -215,5 +215,11 @@ export default class SinglyLinkedList<T> implements ILinkedList<T> {
     }
 
     return node ? node : null;
+  }
+
+  private isEqual(a: T, b: T): boolean {
+    const hasEqualsMethod = typeof (a as any).equals === 'function';
+
+    return hasEqualsMethod ? (a as any).equals(b) : a === b;
   }
 }
