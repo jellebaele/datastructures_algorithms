@@ -107,11 +107,9 @@ describe('HashMap', () => {
     hashMap.set('key2', 'value2');
     hashMap.set('key3', 'value3');
 
-    const keys = hashMap.keys();
+    const keys = Array.from(hashMap.keys());
 
-    expect(keys.next().value).toBe('key1');
-    expect(keys.next().value).toBe('key2');
-    expect(keys.next().value).toBe('key3');
+    expect(keys.sort()).toEqual(['key1', 'key2', 'key3']);
   });
 
   test('should no keys in empty hashmap', () => {
@@ -125,11 +123,9 @@ describe('HashMap', () => {
     hashMap.set('key2', 'value2');
     hashMap.set('key3', 'value3');
 
-    const values = hashMap.values();
+    const values = Array.from(hashMap.values());
 
-    expect(values.next().value).toBe('value1');
-    expect(values.next().value).toBe('value2');
-    expect(values.next().value).toBe('value3');
+    expect(values.sort()).toEqual(['value1', 'value2', 'value3']);
   });
 
   test('should no keys in empty hashmap', () => {

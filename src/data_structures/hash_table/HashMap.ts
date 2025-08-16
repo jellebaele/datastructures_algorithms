@@ -37,7 +37,7 @@ export default class HashMap<T extends HashTableAllowedTypes> implements IHashTa
   private _currentTableSize: number;
   private readonly LOAD_FACTOR_LIMIT = 0.7;
 
-  constructor(initialSize = 1000) {
+  constructor(initialSize = 32) {
     this._size = 0;
     this._currentTableSize = initialSize;
     this._table = this.initializeTable(this._currentTableSize);
