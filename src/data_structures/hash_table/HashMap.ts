@@ -20,9 +20,9 @@ export interface IHashTable<T extends HashTableAllowedTypes> {
 
 class KeyValuePair<T> implements Equatable {
   public key: string;
-  public value: T | null;
+  public value?: T | null;
 
-  constructor(key: string, value: T | null = null) {
+  constructor(key: string, value?: T) {
     this.key = key;
     this.value = value;
   }
