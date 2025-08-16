@@ -92,18 +92,17 @@ export default class HashMap<T extends HashTableAllowedTypes> implements IHashTa
   }
 
   set(key: string, value: T): this {
+    if ((this.size + 1) / this._currentTableSize > this.LOAD_FACTOR_LIMIT) {
+      this.resizeTable(this._currentTableSize * 2);
+    }
+
     const hash = this.hashKey(key);
 
     const linkedList = this._table[hash];
     const newKvp = new KeyValuePair<T>(key, value);
 
     const index = linkedList.indexOf(newKvp);
-
     if (index === -1) {
-      if (-this.size + 1 / this._currentTableSize > this.LOAD_FACTOR_LIMIT) {
-        this.resizeTable(this._currentTableSize * 2);
-      }
-
       linkedList.add(newKvp);
       this._table[hash] = linkedList;
       this._size++;
@@ -117,7 +116,7 @@ export default class HashMap<T extends HashTableAllowedTypes> implements IHashTa
   *values(): IterableIterator<T> {
     for (const linkedList of this._table) {
       for (const kvp of linkedList) {
-        if (!kvp.value) continue;
+        if (kvp.value === null || kvp.value === undefined) continue;
         yield kvp.value;
       }
     }
@@ -129,15 +128,13 @@ export default class HashMap<T extends HashTableAllowedTypes> implements IHashTa
 
   private resizeTable(newSize: number) {
     const originalTable = this._table;
-    this._currentTableSize *= newSize;
+    this._currentTableSize = newSize;
     this._size = 0;
     this._table = this.initializeTable(this._currentTableSize);
 
     for (const bucket of originalTable) {
-      const size = bucket.size;
-      for (let i = 0; i < size; i++) {
-        const kvp = bucket.get(i);
-        if (!kvp || !kvp.value) continue;
+      for (const kvp of bucket) {
+        if (!kvp || kvp.value === null || kvp.value === undefined) continue;
         this.set(kvp.key, kvp.value);
       }
     }

@@ -99,7 +99,7 @@ describe('HashMap', () => {
     expect(hashMapWithResizing.get('key2')).toBe('value2');
     expect(hashMapWithResizing.get('key3')).toBe('value3');
     expect(hashMapWithResizing.get('key4')).toBe('value4');
-    expect((hashMapWithResizing as any)._table.length).toBe(4);
+    expect((hashMapWithResizing as any)._table.length).toBe(8);
   });
 
   test('should return all keys', () => {
