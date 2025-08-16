@@ -10,7 +10,7 @@ export interface IHashTable<T extends HashTableAllowedTypes> {
   clear(): void;
   remove(key: string): boolean;
   // entries();
-  // forEach():void;
+  forEach(callback: (value: T, key: string, map: IHashTable<T>) => void): void;
   get(key: string): T | null;
   has(key: string): boolean;
   keys(): IterableIterator<string>;
@@ -118,6 +118,13 @@ export default class HashMap<T extends HashTableAllowedTypes> implements IHashTa
       for (const kvp of linkedList) {
         if (kvp.value === null || kvp.value === undefined) continue;
         yield kvp.value;
+      }
+    }
+  }
+  forEach(callback: (value: T, key: string, map: IHashTable<T>) => void): void {
+    for (const linkedList of this._table) {
+      for (const kvp of linkedList) {
+        callback(kvp.value!, kvp.key, this);
       }
     }
   }

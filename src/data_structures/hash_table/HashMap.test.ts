@@ -133,4 +133,23 @@ describe('HashMap', () => {
 
     expect(values.next().value).toBeUndefined();
   });
+
+  test('should handle forEach', () => {
+    hashMap.set('key1', 'value1');
+    hashMap.set('key2', 'value2');
+    hashMap.set('key3', 'value3');
+
+    const seen: Record<string, string> = {};
+
+    hashMap.forEach((value, key, mapInstance) => {
+      seen[key] = value;
+      expect(mapInstance).toBe(hashMap);
+    });
+
+    expect(seen).toEqual({
+      key1: 'value1',
+      key2: 'value2',
+      key3: 'value3',
+    });
+  });
 });
