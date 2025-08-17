@@ -15,14 +15,14 @@ export interface IHashTable<T extends HashTableAllowedTypes> {
   has(key: string): boolean;
   keys(): IterableIterator<string>;
   set(key: string, value: T): this;
-  values(): IterableIterator<T>;
+  values(): IterableIterator<T | null>;
 }
 
 class KeyValuePair<T> implements Equatable {
   public key: string;
-  public value?: T | null;
+  public value: T | null;
 
-  constructor(key: string, value?: T) {
+  constructor(key: string, value: T | null = null) {
     this.key = key;
     this.value = value;
   }
@@ -36,11 +36,13 @@ export default class HashMap<T extends HashTableAllowedTypes> implements IHashTa
   private _size: number;
   private _table: SinglyLinkedList<KeyValuePair<T>>[];
   private _entries: KeyValuePair<T>[];
+  private _initialSize: number;
   private _currentTableSize: number;
   private readonly LOAD_FACTOR_LIMIT = 0.7;
 
   constructor(initialSize = 32) {
     this._size = 0;
+    this._initialSize = initialSize;
     this._currentTableSize = initialSize;
     this._table = this.initializeTable(this._currentTableSize);
     this._entries = [];
@@ -51,11 +53,10 @@ export default class HashMap<T extends HashTableAllowedTypes> implements IHashTa
   }
 
   clear(): void {
-    this._table = new Array(this._currentTableSize);
+    this._table = this.initializeTable(this._initialSize);
     this._size = 0;
   }
 
-  // Adjust
   remove(key: string): boolean {
     const hash = this.hashKey(key);
     const linkedList = this._table[hash];
@@ -115,16 +116,17 @@ export default class HashMap<T extends HashTableAllowedTypes> implements IHashTa
       return this;
     }
 
-    linkedList.insert(index, newKvp);
+    const node = linkedList.get(index);
+    if (node) node.value = value;
 
     this.updateEntries(newKvp);
     return this;
   }
 
-  *values(): IterableIterator<T> {
+  *values(): IterableIterator<T | null> {
     for (const linkedList of this._table) {
       for (const kvp of linkedList) {
-        if (kvp.value === null || kvp.value === undefined) continue;
+        if (kvp.value === undefined) continue;
         yield kvp.value;
       }
     }
