@@ -9,7 +9,7 @@ export interface IHashTable<T extends HashTableAllowedTypes> {
   get size(): number;
   clear(): void;
   remove(key: string): boolean;
-  entries(): IterableIterator<[string, T]>;
+  entries(): IterableIterator<[string, T | null]>;
   forEach(callback: (value: T, key: string, map: IHashTable<T>) => void): void;
   get(key: string): T | null;
   has(key: string): boolean;
@@ -35,7 +35,6 @@ class KeyValuePair<T> implements Equatable {
 export default class HashMap<T extends HashTableAllowedTypes> implements IHashTable<T> {
   private _size: number;
   private _table: SinglyLinkedList<KeyValuePair<T>>[];
-  private _entries: KeyValuePair<T>[];
   private _initialSize: number;
   private _currentTableSize: number;
   private readonly LOAD_FACTOR_LIMIT = 0.7;
@@ -45,7 +44,6 @@ export default class HashMap<T extends HashTableAllowedTypes> implements IHashTa
     this._initialSize = initialSize;
     this._currentTableSize = initialSize;
     this._table = this.initializeTable(this._currentTableSize);
-    this._entries = [];
   }
 
   get size(): number {
@@ -68,7 +66,7 @@ export default class HashMap<T extends HashTableAllowedTypes> implements IHashTa
 
     if (result) {
       this._size--;
-      this.removeEntry(kvpToFind);
+      // this.removeEntry(kvpToFind);
       return true;
     }
 
@@ -112,21 +110,21 @@ export default class HashMap<T extends HashTableAllowedTypes> implements IHashTa
       linkedList.add(newKvp);
       this._table[hash] = linkedList;
       this._size++;
-      this.updateEntries(newKvp);
+      // this.updateEntries(newKvp);
       return this;
     }
 
     const node = linkedList.get(index);
     if (node) node.value = value;
 
-    this.updateEntries(newKvp);
+    // this.updateEntries(newKvp);
     return this;
   }
 
   *values(): IterableIterator<T | null> {
     for (const linkedList of this._table) {
       for (const kvp of linkedList) {
-        if (kvp.value === undefined) continue;
+        if (kvp.key !== undefined && kvp.value === undefined) continue;
         yield kvp.value;
       }
     }
@@ -140,9 +138,11 @@ export default class HashMap<T extends HashTableAllowedTypes> implements IHashTa
     }
   }
 
-  *entries(): IterableIterator<[string, T]> {
-    for (const entry of this._entries) {
-      yield [entry.key, entry!.value] as [string, T];
+  *entries(): IterableIterator<[string, T | null]> {
+    for (const bucket of this._table) {
+      for (const kvp of bucket) {
+        if (kvp.key !== undefined && kvp.value !== undefined) yield [kvp.key, kvp.value];
+      }
     }
   }
 
@@ -168,30 +168,30 @@ export default class HashMap<T extends HashTableAllowedTypes> implements IHashTa
     return Array.from({ length: size }, () => new SinglyLinkedList<KeyValuePair<T>>());
   }
 
-  private updateEntries(kvp: KeyValuePair<T>): void {
-    let found: KeyValuePair<T> | undefined = undefined;
+  // private updateEntries(kvp: KeyValuePair<T>): void {
+  //   let found: KeyValuePair<T> | undefined = undefined;
 
-    let i = 0;
-    for (i = 0; i < this._entries.length; i++) {
-      if (this._entries[i].equals(kvp)) {
-        found = this._entries[i];
-        break;
-      }
-    }
+  //   let i = 0;
+  //   for (i = 0; i < this._entries.length; i++) {
+  //     if (this._entries[i].equals(kvp)) {
+  //       found = this._entries[i];
+  //       break;
+  //     }
+  //   }
 
-    if (found === undefined) {
-      this._entries.push(kvp);
-    } else {
-      this._entries[i] = kvp;
-    }
-  }
+  //   if (found === undefined) {
+  //     this._entries.push(kvp);
+  //   } else {
+  //     this._entries[i] = kvp;
+  //   }
+  // }
 
-  private removeEntry(kvpToRemove: KeyValuePair<T>): void {
-    for (let i = 0; i < this._entries.length; i++) {
-      if (this._entries[i].equals(kvpToRemove)) {
-        this._entries.splice(i, 1);
-        break;
-      }
-    }
-  }
+  // private removeEntry(kvpToRemove: KeyValuePair<T>): void {
+  //   for (let i = 0; i < this._entries.length; i++) {
+  //     if (this._entries[i].equals(kvpToRemove)) {
+  //       this._entries.splice(i, 1);
+  //       break;
+  //     }
+  //   }
+  // }
 }

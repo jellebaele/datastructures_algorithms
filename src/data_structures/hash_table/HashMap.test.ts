@@ -153,49 +153,55 @@ describe('HashMap', () => {
     });
   });
 
-  test('should show all entries in order', () => {
+  test('should show all entries', () => {
     hashMap.set('key1', 'value1');
     hashMap.set('key2', 'value2');
     hashMap.set('key3', 'value3');
 
-    const entries = hashMap.entries();
+    const entries = Array.from(hashMap.entries()).sort();
 
-    expect(entries.next().value).toEqual(['key1', 'value1']);
-    expect(entries.next().value).toEqual(['key2', 'value2']);
-    expect(entries.next().value).toEqual(['key3', 'value3']);
+    expect(entries).toEqual([
+      ['key1', 'value1'],
+      ['key2', 'value2'],
+      ['key3', 'value3'],
+    ]);
   });
 
-  test('should show all entries in order when updating the same key', () => {
+  test('should show all entries when updating the same key', () => {
     hashMap.set('key1', 'value1');
     hashMap.set('key2', 'value2');
     hashMap.set('key1', 'value3');
 
-    const entries = hashMap.entries();
+    const entries = Array.from(hashMap.entries()).sort();
 
-    expect(entries.next().value).toEqual(['key1', 'value3']);
-    expect(entries.next().value).toEqual(['key2', 'value2']);
+    expect(entries).toEqual([
+      ['key1', 'value3'],
+      ['key2', 'value2'],
+    ]);
   });
 
-  test('should show all entries in order when removing', () => {
+  test('should show all entries when removing', () => {
     hashMap.set('key1', 'value1');
     hashMap.set('key2', 'value2');
     hashMap.set('key1', 'value3');
     hashMap.remove('key1');
 
-    const entries = hashMap.entries();
+    const entries = Array.from(hashMap.entries()).sort();
 
-    expect(entries.next().value).toEqual(['key2', 'value2']);
+    expect(entries).toEqual([['key2', 'value2']]);
   });
 
-  test('should show all entries in order when removing', () => {
+  test('should show all entries when removing', () => {
     hashMap.set('key1', 'value1');
     hashMap.set('key2', 'value2');
     hashMap.set('key3', 'value3');
     hashMap.remove('key2');
 
-    const entries = hashMap.entries();
+    const entries = Array.from(hashMap.entries()).sort();
 
-    expect(entries.next().value).toEqual(['key1', 'value1']);
-    expect(entries.next().value).toEqual(['key3', 'value3']);
+    expect(entries).toEqual([
+      ['key1', 'value1'],
+      ['key3', 'value3'],
+    ]);
   });
 });
