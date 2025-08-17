@@ -16,7 +16,7 @@ export interface IHashSet<T extends HashTableAllowedValueTypes> {
 export default class HashSet<T extends HashTableAllowedKeyTypes> implements IHashSet<T> {
   private _map: HashMap<T, true>;
 
-  constructor(initialSize: number = 32) {
+  constructor(initialSize = 32) {
     this._map = new HashMap<T, true>(initialSize);
   }
 
