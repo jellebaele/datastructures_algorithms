@@ -1,10 +1,11 @@
 import HashMap from './HashMap';
+import { Equatable } from './HashTableAllowTypes';
 
 describe('HashMap', () => {
-  let hashMap: HashMap<string>;
+  let hashMap: HashMap<string, string>;
 
   beforeEach(() => {
-    hashMap = new HashMap<string>();
+    hashMap = new HashMap<string, string>();
   });
 
   test('should initialize with size 0', () => {
@@ -33,7 +34,7 @@ describe('HashMap', () => {
   });
 
   test('should handle collisions', () => {
-    const hashMap = new HashMap<string>(5);
+    const hashMap = new HashMap<string, string>(5);
     hashMap.set('a', 'value1');
     hashMap.set('f', 'value2'); // 'a' and 'f' their hash is the same when size is 5
 
@@ -203,5 +204,39 @@ describe('HashMap', () => {
       ['key1', 'value1'],
       ['key3', 'value3'],
     ]);
+  });
+
+  test('should handle number as key type and object as value type', () => {
+    class CustomType implements Equatable {
+      public a: string;
+      public b: number;
+
+      constructor(a: string, b: number) {
+        this.a = a;
+        this.b = b;
+      }
+
+      equals(other: this): boolean {
+        return other !== null && other.a === this.a && other.b === this.b;
+      }
+    }
+    const hashMap = new HashMap<number, CustomType>();
+    const obj1 = new CustomType('A', 1);
+    const obj2 = new CustomType('B', 1);
+    hashMap.set(1, obj1);
+    hashMap.set(2, obj2);
+
+    expect(hashMap.has(1)).toBeTruthy();
+    expect(hashMap.get(1)).toEqual(obj1);
+    expect(hashMap.has(2)).toBeTruthy();
+    expect(hashMap.get(2)).toEqual(obj2);
+
+    const obj3 = new CustomType('B', 1);
+    hashMap.set(1, obj3);
+    expect(hashMap.has(1)).toBeTruthy();
+    expect(hashMap.get(1)).toEqual(obj3);
+
+    hashMap.remove(2);
+    expect(hashMap.has(2)).toBeFalsy();
   });
 });

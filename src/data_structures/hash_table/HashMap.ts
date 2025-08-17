@@ -3,26 +3,33 @@
 
 import { modularHash } from '../../shared/utils/hashing';
 import SinglyLinkedList from '../linked_list/SinglyLinkedList';
-import { Equatable, HashTableAllowedTypes } from './HashTableAllowTypes';
+import {
+  Equatable,
+  HashTableAllowedKeyTypes,
+  HashTableAllowedValueTypes,
+} from './HashTableAllowTypes';
 
-export interface IHashTable<T extends HashTableAllowedTypes> {
+export interface IHashTable<
+  TKey extends HashTableAllowedKeyTypes,
+  TValue extends HashTableAllowedValueTypes,
+> {
   get size(): number;
   clear(): void;
-  remove(key: string): boolean;
-  entries(): IterableIterator<[string, T | null]>;
-  forEach(callback: (value: T, key: string, map: IHashTable<T>) => void): void;
-  get(key: string): T | null;
-  has(key: string): boolean;
-  keys(): IterableIterator<string>;
-  set(key: string, value: T): this;
-  values(): IterableIterator<T | null>;
+  remove(key: TKey): boolean;
+  entries(): IterableIterator<[TKey, TValue | null]>;
+  forEach(callback: (value: TValue, key: TKey, map: IHashTable<TKey, TValue>) => void): void;
+  get(key: TKey): TValue | null;
+  has(key: TKey): boolean;
+  keys(): IterableIterator<TKey>;
+  set(key: TKey, value: TValue): this;
+  values(): IterableIterator<TValue | null>;
 }
 
-class KeyValuePair<T> implements Equatable {
-  public key: string;
-  public value: T | null;
+class KeyValuePair<TKey, TValue> implements Equatable {
+  public key: TKey;
+  public value: TValue | null;
 
-  constructor(key: string, value: T | null = null) {
+  constructor(key: TKey, value: TValue | null = null) {
     this.key = key;
     this.value = value;
   }
@@ -32,9 +39,13 @@ class KeyValuePair<T> implements Equatable {
   }
 }
 
-export default class HashMap<T extends HashTableAllowedTypes> implements IHashTable<T> {
+export default class HashMap<
+  TKey extends HashTableAllowedKeyTypes,
+  TValue extends HashTableAllowedValueTypes,
+> implements IHashTable<TKey, TValue>
+{
   private _size: number;
-  private _table: SinglyLinkedList<KeyValuePair<T>>[];
+  private _table: SinglyLinkedList<KeyValuePair<TKey, TValue>>[];
   private _initialSize: number;
   private _currentTableSize: number;
   private readonly LOAD_FACTOR_LIMIT = 0.7;
@@ -55,12 +66,12 @@ export default class HashMap<T extends HashTableAllowedTypes> implements IHashTa
     this._size = 0;
   }
 
-  remove(key: string): boolean {
+  remove(key: TKey): boolean {
     const hash = this.hashKey(key);
     const linkedList = this._table[hash];
     if (linkedList.size <= 0) return false;
 
-    const kvpToFind = new KeyValuePair<T>(key);
+    const kvpToFind = new KeyValuePair<TKey, TValue>(key);
     const index = linkedList.indexOf(kvpToFind);
     const result = linkedList.remove(index);
 
@@ -72,21 +83,21 @@ export default class HashMap<T extends HashTableAllowedTypes> implements IHashTa
     return false;
   }
 
-  get(key: string): T | null {
+  get(key: TKey): TValue | null {
     const hash = this.hashKey(key);
     const linkedList = this._table[hash];
-    const pairToFind = new KeyValuePair<T>(key);
+    const pairToFind = new KeyValuePair<TKey, TValue>(key);
 
     if (!linkedList) return null;
     const index = linkedList.indexOf(pairToFind);
     return linkedList.get(index)?.value ?? null;
   }
 
-  has(key: string): boolean {
+  has(key: TKey): boolean {
     return this.get(key) !== null;
   }
 
-  *keys(): IterableIterator<string> {
+  *keys(): IterableIterator<TKey> {
     for (const linkedList of this._table) {
       for (const kvp of linkedList) {
         yield kvp.key;
@@ -94,7 +105,7 @@ export default class HashMap<T extends HashTableAllowedTypes> implements IHashTa
     }
   }
 
-  set(key: string, value: T): this {
+  set(key: TKey, value: TValue): this {
     if ((this.size + 1) / this._currentTableSize > this.LOAD_FACTOR_LIMIT) {
       this.resizeTable(this._currentTableSize * 2);
     }
@@ -102,7 +113,7 @@ export default class HashMap<T extends HashTableAllowedTypes> implements IHashTa
     const hash = this.hashKey(key);
 
     const linkedList = this._table[hash];
-    const newKvp = new KeyValuePair<T>(key, value);
+    const newKvp = new KeyValuePair<TKey, TValue>(key, value);
 
     const index = linkedList.indexOf(newKvp);
     if (index === -1) {
@@ -119,7 +130,7 @@ export default class HashMap<T extends HashTableAllowedTypes> implements IHashTa
     return this;
   }
 
-  *values(): IterableIterator<T | null> {
+  *values(): IterableIterator<TValue | null> {
     for (const linkedList of this._table) {
       for (const kvp of linkedList) {
         if (kvp.key !== undefined && kvp.value === undefined) continue;
@@ -128,7 +139,7 @@ export default class HashMap<T extends HashTableAllowedTypes> implements IHashTa
     }
   }
 
-  forEach(callback: (value: T, key: string, map: IHashTable<T>) => void): void {
+  forEach(callback: (value: TValue, key: TKey, map: IHashTable<TKey, TValue>) => void): void {
     for (const linkedList of this._table) {
       for (const kvp of linkedList) {
         callback(kvp.value!, kvp.key, this);
@@ -136,7 +147,7 @@ export default class HashMap<T extends HashTableAllowedTypes> implements IHashTa
     }
   }
 
-  *entries(): IterableIterator<[string, T | null]> {
+  *entries(): IterableIterator<[TKey, TValue | null]> {
     for (const bucket of this._table) {
       for (const kvp of bucket) {
         if (kvp.key !== undefined && kvp.value !== undefined) yield [kvp.key, kvp.value];
@@ -144,8 +155,9 @@ export default class HashMap<T extends HashTableAllowedTypes> implements IHashTa
     }
   }
 
-  private hashKey(key: string): number {
-    return modularHash(key, this._currentTableSize);
+  // Modular hash is used for testing purposes
+  private hashKey(key: TKey): number {
+    return modularHash(key.toString(), this._currentTableSize);
   }
 
   private resizeTable(newSize: number) {
@@ -162,7 +174,7 @@ export default class HashMap<T extends HashTableAllowedTypes> implements IHashTa
     }
   }
 
-  private initializeTable(size: number): SinglyLinkedList<KeyValuePair<T>>[] {
-    return Array.from({ length: size }, () => new SinglyLinkedList<KeyValuePair<T>>());
+  private initializeTable(size: number): SinglyLinkedList<KeyValuePair<TKey, TValue>>[] {
+    return Array.from({ length: size }, () => new SinglyLinkedList<KeyValuePair<TKey, TValue>>());
   }
 }
